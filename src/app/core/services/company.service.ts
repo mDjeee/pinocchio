@@ -22,15 +22,13 @@ export class CompanyService {
     },
     filter?: {
       name?: string;
-      inn?: string;
-      pinfl?: string;
-      client_uid?: string;
-      type?: string;
+      phoneNumber?: string;
       address?: string;
+      email?: string;
     }
   ) {
 
-    const url = `${this.apiUrl}/api/admin/organization`;
+    const url = `${this.apiUrl}/api/v1/company/all`;
     const queryParams = new URLSearchParams();
 
     queryParams.append('page', (pagination.page || 0).toString());
@@ -48,28 +46,27 @@ export class CompanyService {
   }
 
   getCompanyById(id: number) {
-    const url = `${this.apiUrl}/api/admin/organization/${id}`;
+    const url = `${this.apiUrl}/api/v1/company/${id}`;
     return this.http.get(url);
+  }
+
+  createCompany(payload: CreateCompany) {
+    const url = `${this.apiUrl}/api/v1/company/add`;
+    return this.http.post(url, payload);
+  }
+
+  updateCompany(id: number, payload: CreateCompany) {
+    const url = `${this.apiUrl}/api/v1/company/edit/${id}`;
+    return this.http.put(url, payload);
+  }
+
+  deleteCompany(id: number) {
+    const url = `${this.apiUrl}/api/v1/company/delete/${id}`;
+    return this.http.delete(url);
   }
 
   getCompanyByInn(inn: string): Observable<OrganizationDetail> {
     const url = `${this.apiUrl}/api/admin/organization/info-by-tin?tin=${inn}`;
     return this.http.get<OrganizationDetail>(url);
-  }
-
-  createCompany(payload: CreateCompany) {
-    const url = `${this.apiUrl}/api/admin/organization`;
-    return this.http.post(url, payload);
-  }
-
-
-  updateCompany(id: number, payload: CreateCompany) {
-    const url = `${this.apiUrl}/api/admin/organization/${id}`;
-    return this.http.patch(url, payload);
-  }
-
-  deleteCompany(id: number) {
-    const url = `${this.apiUrl}/api/admin/organization/${id}`;
-    return this.http.delete(url);
   }
 }

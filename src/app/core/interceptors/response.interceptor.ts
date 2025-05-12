@@ -32,7 +32,7 @@ export const responseInterceptor: HttpInterceptorFn = (request, next) => {
         if (response.body.success) {
           // For successful responses, return the data part
           return response.clone({
-            body: response.body.data
+            body: (response.body as any).result.data
           });
         } else {
           // For error responses, throw the error or a default one

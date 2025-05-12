@@ -29,9 +29,8 @@ export class StorageService {
     return this.getToken() !== null;
   }
 
-  setUserDetail(email: string, fullName: string) {
-    const payload = { email, fullName };
-    localStorage.setItem(this.userKey, JSON.stringify(payload));
+  setUserDetail(userResponse: any) {
+    localStorage.setItem(this.userKey, JSON.stringify(userResponse));
   }
 
   getUserDetail() {

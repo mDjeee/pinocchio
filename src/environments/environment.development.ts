@@ -1,7 +1,7 @@
 
 export const environment = {
   production: false,
-  API_URL: 'http://172.23.1.15',
+  API_URL: 'http://134.209.25.249:8080',
   SOCKET_ENDPOINT: 'wss://corp-chat.aab.uz'
   // SOCKET_ENDPOINT: 'ws://192.168.20.94:3040'
 

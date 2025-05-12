@@ -11,7 +11,7 @@
 
       <div>
         <h2 class="text-2xl font-bold text-gray-800">
-          Информация о компании <span>({{ organization?.type === 'distributor' ? 'дистрибьютор' : 'дилер' }})</span>
+          Информация о компании
         </h2>
         <p class="text-gray-500">Детальные данные организации</p>
       </div>
@@ -30,130 +30,27 @@
   </div>
 
   <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-
-    <div class="space-y-4">
-      <div>
-        <p class="text-sm font-medium text-gray-500">Название компании</p>
-        <p class="text-gray-800">{{organization?.name}}</p>
-      </div>
-
-      <div>
-        <p class="text-sm font-medium text-gray-500">ИНН</p>
-        <p class="text-gray-800">{{organization?.inn}}</p>
-      </div>
-
-      <div>
-        <p class="text-sm font-medium text-gray-500">ПИНФЛ</p>
-        <p class="text-gray-800">{{organization?.pinfl}}</p>
-      </div>
-
-      <!-- Address -->
-      <div>
-        <p class="text-sm font-medium text-gray-500">Адрес</p>
-        <p class="text-gray-800">{{organization?.address}}</p>
-      </div>
-    </div>
-
-    <!-- Column 2 -->
-    <div class="space-y-4">
-      <div>
-        <p class="text-sm font-medium text-gray-500">Тип организации</p>
-        <p class="text-gray-800">{{organization?.type === 'distributor' ? 'дистрибьютор' : 'дилер'}}</p>
-      </div>
-
-      <div>
-        <p class="text-sm font-medium text-gray-500">Код НИББД</p>
-        <p class="text-gray-800">{{organization?.nibbd}}</p>
-      </div>
-
-      <div>
-        <p class="text-sm font-medium text-gray-500">Дата создания</p>
-        <p class="text-gray-800">{{organization?.created_at | date:'dd.MM.yyyy HH:mm'}}</p>
-      </div>
-
-      <div>
-        <p class="text-sm font-medium text-gray-500">Дата обновления</p>
-        <p class="text-gray-800">{{organization?.updated_at | date:'dd.MM.yyyy HH:mm'}}</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- Company Info -->
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-    <!-- Column 1 -->
-    <div class="space-y-4">
-      <div>
-        <p class="text-sm font-medium text-gray-500">Код юридического лица</p>
-        <p class="text-gray-800">{{company?.codeJuridicalPerson}}</p>
-      </div>
-
-      <div>
-        <p class="text-sm font-medium text-gray-500">ID клиента</p>
-        <p class="text-gray-800">{{company?.clientUid}}</p>
-      </div>
-
-      <div>
-        <p class="text-sm font-medium text-gray-500">Номер регистрационного документа</p>
-        <p class="text-gray-800">{{company?.registrationDocumentNumber}}</p>
-      </div>
-
-      <div>
-        <p class="text-sm font-medium text-gray-500">Внешний ID</p>
-        <p class="text-gray-800">{{organization?.ext_org_id || '-'}}</p>
-      </div>
-    </div>
-
-    <!-- Column 2 -->
-    <div class="space-y-4">
-      <div>
-        <p class="text-sm font-medium text-gray-500">Филиал</p>
-        <p class="text-gray-800">{{company?.filialCode}}</p>
-      </div>
-
-      <div>
-        <p class="text-sm font-medium text-gray-500">Основной счет</p>
-        <p class="text-gray-800">{{company?.mainAccount}}</p>
-      </div>
-
-      <div>
-        <p class="text-sm font-medium text-gray-500">Дата регистрации</p>
-        <p class="text-gray-800">{{company?.registrationDate}}</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- Director Info -->
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t">
     <div>
-      <p class="text-sm font-medium text-gray-500">Директор</p>
-      <p class="text-gray-800">{{company?.directorName}}</p>
+      <p class="text-sm font-medium text-gray-500">Название компании</p>
+      <p class="text-gray-800">{{organization?.name}}</p>
     </div>
+
     <div>
-      <p class="text-sm font-medium text-gray-500">Паспорт директора</p>
-      <p class="text-gray-800">{{company?.directorPassport}}</p>
+      <p class="text-sm font-medium text-gray-500">ИНН</p>
+      <p class="text-gray-800">{{organization?.phoneNumber}}</p>
+    </div>
+
+    <div>
+      <p class="text-sm font-medium text-gray-500">ПОЧТА</p>
+      <p class="text-gray-800">{{organization?.email}}</p>
+    </div>
+
+    <!-- Address -->
+    <div>
+      <p class="text-sm font-medium text-gray-500">Адрес</p>
+      <p class="text-gray-800">{{organization?.address}}</p>
     </div>
   </div>
-
-  <!-- Contact Info -->
-  <div class="pt-4">
-    <p class="text-sm font-medium text-gray-500">Контактный телефон директора</p>
-    <p class="text-gray-800">{{company?.mobilePhone}}</p>
-  </div>
-
-
-  @for(accounter of company?.chiefAccounters; track $index) {
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4">
-      <div>
-        <p class="text-sm font-medium text-gray-500">Бухгалтер</p>
-        <p class="text-gray-800">{{ accounter?.surname }} {{ accounter?.firstName }} {{ accounter?.patronymic }}</p>
-      </div>
-
-      <div>
-        <p class="text-sm font-medium text-gray-500">Паспорт бухгалтера</p>
-        <p class="text-gray-800">{{ accounter?.docSerial }}{{ accounter?.docNumber }}</p>
-      </div>
-    </div>
-  }
 
   @if(id) {
     <app-companies-users

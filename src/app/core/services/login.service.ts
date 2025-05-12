@@ -14,8 +14,8 @@ export class LoginService {
   ) {
   }
 
-  loginUser(data: {email: string, password: string}) {
-    const url = `${this.apiUrl}/api/admin/auth/login`;
+  loginUser(data: {phoneNumber: string, password: string}) {
+    const url = `${this.apiUrl}/api/v1/auth/login`;
     return this.http.post(url, data);
   }
 }

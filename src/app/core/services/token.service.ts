@@ -16,12 +16,12 @@ export class TokenService {
     expiresIn: number,
     refreshExpiresIn: number
   } {
-    if (!data?.access_token) {
+    if (!data?.token) {
       throw new Error('Invalid token response');
     }
 
     return {
-      token: data.access_token,
+      token: data.token,
       tokenType: data.token_type,
       expiresIn: data.expires_in,
       refreshExpiresIn: data.refresh_expires_in

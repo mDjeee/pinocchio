@@ -14,6 +14,7 @@ import { LocationBackDirective } from '../../../../shared/directives/location-ba
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LucideAngularModule } from 'lucide-angular';
+import { ValidationService } from '../../../../core/services/validation.service';
 
 @Component({
   selector: 'app-add-company',
@@ -47,55 +48,29 @@ export class AddCompanyComponent implements OnInit {
     private toastrService: ToastrService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
+    private validationService: ValidationService,
     ) {
     this.companyForm = this.fb.group({
       name: ['', [Validators.required, Validators.maxLength(100)]],
-      inn: ['', [Validators.required, Validators.pattern(/^\d{9}$/)]],
+      phoneNumber: ['', [Validators.required, this.validationService.validateUzPhoneNumber]],
       address: ['', [Validators.required, Validators.maxLength(200)]],
-      nibbd: ['', [Validators.pattern(/^\d{8}$/)]],
-      ext_org_id: ['', [Validators.required]],
-      client_uid: ['', [Validators.required]],
-      pinfl: ['', [Validators.pattern(/^\d{14}$/)]],
-      type: [{value: 'distributor', disabled: true}, [Validators.required]]
+      email: ['', [Validators.required, this.validationService.validateEmail]],
     });
   }
 
   ngOnInit() {
-    this.watchInn();
     this.watchRoute();
-    this.watchType();
   }
 
   watchRoute() {
     this.activatedRoute.queryParams
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(query => {
-        if(query['type']) {
-          this.type = query['type'];
-
-          this.companyForm.patchValue({
-            type: this.type
-          })
-        }
         if(query['id']) {
           this.id = +query['id'];
           this.isEditMode = true;
           this.getCompanyById();
         }
-      });
-  }
-
-  watchType() {
-    this.companyForm.get('type')
-      ?.valueChanges
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(type => {
-        this.router.navigate([], {
-          relativeTo: this.activatedRoute,
-          queryParams: { type: type || 'distributor' },
-          queryParamsHandling: 'merge',
-          replaceUrl: true
-        });
       });
   }
 
@@ -106,32 +81,9 @@ export class AddCompanyComponent implements OnInit {
         next: (res: any) => {
           this.companyForm.patchValue({
             ...res,
-            client_uid: res.clientUid,
-            ext_org_id: res.ext_org_id,
-            nibbd: res.clientCode,
           });
         }
       });
-  }
-
-  watchInn() {
-    this.companyForm.get('inn')?.valueChanges.pipe(
-      takeUntilDestroyed(this.destroyRef)
-    ).subscribe(innValue => {
-      if (innValue && innValue.length === 9) {
-        this.companyService.getCompanyByInn(`${innValue}`).subscribe({
-          next: (res: any) => {
-            this.companyForm.patchValue({
-              name: res.name,
-              address: res.address,
-              client_uid: res.clientUid,
-              ext_org_id: res.ext_org_id,
-              nibbd: res.clientCode,
-            });
-          }
-        });
-      }
-    });
   }
 
 

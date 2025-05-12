@@ -1,17 +1,7 @@
 .element {
-  background-image:
-    url('/assets/images/group.png'),
-    linear-gradient(to top, #1139E1, #040F45);
+  background-image: linear-gradient(to top, #1139E1, #040F45);
 
-  /* Maintain aspect ratio (900x1000 ≈ 9:10) */
-  background-size:
-    50vw 120vh,      /* Height = 50% of viewport, width auto-scales */
-    cover;
-
-  /* Position offsets */
-  background-position:
-    bottom -30vh right -6vw,
-    0 0;
+  background-size: cover;
 
   background-repeat: no-repeat;
   min-height: 100vh;

@@ -2,21 +2,9 @@ import { IMenu } from '../menu.component';
 
 export const menuList: IMenu[] = [
   {
-    title: 'Дистрибьютор',
+    title: 'Компании',
     svgName: 'buildings',
     route: '/companies',
-    query: {
-      type: 'distributor'
-    },
-    compareQuery: true,
-  },
-  {
-    title: 'Дилер',
-    svgName: 'building-4',
-    route: '/companies',
-    query: {
-      type: 'dealer'
-    },
     compareQuery: true,
   },
   {

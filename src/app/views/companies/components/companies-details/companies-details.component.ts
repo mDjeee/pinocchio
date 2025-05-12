@@ -60,24 +60,7 @@ export class CompaniesDetailsComponent implements OnInit {
     this.activatedRoute.queryParams
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(param => {
-        this.inn = param['inn'];
-        this.getCompanyByInn();
       });
-  }
-
-  getCompanyByInn() {
-    if(this.inn) {
-      this.companyService.getCompanyByInn(this.inn)
-        .pipe(takeUntilDestroyed(this.destroyRef))
-        .subscribe({
-          next: (res: any) => {
-            this.company = res;
-          },
-          error: (err) => {
-            this.toastrService.error(err.message);
-          }
-        });
-    }
   }
 
   getOrganization() {

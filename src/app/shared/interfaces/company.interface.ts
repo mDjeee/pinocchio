@@ -2,12 +2,9 @@
 export interface Organization {
   id: number;
   name: string;
-  ext_org_id: string;
-  inn: string;
-  pinfl: string;
+  email: string;
+  phoneNumber: string;
   address: string;
-  nibbd: string;
-  type: string;
   created_at: Date;
   updated_at: Date;
 }
@@ -60,15 +57,9 @@ export interface OrganizationDetail {
   chiefAccounters: ChiefAccounters[];
 }
 
-export type CompanyType = 'dealer' | 'distributor';
-
 export interface CreateCompany {
   name: string;
-  inn: string;
+  phone: string;
   address: string;
-  nibbd: string;
-  ext_org_id: string;
-  client_uid: string;
-  pinfl: string;
-  type: CompanyType;
+  email: string;
 }

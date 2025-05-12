@@ -31,13 +31,12 @@ import { AgreeModalComponent } from '../../../../shared/components/modal/agree-m
   styleUrl: './companies-list.component.scss'
 })
 export class CompaniesListComponent implements OnInit {
-  title = 'Дистрибьютор';
+  title = 'Компании';
   data = [];
   companies: Organization[] = [];
   page = 0;
   size = 20;
   totalItems = 0;
-  type = 'distributor';
 
   constructor(
     private destryoRef: DestroyRef,
@@ -56,10 +55,6 @@ export class CompaniesListComponent implements OnInit {
     this.activatedRoute.queryParams
       .pipe(takeUntilDestroyed(this.destryoRef))
         .subscribe(query => {
-          if(query['type']) {
-            this.type = query['type'];
-            this.title = this.type === 'distributor' ? 'Дистрибьютор' : 'Дилер';
-          }
           this.getCompanies();
         })
   }
@@ -67,15 +62,15 @@ export class CompaniesListComponent implements OnInit {
   getCompanies() {
     this.companyService.getCompanies(
       { page: this.page, perPage: this.size },
-      { type: this.type }
+      { }
       )
       .pipe(takeUntilDestroyed(this.destryoRef))
       .subscribe({
         next: (res: any) => {
-          this.companies = res.data;
-          this.page = res.current_page - 1;
-          this.totalItems = res.total;
-          this.size = res.per_page;
+          this.companies = res;
+          // this.page = res.current_page - 1;
+          // this.totalItems = res.total;
+          // this.size = res.per_page;
         },
         error: (err) => {
           this.toastrService.error(err.message);

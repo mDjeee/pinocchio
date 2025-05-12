@@ -1,6 +1,13 @@
 import { Component, DestroyRef } from '@angular/core';
 import { NgOptimizedImage } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  ValidationErrors,
+  Validators
+} from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { MatIcon } from '@angular/material/icon';
@@ -17,6 +24,7 @@ import { Router } from '@angular/router';
 import { TokenService } from '../../core/services/token.service';
 import { StorageService } from '../../core/services/storage.service';
 import { SpinnerService } from '../../core/services/spinner.service';
+import { ValidationService } from '../../core/services/validation.service';
 
 @Component({
   selector: 'app-auth-layout',
@@ -50,10 +58,11 @@ export class AuthComponent {
     private router: Router,
     private tokenService: TokenService,
     private storageService: StorageService,
-    private spinnerService: SpinnerService
+    private spinnerService: SpinnerService,
+    private validationService: ValidationService,
     ) {
     this.form = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
+      phoneNumber: ['', [Validators.required, this.validationService.validateUzPhoneNumber]],
       password: ['', [Validators.required, Validators.minLength(8)]]
     });
   }
@@ -69,18 +78,10 @@ export class AuthComponent {
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe({
           next: (res: any) => {
+            console.log('res', res);
             const tokenData = this.tokenService.parseTokenResponse(res);
             this.storageService.setToken(tokenData.token);
-
-            const claims = this.tokenService.getTokenClaims(tokenData.token);
-            const userId = this.tokenService.getUserId(tokenData.token);
-            const isExpired = this.tokenService.isTokenExpired(tokenData.token);
-            const email = this.tokenService.getEmail(tokenData.token);
-            const fullName = this.tokenService.getFullName(tokenData.token);
-
-            if(email || fullName) {
-              this.storageService.setUserDetail(email as string, fullName as string);
-            }
+            this.storageService.setUserDetail(res.userResponse);
 
             this.router.navigate(['/companies']);
           },
