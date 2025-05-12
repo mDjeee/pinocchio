@@ -1,5 +1,5 @@
 import { Component, DestroyRef } from '@angular/core';
-import { NgOptimizedImage } from '@angular/common';
+import { NgIf, NgOptimizedImage } from '@angular/common';
 import {
   AbstractControl,
   FormBuilder,
@@ -41,6 +41,7 @@ import { ValidationService } from '../../core/services/validation.service';
     InputComponent,
     MatIconButton,
     SvgIconComponent,
+    NgIf,
   ],
   standalone: true,
   templateUrl: './auth.component.html',

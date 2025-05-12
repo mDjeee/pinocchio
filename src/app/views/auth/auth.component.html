@@ -1,88 +1,93 @@
-<div class="h-full w-full px-[150px] py-[100px] flex justify-center">
-  <form
-    class="max-w-[343px] h-full flex flex-col items-center justify-center gap-4"
-    (ngSubmit)="onSubmit()"
-    [formGroup]="form"
-  >
-    <div class="flex flex-col gap-y-[27px] text-[#D4E0FA] tracking-[0.38px]">
-      <div class="flex flex-col-reverse gap-y-2 text-center">
-        <span
-          class="text-[32px] leading-[38.4px]"
-        >Добро пожаловать!</span>
-        <span
-          class="text-[15px]"
-        >Войдите в свой аккаунт</span>
-      </div>
-
-      <app-input
-        label="Почта"
-        labelClass="text-[#D4E0FA]"
-        inputClass="!placeholder-[#2550AF] !text-[#D4E0FA]"
-        formControlName="phoneNumber"
-        placeholder="Введите телефое"
-        [prefix]="prefix"
-        [errorMessages]="{
-        required: 'Почта обязателен',
-        pattern: 'Введите валдиную почту'
-      }"
-      ></app-input>
-
-      <!-- Password Input -->
-      <app-input
-        label="Пароль"
-        labelClass="text-[#D4E0FA]"
-        inputClass="!placeholder-[#2550AF] !text-[#D4E0FA]"
-        formControlName="password"
-        placeholder="Введите пароль"
-        [prefix]="prefixPassword"
-        [suffix]="suffix"
-        [type]="hidePassword ? 'password' : 'text'"
-        [errorMessages]="{
-        required: 'Пароль обязателен',
-        minlength: 'Пароль должен быть не меньше 8 символов'
-      }"
-      >
-      </app-input>
+<div class="h-full w-full px-[150px] py-[100px] flex justify-center items-center">
+  <div class="flex flex-col gap-y-5 shadow-2xl border border-gray-200 p-6 rounded-[10px]">
+    <div class="h-full flex items-center justify-center gap-x-5">
+      <img priority ngSrc="./assets/icons/logo.png" alt="logo" width="50" height="50">
+      <div class="text-2xl text-gray-900 font-bold font-montserrat">Pinocchio</div>
     </div>
 
-    <app-button
-      class="!w-full mt-5"
-      variant="primary"
-      size="lg"
-      shape="pill"
-      type="submit"
-      [fullWidth]="true"
+    <form
+      class="max-w-[343px] h-full flex flex-col items-center justify-center gap-4"
+      (ngSubmit)="onSubmit()"
+      [formGroup]="form"
     >
-      Далее
-    </app-button>
-  </form>
+      <div class="flex flex-col gap-y-[27px] text-gray-800 tracking-[0.38px]">
+        <div class="flex flex-col-reverse gap-y-2 text-center">
+          <span class="text-[32px] leading-[38.4px]">Добро пожаловать!</span>
+          <span class="text-[15px]">Войдите в свой аккаунт</span>
+        </div>
+
+        <!-- Phone Input -->
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Телефон</mat-label>
+
+          <lucide-icon
+            class="mx-3"
+            matPrefix
+            name="phone"
+          ></lucide-icon>
+
+          <input
+            matInput
+            formControlName="phoneNumber"
+            placeholder="Введите телефон"
+            class="!text-gray-800"
+            maxlength="12"
+          >
+          <mat-error *ngIf="form.get('phoneNumber')?.hasError('required')">
+            Почта обязателен
+          </mat-error>
+          <mat-error *ngIf="form.get('phoneNumber')?.hasError('invalidPhoneNumber')">
+            Введите корректный номер (998__ ___ __ __)
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Password Input -->
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Пароль</mat-label>
+
+          <lucide-icon
+            matPrefix
+            class="text-gray-800 mx-3"
+            name="rectangle-ellipsis"
+          ></lucide-icon>
+
+          <input
+            matInput
+            formControlName="password"
+            placeholder="Введите пароль"
+            [type]="hidePassword ? 'password' : 'text'"
+            class="!text-gray-800"
+          >
+          <button
+            mat-icon-button
+            matSuffix
+            (click)="togglePasswordVisibility()"
+            [attr.aria-label]="hidePassword ? 'Show password' : 'Hide password'"
+          >
+            <lucide-icon
+              class="text-gray-800"
+              [name]="hidePassword ? 'eye' : 'eye-off'"
+            ></lucide-icon>
+          </button>
+          <mat-error *ngIf="form.get('password')?.hasError('required')">
+            Пароль обязателен
+          </mat-error>
+          <mat-error *ngIf="form.get('password')?.hasError('minlength')">
+            Пароль должен быть не меньше 8 символов
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <app-button
+        class="!w-full mt-5"
+        variant="primary"
+        size="lg"
+        shape="pill"
+        type="submit"
+        [fullWidth]="true"
+      >
+        Далее
+      </app-button>
+    </form>
+  </div>
 </div>
-
-<ng-template #prefix>
-  <lucide-icon
-    name="phoneCall"
-    class="text-[#D4E0FA] w-12"
-  />
-</ng-template>
-
-<ng-template #prefixPassword>
-  <app-svg-icon
-    [iconName]="'password-check'"
-    className="h-6 w-12 px-3 text-[#D4E0FA]"
-  >
-  </app-svg-icon>
-</ng-template>
-
-<ng-template #suffix>
-  <button
-    mat-icon-button
-    type="button"
-    (click)="togglePasswordVisibility()"
-    [attr.aria-label]="hidePassword ? 'Show password' : 'Hide password'"
-  >
-    <lucide-icon
-      class="text-[#D4E0FA]"
-      [name]="hidePassword ? 'eye' : 'eye-off'"
-    ></lucide-icon>
-  </button>
-</ng-template>
