@@ -3,7 +3,7 @@
     <div class="text-[#2B2D33] text-[22px] font-medium">{{ title }}</div>
 
     <button
-      class="px-4 py-2 text-sm font-medium text-white bg-primary rounded-md hover:bg-highlight focus:outline-none"
+      class="px-4 py-2 text-sm font-medium text-white bg-green-500 rounded-md hover:bg-green-600 focus:outline-none"
       [routerLink]="['/companies/add']"
     >
       Добавить компанию
@@ -39,10 +39,10 @@
     class="w-full h-full cursor-pointer flex items-center justify-center"
     (click)="$event.stopPropagation()" [matMenuTriggerFor]="actionsPayments"
   >
-    <app-svg-icon
-      [iconName]="'more'"
-      className="h-6 w-6 text-primary group-hover:text-highlight cursor-pointer transition-colors"
-    ></app-svg-icon>
+    <lucide-icon
+      class="h-6 w-6 text-green-500 group-hover:text-green-600 cursor-pointer transition-colors"
+      name="ellipsis"
+    ></lucide-icon>
   </div>
   <mat-menu #actionsPayments="matMenu" xPosition="before" class="menu-actions">
     <button

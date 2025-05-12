@@ -33,10 +33,10 @@
     class="w-full h-full cursor-pointer flex items-center justify-center"
     (click)="$event.stopPropagation()" [matMenuTriggerFor]="actionsPayments"
   >
-    <app-svg-icon
-      [iconName]="'more'"
-      className="h-6 w-6 text-[#38AA3D] group-hover:text-green-500 cursor-pointer transition-colors"
-    ></app-svg-icon>
+    <lucide-icon
+      class="h-6 w-6 text-green-500 group-hover:text-green-600 cursor-pointer transition-colors"
+      name="ellipsis"
+    ></lucide-icon>
   </div>
   <mat-menu #actionsPayments="matMenu" xPosition="before" class="menu-actions">
     <button

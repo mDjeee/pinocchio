@@ -60,17 +60,17 @@ export class CompaniesUsersComponent implements OnInit {
   }
 
   detachUser(user: User) {
-    this.usersService.detachUser({user_id: user.id, organization_id: user.org_id})
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe({
-        next: (res: any) => {
-          this.toastrService.success('Пользователь успешно откреплён!');
-          this.getCompanyUsers();
-        },
-        error: (err: any) => {
-          this.toastrService.error(err.message);
-        }
-      })
+    // this.usersService.detachUser({user_id: user.id, organization_id: user.org_id})
+    //   .pipe(takeUntilDestroyed(this.destroyRef))
+    //   .subscribe({
+    //     next: (res: any) => {
+    //       this.toastrService.success('Пользователь успешно откреплён!');
+    //       this.getCompanyUsers();
+    //     },
+    //     error: (err: any) => {
+    //       this.toastrService.error(err.message);
+    //     }
+    //   })
   }
 
   protected readonly usersColumns = usersColumns;

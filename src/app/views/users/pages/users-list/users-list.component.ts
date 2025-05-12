@@ -58,10 +58,10 @@ export class UsersListComponent implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: (res: any) => {
-          this.users = res.data;
-          this.page = res.current_page;
-          this.totalItems = res.total;
-          this.size = res.per_page;
+          this.users = res;
+          // this.page = res.current_page;
+          // this.totalItems = res.total;
+          // this.size = res.per_page;
         },
         error: (err) => {
           this.toastrService.error(err.message);
@@ -95,7 +95,7 @@ export class UsersListComponent implements OnInit {
   deleteUser(user: User) {
     const dialogRef = this.matDialog.open(AgreeModalComponent, {
       data: {
-        title: `Вы точно хотите удалить пользователя ${user.full_name}?`,
+        title: `Вы точно хотите удалить пользователя ${user.firstName} ${user.lastName}?`,
         confirm: 'Да',
         cancel: 'Нет'
       },

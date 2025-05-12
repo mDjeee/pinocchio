@@ -1,6 +1,6 @@
 services:
   pinocchio:
-    image: 172.20.2.20:5050/frontend/pinocchio:latest
+    image: 134.209.25.249:5050/frontend/pinocchio:latest
     container_name: pinocchio
     ports:
       - 4200:4200

@@ -70,7 +70,7 @@ export class UserDetailsComponent implements OnInit {
   detachUser(org: Organization) {
     const dialogRef = this.matDialog.open(AgreeModalComponent, {
       data: {
-        title: `Вы точно хотите откерпить организацию ${org.name} от ${this.user.full_name}?`,
+        title: `Вы точно хотите откерпить организацию ${org.name} от ${this.user.firstName} ${this.user.lastName}?`,
         confirm: 'Да',
         cancel: 'Нет'
       },
