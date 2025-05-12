@@ -1,0 +1,228 @@
+<mat-card *ngIf="loading; else errorContent" class="flex justify-center items-center p-10">
+  <mat-spinner diameter="50"></mat-spinner>
+</mat-card>
+
+<ng-template #errorContent>
+  <mat-card *ngIf="errorMessage; else dataContent" class="text-center text-error p-10">
+    {{ errorMessage }}
+  </mat-card>
+</ng-template>
+
+<ng-template #dataContent>
+  <mat-card *ngIf="data.length === 0; else tableContent" class="text-center p-5">
+    Нет доступных данных
+  </mat-card>
+</ng-template>
+
+<ng-template #tableContent>
+  <table
+    class="w-full"
+    [ngClass]="tableClass"
+    mat-table
+    [dataSource]="getData()"
+    matSort
+    multiTemplateDataRows
+    (matSortChange)="announceSortChange($event)"
+  >
+    <ng-container matColumnDef="numbering" *ngIf="numbering">
+      <th
+        class="!border-none"
+        [ngClass]="{ '!rounded-tl-xl': numbering }"
+        mat-header-cell
+        *matHeaderCellDef
+      >
+        <span>№</span>
+      </th>
+      <td
+        class="!border-[#EFF4F9]"
+        mat-cell
+        *matCellDef="let row"
+      >
+        {{ data.indexOf(row) + 1 }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="select" *ngIf="checkable">
+      <th
+        class="!border-none"
+        [ngClass]="{ '!rounded-tl-xl': !numbering && checkable }"
+        mat-header-cell
+        *matHeaderCellDef
+      >
+        <mat-checkbox
+          class="custom-checkbox"
+          (change)="toggleSelectAll($event)"
+          [checked]="isAllChecked()"
+          [indeterminate]="!isAllChecked() && someSelected()">
+          {{ checkTitle }}
+        </mat-checkbox>
+      </th>
+      <td
+        class="!border-[#EFF4F9]"
+        mat-cell *matCellDef="let row"
+      >
+        <mat-checkbox
+          class="custom-checkbox"
+          [(ngModel)]="row.selected"
+          (click)="getSelectedRows($event)"
+        >
+        </mat-checkbox>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="doubleSelect" *ngIf="doubleCheck">
+      <th
+        class="!border-none"
+        mat-header-cell
+        *matHeaderCellDef
+      >
+        <mat-checkbox
+          class="custom-checkbox"
+          (change)="toggleSecondSelectAll($event)"
+          [checked]="isAllSecondChecked()"
+          [indeterminate]="!isAllSecondChecked() && someSecondSelected()">
+          {{ secondCheckTitle }}
+        </mat-checkbox>
+      </th>
+      <td
+        class="!border-[#EFF4F9]"
+        mat-cell *matCellDef="let row"
+      >
+        <mat-checkbox
+          class="custom-checkbox"
+          [(ngModel)]="row.doubleCheck"
+          (click)="getSelectedRows($event)"
+        >
+        </mat-checkbox>
+      </td>
+    </ng-container>
+
+    @for(column of columns; track column.field; let last = $last; let first = $first) {
+      <ng-container [matColumnDef]="column.field">
+        <th
+          class="!border-none"
+          [ngClass]="{
+          '!rounded-tr-xl': last,
+          'rounded-tl-xl': first && !numbering && !checkable
+          }"
+          mat-header-cell
+          *matHeaderCellDef
+        >
+          <div
+            class="w-full h-full"
+            [ngClass]="{ 'text-left': column.left, 'text-right': column.right, 'text-center': column.center }"
+          >{{ column.header }}
+          </div>
+        </th>
+
+        <td
+          mat-cell
+          class="!border-[#EFF4F9]"
+          *matCellDef="let row"
+          [ngClass]="{ 'border-none': row == expandedRow }"
+        >
+          <ng-container [ngSwitch]="column.field">
+            <ng-container *ngSwitchCase="'actions'" stopPropagation>
+              <ng-container *ngTemplateOutlet="actionTemplate; context: { $implicit: row }"></ng-container>
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'preAdditionalTemplate'">
+              <ng-container *ngTemplateOutlet="preAdditionalTemplate; context: { $implicit: row }"></ng-container>
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'additionalTemplate'">
+              <ng-container *ngTemplateOutlet="additionalTemplate; context: { $implicit: row }"></ng-container>
+            </ng-container>
+
+            <ng-container *ngSwitchDefault>
+              <div
+                class="w-full relative h-full cursor-pointer"
+                [ngClass]="{
+                'text-left': column.left,
+                'text-right': column.right,
+                'text-center': column.center,
+                'break-words': column.breakWords,
+                }"
+                [ngStyle]="{ 'max-width': column.maxWidth }"
+              >
+                @if(isStatusField(column.field)) {
+                  <span
+                    class="px-2 py-1 rounded-[4px]"
+                    [ngClass]="[statusColors(row, column.field).className]"
+                  >{{ statusColors(row, column.field).label }}</span>
+                }
+                @else if(column.datePipe) {
+                  {{ getNestedValue(row, column) | date: column.datePipe }}
+                }
+                @else {
+                  {{ getNestedValue(row, column) }}
+                }
+              </div>
+            </ng-container>
+          </ng-container>
+
+        </td>
+      </ng-container>
+    }
+
+    <ng-container matColumnDef="expand">
+      <th
+        class="!border-none"
+        mat-header-cell
+        *matHeaderCellDef
+      >&nbsp;</th>
+      <td
+        class="!border-[#EFF4F9]"
+        mat-cell *matCellDef="let row"
+      >
+        <button
+          mat-icon-button
+          aria-label="expand row"
+          (click)="toggle(row); $event.stopPropagation()"
+          class="cursor-pointer example-toggle-button"
+          [class.example-toggle-button-expanded]="isExpanded(row)"
+        >
+          <lucide-icon
+            class="mr-1"
+            name="chevron-down"
+          ></lucide-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="expandedDetail">
+      <td
+        mat-cell *matCellDef="let row"
+        [attr.colspan]="displayedColumns.length"
+      >
+        <div class="example-element-detail-wrapper"
+             [class.example-element-detail-wrapper-expanded]="isExpanded(row)">
+          <div class="example-element-detail">
+            <ng-container *ngTemplateOutlet="expandTemplate; context: { $implicit: row }"></ng-container>
+          </div>
+        </div>
+      </td>
+    </ng-container>
+
+    <tr
+      class="!bg-[#EFF4F9] !text-[#8B97A2] !rounded-t-xl"
+      mat-header-row
+      *matHeaderRowDef="displayedColumns"
+    ></tr>
+
+    <tr
+      mat-row
+      class="bg-white"
+      (click)="onClickRow(row)"
+      [class.example-expanded-row]="isExpanded(row)"
+      [ngClass]="{ '!bg-gray-200': row.selected  }"
+      *matRowDef="let row; columns: displayedColumns;"
+    ></tr>
+
+    <tr
+      mat-row
+      class="example-detail-row"
+      *matRowDef="let row; columns: ['expandedDetail']; when: isExpandedRow"
+    ></tr>
+  </table>
+</ng-template>

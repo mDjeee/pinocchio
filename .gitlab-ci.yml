@@ -1,0 +1,23 @@
+deploy_production:
+  stage: deploy
+  before_script:
+    - mkdir -p ~/.ssh
+    - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+    - ssh-keyscan -H "$SSH_HOST" >> ~/.ssh/known_hosts
+  script:
+    - |
+      ssh -T "$SSH_USER@$SSH_HOST" <<EOF
+        set -e
+        export NVM_DIR="\$HOME/.nvm"
+        [ -s "\$NVM_DIR/nvm.sh" ] && \. "\$NVM_DIR/nvm.sh"
+        nvm use --lts
+
+        cd "$SSH_TARGET_DIR"
+        git pull origin main
+        npm install --legacy-peer-deps
+        npm run build
+      EOF
+
+  tags:
+    - shell

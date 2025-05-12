@@ -1,0 +1,40 @@
+<div
+  class="h-10 py-2 flex items-center cursor-pointer group"
+  [routerLink]="route"
+  [queryParams]="query"
+>
+  <div class="w-[64px] flex justify-center items-center">
+    @if(lucideIcon) {
+      <lucide-icon
+        class="h-6 w-6 text-[#38AA3D] group-hover:text-green-500 cursor-pointer transition-colors"
+        [name]="lucideIcon"
+      ></lucide-icon>
+    }
+    @else if(svgName) {
+      <app-svg-icon
+        [iconName]="svgName"
+        className="h-6 w-6 text-[#38AA3D] group-hover:text-green-500 cursor-pointer transition-colors"
+      >
+      </app-svg-icon>
+    }
+  </div>
+
+  <div
+    *ngIf="isMenuOpen"
+    @slideInOut
+    class="relative flex-1 flex items-center"
+  >
+    <span
+      class="text-[14px] font-medium leading-[28px] select-none group-hover:underline"
+      [ngClass]="{ '!text-[#060563]': isActive }"
+    >{{ title }}</span>
+
+    @if(isActive) {
+      <span class="absolute w-[4px] h-8 right-0 bg-[#060563]
+      rounded-tl-[var(--border-radius-border-radius-xxlarge-24px,24px)]
+      rounded-tr-none rounded-br-none
+      rounded-bl-[var(--border-radius-border-radius-xxlarge-24px,24px)]">
+    </span>
+    }
+  </div>
+</div>

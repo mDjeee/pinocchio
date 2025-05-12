@@ -1,0 +1,82 @@
+<div class="flex justify-end items-center gap-5">
+  <div class="flex items-center h-[44px]">
+    <span class="text-[#8A97A4]">Всего: {{ totalItems }}</span>
+  </div>
+
+  <div class="flex gap-x-5 items-center page-select">
+    <mat-form-field
+      class="custom-gray-field"
+      appearance="outline" color="primary"
+    >
+      <mat-select
+        (valueChange)="perPage($event)"
+        [(value)]="selectedPageSize"
+        class="w-[130px]"
+      >
+        <mat-select-trigger>
+          <div class="text-sm">
+            @if(selectedPageSize !== totalItems) {
+              <span>Показать по {{ selectedPageSize }}</span>
+            } @else {
+              <span>Показать все</span>
+            }
+          </div>
+        </mat-select-trigger>
+
+        @for(pSize of pageSizes; track pSize) {
+          <mat-option [value]="pSize">{{ pSize }}</mat-option>
+        }
+        @if(includeAll) {
+          <mat-option [value]="totalItems">Все</mat-option>
+        }
+      </mat-select>
+
+
+      <lucide-icon
+        class="mr-1"
+        matSuffix
+        name="chevron-down"
+      ></lucide-icon>
+    </mat-form-field>
+  </div>
+
+  <div class="flex items-center h-[44px]">
+    <span class="text-[#8A97A4]">Страница {{ currentPage }} из {{ totalPages }}</span>
+  </div>
+
+  <div class="flex gap-x-[5px] h-[40px]">
+    <button
+      class="h-10 p-2.5 rounded-[5px] bg-[#EFF4F9] flex items-center justify-center"
+      [ngClass]="{ 'opacity-50': currentPage === 1 }"
+      [disabled]="currentPage === 1"
+      (click)="goToPage(currentPage - 1)"
+    >
+      <lucide-icon
+        name="chevron-left"
+      ></lucide-icon>
+    </button>
+
+    <input
+      matInput
+      type="number"
+      [min]="1"
+      [max]="totalPages"
+      [disabled]="totalPages === currentPage"
+      class="w-[56px] p-2.5 border text-center rounded-[5px] border-[#E4E4E4]"
+      [value]="currentPage"
+      (input)="enforceRange($event)"
+      (focusout)="goToPage($event)"
+    >
+
+    <button
+      class="h-10 p-2.5 rounded-[5px] bg-[#EFF4F9] flex items-center justify-center"
+      [ngClass]="{ 'opacity-50': currentPage === totalPages || totalPages === 0 }"
+      [disabled]="currentPage === totalPages || totalPages === 0"
+      (click)="goToPage(currentPage + 1)"
+    >
+      <lucide-icon
+        name="chevron-right"
+      ></lucide-icon>
+    </button>
+  </div>
+</div>

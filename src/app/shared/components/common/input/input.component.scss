@@ -1,0 +1,41 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+
+  .hint {
+    font-size: 0.875rem;
+  }
+
+  mat-form-field {
+    width: 100%;
+
+    // Custom styling for outlined form field
+    &.mat-form-field-appearance-outline {
+      .mat-form-field-outline {
+        background-color: white;
+        border-radius: 4px;
+      }
+    }
+
+    // Dynamic placeholder styling
+    .mat-input-element::placeholder {
+      // Inherit the input text color with 75% opacity
+      color: inherit;
+      opacity: 0.75;
+    }
+
+    // Ensure the placeholder inherits the same color as the input
+    .mat-input-element {
+      &, &::placeholder {
+        color: currentColor;
+      }
+    }
+  }
+}

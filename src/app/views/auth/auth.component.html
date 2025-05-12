@@ -1,0 +1,95 @@
+<div class="h-full w-full px-[150px] py-[100px] flex justify-between">
+  <form
+    class="max-w-[343px] h-full flex flex-col items-center justify-between gap-4"
+    (ngSubmit)="onSubmit()"
+    [formGroup]="form"
+  >
+    <div class="flex flex-col gap-y-[27px] text-[#D4E0FA] tracking-[0.38px]">
+      <div class="h-[193px] flex flex-col-reverse gap-y-2 text-center">
+        <span
+          class="text-[32px] leading-[38.4px]"
+        >Добро пожаловать!</span>
+        <span
+          class="text-[15px]"
+        >Войдите в свой аккаунт</span>
+      </div>
+
+      <app-input
+        label="Почта"
+        labelClass="text-[#D4E0FA]"
+        inputClass="!placeholder-[#2550AF] !text-[#D4E0FA]"
+        formControlName="email"
+        placeholder="Введите почту"
+        [prefix]="prefix"
+        [errorMessages]="{
+        required: 'Почта обязателен',
+        pattern: 'Введите валдиную почту'
+      }"
+      ></app-input>
+
+      <!-- Password Input -->
+      <app-input
+        label="Пароль"
+        labelClass="text-[#D4E0FA]"
+        inputClass="!placeholder-[#2550AF] !text-[#D4E0FA]"
+        formControlName="password"
+        placeholder="Введите пароль"
+        [prefix]="prefixPassword"
+        [suffix]="suffix"
+        [type]="hidePassword ? 'password' : 'text'"
+        [errorMessages]="{
+        required: 'Пароль обязателен',
+        minlength: 'Пароль должен быть не меньше 8 символов'
+      }"
+      >
+      </app-input>
+    </div>
+
+
+    <app-button
+      class="!w-full"
+      variant="primary"
+      size="lg"
+      shape="pill"
+      type="submit"
+      [fullWidth]="true"
+    >
+      Далее
+    </app-button>
+  </form>
+
+  <div class="flex flex-col text-white">
+    <img priority ngSrc="./assets/svg/logo.svg" alt="logo" width="224.57" height="48">
+    <span class="text-2xl uppercase text-end">ADMIN</span>
+  </div>
+</div>
+
+<ng-template #prefix>
+  <app-svg-icon
+    [iconName]="'sms'"
+    className="h-6 w-12 px-3 text-[#D4E0FA]"
+  >
+  </app-svg-icon>
+</ng-template>
+
+<ng-template #prefixPassword>
+  <app-svg-icon
+    [iconName]="'password-check'"
+    className="h-6 w-12 px-3 text-[#D4E0FA]"
+  >
+  </app-svg-icon>
+</ng-template>
+
+<ng-template #suffix>
+  <button
+    mat-icon-button
+    type="button"
+    (click)="togglePasswordVisibility()"
+    [attr.aria-label]="hidePassword ? 'Show password' : 'Hide password'"
+  >
+    <lucide-icon
+      class="text-[#D4E0FA]"
+      [name]="hidePassword ? 'eye' : 'eye-off'"
+    ></lucide-icon>
+  </button>
+</ng-template>

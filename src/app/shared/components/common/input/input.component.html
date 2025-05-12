@@ -1,0 +1,87 @@
+<div class="input-container">
+  @if(label) {
+    <div
+      [classList]="labelClass"
+      [ngClass]="{
+      'text-[13px] text-sm font-[300] leading-[15.6px]': true
+      }"
+    >{{ label }}</div>
+  }
+
+  @if(hint) {
+    <div class="hint">{{ hint }}</div>
+  }
+
+  <mat-form-field
+    appearance="outline"
+    [class]="formFieldClass"
+    class="custom_input [&_.mdc-text-field--focused]:shadow-[0_0_7.7px_0_#3466E9,0_4px_60px_0_rgba(229,236,255,0.6)]
+         [&_.mdc-text-field--invalid]:bg-red-500/50"
+  >
+
+    <!-- Prefix Content -->
+    @if(prefix) {
+      <span matPrefix>
+        <ng-container *ngTemplateOutlet="prefix"></ng-container>
+      </span>
+    }
+
+    @if(prefixIcon) {
+      <mat-icon matPrefix [class]="prefixIconClass">{{ prefixIcon }}</mat-icon>
+    }
+
+    @if(prefixLucidIcon) {
+      <span matPrefix>
+        <lucide-icon [name]="prefixLucidIcon" [class]="prefixIconClass"></lucide-icon>
+      </span>
+    }
+
+    <input
+      matInput
+      [classList]="inputClass"
+      [type]="type"
+      [placeholder]="placeholder"
+      [disabled]="disabled"
+      [readonly]="readonly"
+      [formControl]="control"
+      (blur)="_onBlur($event)"
+      (focus)="onFocus.emit($event)"
+    />
+
+    <!-- Suffix Content -->
+    @if(suffix) {
+      <span matSuffix>
+        <ng-container *ngTemplateOutlet="suffix"></ng-container>
+      </span>
+    }
+
+    @if(suffixIcon) {
+      <mat-icon matSuffix [class]="suffixIconClass">{{ suffixIcon }}</mat-icon>
+    }
+
+    @if(suffixLucidIcon) {
+      <lucide-icon
+        matSuffix
+        [name]="suffixLucidIcon"
+        [class]="suffixIconClass"
+      ></lucide-icon>
+    }
+
+    @if(clearable && control.value) {
+      <button matSuffix mat-icon-button (click)="clearInput()" type="button">
+        <lucide-icon
+          name="x"
+        ></lucide-icon>
+      </button>
+    }
+
+    <!-- Form field hints and errors -->
+    @if(hintText) {
+      <mat-hint>{{ hintText }}</mat-hint>
+    }
+
+    @if(showErrors && control.invalid && (control.touched || control.dirty)) {
+      <mat-error>{{ getErrorMessage() }}</mat-error>
+    }
+  </mat-form-field>
+</div>

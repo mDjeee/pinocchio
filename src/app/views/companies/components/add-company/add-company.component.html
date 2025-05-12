@@ -1,0 +1,134 @@
+<!-- company-create.component.html -->
+<div>
+  <!-- Header -->
+  <div class="mb-6">
+    <h2 class="text-2xl font-bold mb-1">
+      {{ isEditMode ? 'Редактирование' : 'Добавление новой' }} организации
+    </h2>
+    <p class="text-gray-600">Заполните все необходимые поля</p>
+  </div>
+
+  <!-- Form -->
+  <form [formGroup]="companyForm" (ngSubmit)="onSubmit()" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <!-- Column 1 -->
+    <div class="flex flex-col gap-y-5">
+      <!-- INN -->
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>ИНН</mat-label>
+        <input appDigitMask matInput formControlName="inn" required maxlength="9">
+        <mat-error *ngIf="f['inn'].hasError('required')">
+          Обязательное поле
+        </mat-error>
+        <mat-error *ngIf="f['inn'].hasError('pattern')">
+          Должно быть 9 цифр
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Name -->
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Название компании</mat-label>
+        <input matInput formControlName="name" required>
+        <mat-error *ngIf="f['name'].hasError('required')">
+          Обязательное поле
+        </mat-error>
+        <mat-error *ngIf="f['name'].hasError('maxlength')">
+          Максимум 100 символов
+        </mat-error>
+      </mat-form-field>
+
+      <!-- PINFL -->
+<!--      <mat-form-field appearance="outline" class="w-full">-->
+<!--        <mat-label>ПИНФЛ</mat-label>-->
+<!--        <input appDigitMask matInput formControlName="pinfl" maxlength="14">-->
+<!--        <mat-error *ngIf="f['pinfl'].hasError('pattern')">-->
+<!--          Должно быть 14 цифр-->
+<!--        </mat-error>-->
+<!--      </mat-form-field>-->
+
+      <!-- External Org ID -->
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Клиент Uid</mat-label>
+        <input matInput formControlName="client_uid">
+      </mat-form-field>
+    </div>
+
+    <!-- Column 2 -->
+    <div class="flex flex-col gap-y-5">
+      <!-- Type -->
+      <mat-form-field
+        appearance="outline"
+        class="w-full secondary"
+      >
+        <mat-label>Тип организации</mat-label>
+        <mat-select
+          formControlName="type"
+          required
+          [disabled]="true"
+        >
+          <mat-option value="distributor">Дистрибьютор</mat-option>
+          <mat-option value="dealer">Дилер</mat-option>
+        </mat-select>
+
+        <lucide-icon
+          class="mr-1"
+          matSuffix
+          name="chevron-down"
+        ></lucide-icon>
+
+        <mat-error *ngIf="f['type'].hasError('required')">
+          Обязательное поле
+        </mat-error>
+      </mat-form-field>
+
+      <!-- NBBD -->
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Код клиента</mat-label>
+        <input appDigitMask matInput formControlName="nibbd" maxlength="8">
+        <mat-error *ngIf="f['nibbd'].hasError('pattern')">
+          Должно быть 8 цифр
+        </mat-error>
+      </mat-form-field>
+
+      <!-- External Org ID -->
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Внешний ID организации</mat-label>
+        <input matInput formControlName="ext_org_id">
+
+        <mat-error *ngIf="f['ext_org_id'].hasError('required')">
+          Обязательное поле
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <!-- Address -->
+    <mat-form-field appearance="outline" class="w-full md:col-span-2">
+      <mat-label>Адрес</mat-label>
+      <textarea matInput formControlName="address" rows="3" required></textarea>
+      <mat-error *ngIf="f['address'].hasError('required')">
+        Обязательное поле
+      </mat-error>
+      <mat-error *ngIf="f['address'].hasError('maxlength')">
+        Максимум 200 символов
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Form Actions -->
+    <div class="flex justify-end gap-3 pt-4 md:col-span-2">
+      <button
+        type="button"
+        appLocationBack
+        class="px-4 py-2 text-sm font-medium text-white bg-gray-500 rounded-md hover:bg-gray-700 focus:outline-none"
+      >
+        Отмена
+      </button>
+
+      <button
+        type="submit"
+        [disabled]="companyForm.invalid"
+        class="px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-md hover:bg-green-700 focus:outline-none"
+      >
+        {{ isEditMode ? 'Редактировать компанию' : 'Создать компанию' }}
+      </button>
+    </div>
+  </form>
+</div>

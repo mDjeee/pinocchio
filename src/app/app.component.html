@@ -1,0 +1,7 @@
+@if(spinnerService.isLoading$ | async) {
+  <div class="spinner-container">
+    <mat-spinner diameter="60"></mat-spinner>
+  </div>
+}
+
+<router-outlet></router-outlet>

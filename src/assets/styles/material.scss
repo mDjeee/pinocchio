@@ -1,0 +1,71 @@
+@use '@angular/material' as mat;
+
+@include mat.core();
+
+html {
+  color-scheme: light;
+  @include mat.theme((
+    color: mat.$azure-palette,
+    typography: var(--app-font-family),
+    density: 0
+  ),
+  $overrides: (
+    "background": #f1f5f9,
+  ));
+}
+
+body.light {
+  color-scheme: light;
+  @include mat.theme((
+    color: mat.$azure-palette,
+    typography: var(--app-font-family),
+    density: 0
+  ),
+  $overrides: (
+    "background": #f1f5f9,
+  ));
+}
+
+body.dark {
+  color-scheme: dark;
+  @include mat.theme(
+      (
+        color: mat.$azure-palette,
+        typography: var(--app-font-family),
+        density: 0
+      ),
+    $overrides: (
+      "background": #24292e,
+    )
+  );
+}
+
+$compact-theme: mat.define-theme(
+    (
+      density: (
+        scale: -4,
+      )
+    )
+);
+
+//.mat-mdc-unelevated-button, .mat-mdc-unelevated-button .mdc-button__ripple {
+//  border-radius: 4px !important;
+//}
+
+.mat-mdc-select-arrow {
+  display: none !important;
+}
+
+.mat-mdc-card-header-text {
+  width: 100% !important;
+}
+
+:root {
+  @include mat.form-field-density($compact-theme);
+
+  //@include mat.badge-overrides((
+  //  background-color: var(--mat-sys-primary),
+  //  text-color: var(--mat-sys-on-primary),
+  //));
+}
+

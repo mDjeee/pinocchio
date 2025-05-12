@@ -1,0 +1,8 @@
+{
+  "/api": {
+    "target": "https://corp-audit-api.aab.uz",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  }
+}

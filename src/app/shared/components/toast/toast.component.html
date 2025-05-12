@@ -1,0 +1,13 @@
+<div class="toast p-2 pl-11 pr-4 flex justify-between items-center relative">
+  <span class="icon h-[73px] w-[36px] rounded-r-full absolute left-[-2px] top-1/2 translate-y-[-50%] flex items-center pr-1"></span>
+  <div class="!w-[230px]">
+    <p class="title text-base font-semibold leading-5 relative mb-1.5 text-black" [innerHTML]="title"></p>
+    <div class="text-sm message text-secondary leading-4" [innerHTML]="message"></div>
+  </div>
+
+  <lucide-icon
+    (click)="remove()"
+    [className]="'cursor-pointer hover:text-gray-600 absolute right-12 top-1 !text-secondary'"
+    name="x"
+  ></lucide-icon>
+</div>

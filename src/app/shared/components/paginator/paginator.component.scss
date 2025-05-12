@@ -1,0 +1,60 @@
+a {
+  user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
+
+  border-bottom: 4px;
+  font-size: 16px;
+
+  &:hover {
+    cursor: pointer !important;
+  }
+}
+
+.selected {
+  border-bottom: 4px solid #3D96FF;
+}
+
+::ng-deep .page-select .mat-mdc-form-field-infix {
+  width: 110px;
+  padding: 10px 0 !important;
+  height: 44px !important;
+}
+
+::ng-deep .mat-mdc-select-arrow-wrapper, ::ng-deep .mat-select-arrow { opacity: 0; display: none }
+
+::ng-deep .mat-mdc-select-arrow {
+  display: none;
+}
+
+::ng-deep .mat-mdc-form-field-type-mat-select:not(.mat-form-field-disabled) .mat-mdc-text-field-wrapper {
+  height: 44px;
+}
+
+::ng-deep .custom-gray-field {
+  --mdc-outlined-text-field-container-shape: 5px;
+  --mdc-dialog-container-shape: 5px;
+  --mat-bottom-sheet-container-shape: 5px;
+
+  /* Default state */
+  .mdc-notched-outline__leading,
+  .mdc-notched-outline__notch,
+  .mdc-notched-outline__trailing {
+    border-color: #D5D5D6 !important;
+  }
+
+  /* Hover state */
+  &:hover .mdc-notched-outline__leading,
+  &:hover .mdc-notched-outline__notch,
+  &:hover .mdc-notched-outline__trailing {
+    border-color: #D5D5D6 !important;
+  }
+
+  /* Focus state */
+  &.mat-mdc-form-field-focused .mdc-notched-outline__leading,
+  &.mat-mdc-form-field-focused .mdc-notched-outline__notch,
+  &.mat-mdc-form-field-focused .mdc-notched-outline__trailing {
+    border-color: #60A2F0 !important;
+  }
+}

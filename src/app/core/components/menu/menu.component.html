@@ -1,0 +1,36 @@
+<div
+  class="flex flex-col rounded-[10px] bg-white h-full transition-all duration-200"
+  [ngClass]="{
+  'w-[276px]': isMenuOpen,
+  'w-[64px]': !isMenuOpen,
+  }"
+>
+  <div
+    (click)="isMenuOpen = !isMenuOpen"
+    class="h-[44px] px-4 mt-4 pb-5 flex justify-center gap-x-2.5 border-b border-[#E5E7EB] cursor-pointer"
+  >
+    @if(isMenuOpen) {
+      <span
+        @slideInOut
+        class="flex-1 font-[600] leading-6 select-none hover:text-[#38AA3D]"
+      >Меню</span>
+    }
+
+    <app-svg-icon
+      [iconName]="isMenuOpen ? 'sidebar-left' : 'sidebar-right'"
+      className="h-6 w-6 text-[#38AA3D] hover:text-green-500 cursor-pointer transition-colors">
+    </app-svg-icon>
+  </div>
+
+  @for(menuItem of menuItems; track $index) {
+    <app-menu-item
+      [isMenuOpen]="isMenuOpen"
+      [route]="menuItem.route"
+      [svgName]="menuItem?.svgName"
+      [lucideIcon]="menuItem?.lucideIcon"
+      [title]="menuItem.title"
+      [query]="menuItem.query"
+      [compareQuery]="menuItem.compareQuery"
+    ></app-menu-item>
+  }
+</div>

@@ -1,0 +1,128 @@
+@use './app/shared/components/toast/toast.component' as toast;
+
+@use "./assets/styles/material" as mat;
+@use "./assets/styles/colors" as colors;
+@use "./assets/styles/tailwind" as tailwind;
+@use "./assets/styles/custom" as custom;
+
+@use "@angular/material/prebuilt-themes/azure-blue.css";
+
+@use './assets/fonts/fonts';
+
+:root {
+  //--mdc-outlined-button-container-shape: 5px;
+  //--mdc-protected-button-container-shape: 5px;
+  //--mdc-text-button-container-shape: 5px;
+  //
+  //--mat-expansion-container-shape: 4px;
+  //--mdc-elevated-card-container-shape: 4px;
+
+  --mdc-outlined-text-field-outline-color: #608DF0; /* var(--mat-sys-secondary-container); */
+
+  --mat-table-row-item-label-text-tracking: 0px;
+
+  --mdc-outlined-text-field-container-shape: 14px;
+  --mdc-dialog-container-shape: 14px;
+  --mat-bottom-sheet-container-shape: 14px;
+  --mat-bottom-sheet-container-background-color: var(--mat-sys-on-primary);
+
+  --mdc-dialog-container-color: #ffffff;
+
+  --app-font-family: 'SF Pro Display', sans-serif;
+}
+
+html, body { height: 100%; }
+body {
+  margin: 0;
+  font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: var(--mat-sys-on-primary);
+}
+
+* {
+  font-family: var(--app-font-family);
+}
+
+.custom-dialog .mat-mdc-dialog-container {
+  border-radius: 8px !important; // Reduce from default-layout 16px
+}
+
+.chat-dialog-container.cdk-overlay-backdrop {
+  display: none !important;
+}
+
+.mdc-data-table__cell, .mdc-data-table__header-cell {
+  padding: 0 8px !important;
+}
+
+mat-error {
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  right: 0;
+  height: 14px !important;
+  font-size: 11px;
+}
+
+.user-panel .mat-expansion-panel-body {
+  padding: 0 !important;;
+}
+
+
+.custom_input {
+  --mdc-outlined-text-field-hover-outline-color: #60A2F0;
+  .mat-mdc-text-field-wrapper {
+    border-radius: 14px !important;
+  }
+
+  .mdc-text-field--invalid {
+    background-color: #240A0A;
+  }
+}
+
+.mat-mdc-table {
+  --mat-table-background-color: white;
+}
+
+.mat-mdc-table tr.mat-mdc-row:hover { background-color: #f3f4f6; }
+
+.right-side-dialog .mat-mdc-dialog-container .mdc-dialog__surface, .right-side-dialog .mdc-dialog__container {
+  padding: 0 !important;
+}
+
+.right-side-dialog {
+  transition: width 0.5s;
+}
+
+.right-side-dialog {
+  transform: translateX(100%);
+  animation: slideIn 300ms ease-out forwards;
+}
+
+@keyframes slideIn {
+  to {
+    transform: translateX(0);
+  }
+}
+
+mat-form-field.secondary {
+  .mat-label {
+    color: #00000099;
+  }
+
+  .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-floating-label, .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-floating-label--float-above {
+    color: #00000099;
+  }
+
+  .mdc-notched-outline__leading, .mdc-notched-outline__notch, .mdc-notched-outline__trailing {
+    background-color: #EFF4F9;
+    border: none;
+  }
+
+  .mdc-text-field--outlined.mdc-text-field--disabled .mdc-text-field__input {
+    color: black;
+  }
+
+  .mat-mdc-form-field-infix {
+    z-index: 2 !important;
+  }
+}

@@ -1,0 +1,12 @@
+.spinner-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw; /* Full viewport width */
+  height: 100vh; /* Full viewport height */
+  display: flex;
+  align-items: center; /* Center vertically */
+  justify-content: center; /* Center horizontally */
+  background-color: rgba(255, 255, 255, 0.8); /* Optional semi-transparent background */
+  z-index: 10000; /* Ensure it stays above other elements */
+}

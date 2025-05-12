@@ -1,0 +1,90 @@
+<div class="flex flex-col gap-y-5 min-h-full">
+  <div class="flex justify-between items-center">
+    <div class="text-[#2B2D33] text-[22px] font-medium">{{ title }}</div>
+
+    <button
+      class="px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-md hover:bg-green-700 focus:outline-none"
+      [routerLink]="['/users/create']"
+    >
+      Добавить пользователя
+    </button>
+  </div>
+
+  <app-table
+    [numbering]="true"
+    [columns]="usersColumns"
+    [data]="users"
+    (rowClicked)="openDetails($event)"
+    [actionTemplate]="actionTemplate"
+  ></app-table>
+
+  <app-paginator
+    class="mt-auto"
+    [currentPage]="page"
+    [totalItems]="totalItems"
+    [itemsPerPage]="size"
+    (pageChange)="pageChange($event)"
+  ></app-paginator>
+</div>
+
+
+<ng-template #actionTemplate let-row>
+  <div
+    class="w-full h-full cursor-pointer flex items-center justify-center"
+    (click)="$event.stopPropagation()" [matMenuTriggerFor]="actionsPayments"
+  >
+    <app-svg-icon
+      [iconName]="'more'"
+      className="h-6 w-6 text-[#38AA3D] group-hover:text-green-500 cursor-pointer transition-colors"
+    ></app-svg-icon>
+  </div>
+  <mat-menu #actionsPayments="matMenu" xPosition="before" class="menu-actions">
+    <button
+      mat-menu-item
+      mat-dialog-close
+      [routerLink]="['/users', 'create']"
+      [queryParams]="{ id: row.id }"
+      queryParamsHandling="merge"
+    >
+      <div
+        class="w-full flex gap-x-2 items-center cursor-pointer"
+      >
+        <lucide-icon
+          [className]="'text-green-500'"
+          name="edit"
+        ></lucide-icon>
+        <div class="text-xs font-medium">Редактировать</div>
+      </div>
+    </button>
+
+    <button
+      mat-menu-item
+      (click)="deleteUser(row)"
+    >
+      <div
+        class="w-full flex gap-x-2 items-center cursor-pointer"
+      >
+        <lucide-icon
+          [className]="'text-red-500'"
+          name="trash"
+        ></lucide-icon>
+        <div class="text-xs font-medium">Удалить</div>
+      </div>
+    </button>
+
+    <button
+      mat-menu-item
+      (click)="attachUser(row)"
+    >
+      <div
+        class="w-full flex gap-x-2 items-center cursor-pointer"
+      >
+        <lucide-icon
+          [className]="'text-blue-500'"
+          name="user-round-plus"
+        ></lucide-icon>
+        <div class="text-xs font-medium">Прикрепить к компании</div>
+      </div>
+    </button>
+  </mat-menu>
+</ng-template>

@@ -1,0 +1,62 @@
+<div class="min-h-screen">
+  <div class="max-w-4xl mx-auto">
+    <!-- Header with back button -->
+    <div class="flex items-center justify-between mb-8">
+      <div class="flex items-center gap-x-2.5">
+        <button
+          appLocationBack
+          class="flex items-center text-green-600 hover:text-green-800 transition-colors"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+          </svg>
+        </button>
+
+        <h1 class="text-2xl font-medium text-gray-800">Детали администратора</h1>
+      </div>
+
+      <button
+        [routerLink]="['/admins', 'create']"
+        [queryParams]="{ id: admin?.id }"
+        queryParamsHandling="merge"
+        class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors flex items-center"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+          <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+        </svg>
+        Редактировать
+      </button>
+    </div>
+
+    <!-- Details Card -->
+    <div class="bg-gray-50 rounded-lg shadow-md overflow-hidden">
+      <div class="p-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Full Name -->
+          <div>
+            <h3 class="text-sm font-medium text-gray-500">Имя</h3>
+            <p class="mt-1 text-lg font-medium text-gray-900">{{ admin?.full_name || 'Not specified' }}</p>
+          </div>
+
+          <!-- Phone -->
+          <div>
+            <h3 class="text-sm font-medium text-gray-500">Телефон</h3>
+            <p class="mt-1 text-lg font-medium text-gray-900">{{ admin?.phone || 'Not specified' }}</p>
+          </div>
+
+          <!-- Email -->
+          <div>
+            <h3 class="text-sm font-medium text-gray-500">Почта</h3>
+            <p class="mt-1 text-lg font-medium text-gray-900">{{ admin?.email || 'Not specified' }}</p>
+          </div>
+
+          <!-- Password (hidden for security) -->
+          <div>
+            <h3 class="text-sm font-medium text-gray-500">Пароль</h3>
+            <p class="mt-1 text-lg font-medium text-gray-900">••••••</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

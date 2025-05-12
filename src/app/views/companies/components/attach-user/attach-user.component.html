@@ -1,0 +1,99 @@
+<div>
+  <!-- Header -->
+  <div class="mb-6">
+    <h2 class="text-2xl font-bold mb-1">Создание нового пользователя для {{ orgDetail?.name }}</h2>
+    <p class="text-gray-600">Заполните все необходимые поля</p>
+  </div>
+
+  <!-- Form -->
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <!-- Column 1 -->
+
+    <!-- Full Name -->
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>ФИО</mat-label>
+      <input matInput formControlName="full_name" required>
+      <mat-error *ngIf="f['full_name'].hasError('required')">
+        Обязательное поле
+      </mat-error>
+      <mat-error *ngIf="f['full_name'].hasError('maxlength')">
+        Максимум 100 символов
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Phone -->
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Телефон</mat-label>
+      <input matInput formControlName="phone" required maxlength="12">
+      <mat-error *ngIf="f['phone'].hasError('required')">
+        Обязательное поле
+      </mat-error>
+      <mat-error *ngIf="f['phone'].hasError('pattern')">
+        Введите корректный номер телефона
+      </mat-error>
+    </mat-form-field>
+
+
+    <!-- Password -->
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Пароль</mat-label>
+      <input matInput formControlName="password" [type]="hidePassword ? 'password' : 'text'" required>
+      <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword">
+        <lucide-icon
+          class="text-[#1A1B1F]"
+          [name]="hidePassword ? 'eye' : 'eye-off'"
+        ></lucide-icon>
+      </button>
+      <mat-error *ngIf="f['password'].hasError('required')">
+        Обязательное поле
+      </mat-error>
+      <mat-error *ngIf="f['password'].hasError('minlength')">
+        Минимум 8 символов
+      </mat-error>
+    </mat-form-field>
+
+<!--    <div class="flex flex-col gap-y-5">-->
+<!--      -->
+<!--    </div>-->
+
+    <!-- Column 2 -->
+<!--    <div class="flex flex-col gap-y-5">-->
+      <!-- INN -->
+<!--      <mat-form-field appearance="outline" class="w-full">-->
+<!--        <mat-label>ИНН</mat-label>-->
+<!--        <input appDigitMask matInput formControlName="inn" maxlength="9">-->
+<!--        <mat-error *ngIf="f['inn'].hasError('pattern')">-->
+<!--          Должно быть 9 цифр-->
+<!--        </mat-error>-->
+<!--      </mat-form-field>-->
+
+<!--      &lt;!&ndash; PINFL &ndash;&gt;-->
+<!--      <mat-form-field appearance="outline" class="w-full">-->
+<!--        <mat-label>ПИНФЛ</mat-label>-->
+<!--        <input appDigitMask matInput formControlName="pinfl" maxlength="14">-->
+<!--        <mat-error *ngIf="f['pinfl'].hasError('pattern')">-->
+<!--          Должно быть 14 цифр-->
+<!--        </mat-error>-->
+<!--      </mat-form-field>-->
+<!--    </div>-->
+
+    <!-- Form Actions -->
+    <div class="flex justify-end gap-3 pt-4 md:col-span-2">
+      <button
+        type="button"
+        appLocationBack
+        class="px-4 py-2 text-sm font-medium text-white bg-gray-500 rounded-md hover:bg-gray-700 focus:outline-none"
+      >
+        Отмена
+      </button>
+
+      <button
+        type="submit"
+        [disabled]="userForm.invalid"
+        class="px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-md hover:bg-green-700 focus:outline-none"
+      >
+        Создать пользователя
+      </button>
+    </div>
+  </form>
+</div>

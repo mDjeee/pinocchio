@@ -1,0 +1,127 @@
+<div class="flex flex-col gap-y-5 p-6 max-w-2xl">
+  <!-- Header -->
+  <div class="border-b pb-3 flex justify-between">
+    <div>
+      <h2 class="text-2xl font-bold text-gray-800">Информация о пользователе</h2>
+      <p class="text-gray-500">Детальные данные пользователя</p>
+    </div>
+
+    <lucide-icon
+      [className]="'cursor-pointer hover:text-gray-600'"
+      mat-dialog-close
+      name="x"
+    ></lucide-icon>
+  </div>
+
+  <!-- User Info -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <!-- Column 1 -->
+    <div class="space-y-4">
+      <div>
+        <p class="text-sm font-medium text-gray-500">ФИО</p>
+        <p class="text-gray-800">{{user.full_name}}</p>
+      </div>
+
+      <div>
+        <p class="text-sm font-medium text-gray-500">Телефон</p>
+        <p class="text-gray-800">{{user.phone | phoneFormat}}</p>
+      </div>
+    </div>
+
+    <!-- Column 2 -->
+    <div class="space-y-4">
+
+      <div>
+        <p class="text-sm font-medium text-gray-500">Дата создания</p>
+        <p class="text-gray-800">{{user.created_at | date:'dd.MM.yyyy HH:mm'}}</p>
+      </div>
+
+      <div>
+        <p class="text-sm font-medium text-gray-500">Дата обновления</p>
+        <p class="text-gray-800">{{user.updated_at | date:'dd.MM.yyyy HH:mm'}}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex flex-col gap-y-5">
+    <div class="text-lg text-gray-500 font-medium">Прикреплённые компании</div>
+
+    <app-table
+      [numbering]="true"
+      [columns]="companiesColumns"
+      [data]="organizations"
+      (rowClicked)="openDetails($event)"
+      [actionTemplate]="actionTemplate"
+      [additionalTemplate]="additionalTemplate"
+    ></app-table>
+  </div>
+
+  <!-- Footer Buttons -->
+  <div class="flex justify-end space-x-3 pt-4 border-t">
+    <button
+      [routerLink]="['/users', 'create']"
+      [queryParams]="{ id: user.id }"
+      queryParamsHandling="merge"
+      mat-dialog-close
+      class="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none"
+      >
+      Редактировать
+    </button>
+  </div>
+</div>
+
+<ng-template #additionalTemplate let-row>
+  <div class="w-full h-full flex items-center justify-between">
+    {{ row.type === 'distributor' ? 'Дистрибьютор' : 'Дилер' }}
+  </div>
+</ng-template>
+
+<ng-template #actionTemplate let-row>
+  <div
+    class="w-full h-full cursor-pointer flex items-center justify-center"
+    (click)="$event.stopPropagation()" [matMenuTriggerFor]="actionsPayments"
+  >
+    <app-svg-icon
+      [iconName]="'more'"
+      className="h-6 w-6 text-[#38AA3D] group-hover:text-green-500 cursor-pointer transition-colors"
+    ></app-svg-icon>
+  </div>
+  <mat-menu #actionsPayments="matMenu" xPosition="before" class="menu-actions">
+    <button
+      mat-menu-item
+      mat-dialog-close
+      [routerLink]="['/companies', row.id]"
+      [queryParams]="{
+      inn: row.inn,
+      type: row.type
+      }"
+      queryParamsHandling="merge"
+    >
+      <div
+        class="w-full flex gap-x-2 items-center cursor-pointer"
+      >
+
+        <lucide-icon
+          [className]="'text-blue-500'"
+          name="info"
+        ></lucide-icon>
+        <div class="text-xs font-medium">Детали</div>
+      </div>
+    </button>
+
+    <button
+      mat-menu-item
+      (click)="detachUser(row)"
+    >
+      <div
+        class="w-full flex gap-x-2 items-center cursor-pointer"
+      >
+        <lucide-icon
+          [className]="'text-red-500'"
+          name="user-round-minus"
+        ></lucide-icon>
+        <div class="text-xs font-medium">Открепить</div>
+      </div>
+    </button>
+  </mat-menu>
+</ng-template>
