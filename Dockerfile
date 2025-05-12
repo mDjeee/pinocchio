@@ -10,7 +10,7 @@ RUN npm run build
 FROM 172.20.2.20:5050/frontend/images:nginx-alpine
 COPY --from=node /app/dist/pinocchio/browser /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/conf.d/default.conf
-EXPOSE 80
+EXPOSE 4200
 
 #dev
 #docker build -t 10.226.99.100:5050/uz.tenge.tune/tune_root/tengefront:latest .

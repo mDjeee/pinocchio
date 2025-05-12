@@ -3,7 +3,7 @@ services:
     image: 172.20.2.20:5050/frontend/pinocchio:latest
     container_name: pinocchio
     ports:
-      - 81:80
+      - 4200:4200
     restart: always
     networks:
       - yurik
