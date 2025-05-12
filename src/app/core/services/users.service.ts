@@ -17,7 +17,7 @@ export class UsersService {
   }
 
   getUsers() {
-    const url = `${this.apiUrl}/api/admin/users`;
+    const url = `${this.apiUrl}/api/v1/user/all`;
     return this.http.get(url);
   }
 

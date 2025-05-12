@@ -7,18 +7,18 @@
 >
   <div
     (click)="isMenuOpen = !isMenuOpen"
-    class="h-[44px] px-4 mt-4 pb-5 flex justify-center gap-x-2.5 border-b border-[#E5E7EB] cursor-pointer"
+    class="h-[44px] px-4 mt-4 pb-5 flex justify-center gap-x-2.5 border-b border-[#E5E7EB] cursor-pointer group"
   >
     @if(isMenuOpen) {
       <span
         @slideInOut
-        class="flex-1 font-[600] leading-6 select-none hover:text-[#38AA3D]"
+        class="flex-1 font-[600] leading-6 select-none text-primary group-hover:text-highlight"
       >Меню</span>
     }
 
     <app-svg-icon
       [iconName]="isMenuOpen ? 'sidebar-left' : 'sidebar-right'"
-      className="h-6 w-6 text-[#38AA3D] hover:text-green-500 cursor-pointer transition-colors">
+      className="h-6 w-6 text-primary group-hover:text-highlight cursor-pointer transition-colors">
     </app-svg-icon>
   </div>
 

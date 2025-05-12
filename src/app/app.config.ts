@@ -41,7 +41,7 @@ import {
   Edit,
   Info,
   Pencil,
-  UserRoundPlus,
+  UserRoundPlus, Building2,
 } from 'lucide-angular';
 
 registerLocaleData(localeRu);
@@ -90,6 +90,7 @@ export const appConfig: ApplicationConfig = {
         Info,
         Pencil,
         UserRoundPlus,
+        Building2,
       })
     )
   ]

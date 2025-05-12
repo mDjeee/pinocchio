@@ -3,8 +3,9 @@ module.exports = {
   content: ["./src/**/*.{html,ts,css,scss}"], // Update paths to your project files
   theme: {
     colors: {
-      primary: "var(--mat-sys-primary)",
-      secondary: "var(--mat-sys-secondary)",
+      primary: "var(--primary)",
+      secondary: "var(--secondary)",
+      highlight: "var(--highlight)",
       tertiary: "var(--mat-sys-tertiary)",
       background: "var(--mat-sys-background)",
       surface: "var(--mat-sys-surface)",
@@ -296,6 +297,9 @@ module.exports = {
       "white": "var(--color-white)"
     },
     extend: {
+      fontFamily: {
+        montserrat: ['Montserrat', 'sans-serif'],
+      },
       animation: {
         'skeleton': 'pulse 1.5s ease-in-out infinite',
       },

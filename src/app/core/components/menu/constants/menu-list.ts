@@ -3,9 +3,8 @@ import { IMenu } from '../menu.component';
 export const menuList: IMenu[] = [
   {
     title: 'Компании',
-    svgName: 'buildings',
+    lucideIcon: 'building-2',
     route: '/companies',
-    compareQuery: true,
   },
   {
     title: 'Администраторы',
