@@ -12,18 +12,6 @@
   <form [formGroup]="companyForm" (ngSubmit)="onSubmit()" class="grid grid-cols-1 md:grid-cols-2 gap-6">
     <!-- Column 1 -->
     <div class="flex flex-col gap-y-5">
-      <!-- INN -->
-      <mat-form-field appearance="outline" class="w-full">
-        <mat-label>ИНН</mat-label>
-        <input appDigitMask matInput formControlName="inn" required maxlength="9">
-        <mat-error *ngIf="f['inn'].hasError('required')">
-          Обязательное поле
-        </mat-error>
-        <mat-error *ngIf="f['inn'].hasError('pattern')">
-          Должно быть 9 цифр
-        </mat-error>
-      </mat-form-field>
-
       <!-- Name -->
       <mat-form-field appearance="outline" class="w-full">
         <mat-label>Название компании</mat-label>
@@ -36,66 +24,37 @@
         </mat-error>
       </mat-form-field>
 
-      <!-- PINFL -->
-<!--      <mat-form-field appearance="outline" class="w-full">-->
-<!--        <mat-label>ПИНФЛ</mat-label>-->
-<!--        <input appDigitMask matInput formControlName="pinfl" maxlength="14">-->
-<!--        <mat-error *ngIf="f['pinfl'].hasError('pattern')">-->
-<!--          Должно быть 14 цифр-->
-<!--        </mat-error>-->
-<!--      </mat-form-field>-->
-
-      <!-- External Org ID -->
+      <!-- Phone Number -->
       <mat-form-field appearance="outline" class="w-full">
-        <mat-label>Клиент Uid</mat-label>
-        <input matInput formControlName="client_uid">
+        <mat-label>Номер телефона</mat-label>
+        <input
+          matInput
+          formControlName="phoneNumber"
+          required
+          maxlength="12"
+          appDigitMask
+          placeholder="998 __ ___ __ __"
+        >
+        <mat-error *ngIf="f['phoneNumber'].hasError('required')">
+          Обязательное поле
+        </mat-error>
+        <mat-error *ngIf="f['phoneNumber'].hasError('invalidPhoneNumber')">
+          Введите корректный номер телефона
+        </mat-error>
       </mat-form-field>
     </div>
 
     <!-- Column 2 -->
     <div class="flex flex-col gap-y-5">
-      <!-- Type -->
-      <mat-form-field
-        appearance="outline"
-        class="w-full secondary"
-      >
-        <mat-label>Тип организации</mat-label>
-        <mat-select
-          formControlName="type"
-          required
-          [disabled]="true"
-        >
-          <mat-option value="distributor">Дистрибьютор</mat-option>
-          <mat-option value="dealer">Дилер</mat-option>
-        </mat-select>
-
-        <lucide-icon
-          class="mr-1"
-          matSuffix
-          name="chevron-down"
-        ></lucide-icon>
-
-        <mat-error *ngIf="f['type'].hasError('required')">
+      <!-- Email -->
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" type="email" required>
+        <mat-error *ngIf="f['email'].hasError('required')">
           Обязательное поле
         </mat-error>
-      </mat-form-field>
-
-      <!-- NBBD -->
-      <mat-form-field appearance="outline" class="w-full">
-        <mat-label>Код клиента</mat-label>
-        <input appDigitMask matInput formControlName="nibbd" maxlength="8">
-        <mat-error *ngIf="f['nibbd'].hasError('pattern')">
-          Должно быть 8 цифр
-        </mat-error>
-      </mat-form-field>
-
-      <!-- External Org ID -->
-      <mat-form-field appearance="outline" class="w-full">
-        <mat-label>Внешний ID организации</mat-label>
-        <input matInput formControlName="ext_org_id">
-
-        <mat-error *ngIf="f['ext_org_id'].hasError('required')">
-          Обязательное поле
+        <mat-error *ngIf="f['email'].hasError('invalidEmail')">
+          Введите корректный email
         </mat-error>
       </mat-form-field>
     </div>
