@@ -1,15 +1,23 @@
+version: "3.8"
+
 services:
   pinocchio:
     container_name: pinocchio
     build:
       context: .
       dockerfile: Dockerfile
-    image: pinocchio:latest
     ports:
-      - 4200:80
-    restart: unless-stopped
-    networks:
-      - pinocchio
-networks:
-  pinocchio:
-    external: true
+      - "4200:80"
+    restart: always
+    depends_on:
+      - nginx
+
+  nginx:
+    image: nginx:alpine
+    container_name: nginx
+    ports:
+      - "8080:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./dist:/usr/share/nginx/html:ro
+    restart: always
