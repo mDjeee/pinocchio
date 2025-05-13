@@ -5,6 +5,7 @@ import { usersRoutes } from '../views/users/users.routes';
 import { RedirectGuard } from '../core/guards/redirect.guard';
 import { tariffRoutes } from '../views/tariff/tariff.routes';
 import { clientRoutes } from '../views/client/client.routes';
+import { roleRoutes } from '../views/role/role.routes';
 
 export const viewRoutes: Routes = [
   {
@@ -17,6 +18,7 @@ export const viewRoutes: Routes = [
   ...usersRoutes,
   ...tariffRoutes,
   ...clientRoutes,
+  ...roleRoutes,
   {
     path: '**',
     loadComponent: () => import('../views/not-found-page/not-found-page.component')

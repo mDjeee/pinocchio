@@ -1,6 +1,6 @@
 <div class="">
   <h2 class="text-2xl font-bold text-gray-800 mb-6">
-    {{ isEditMode ? 'Обновить тарифф' : 'Создать новы тарифф' }}
+    {{ isEditMode ? 'Обновить тарифф' : 'Создать новый тарифф' }}
   </h2>
 
   <!-- Error Message -->
@@ -39,7 +39,10 @@
           formControlName="price"
           required
         >
-        <span matPrefix>$&nbsp;</span>
+        <span
+          matSuffix
+          class="px-1"
+        >UZS</span>
         <mat-error *ngIf="f['price'].hasError('required')">
           Обязательное поле
         </mat-error>

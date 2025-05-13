@@ -4,16 +4,16 @@
 
     <button
       class="px-4 py-2 text-sm font-medium text-white bg-green-500 rounded-md hover:bg-green-600 focus:outline-none"
-      [routerLink]="['/tariff/add']"
+      [routerLink]="['/role/add']"
     >
-      Добавить клиента
+      Добавить роль
     </button>
   </div>
 
   <app-table
     [numbering]="true"
-    [columns]="clientColumn"
-    [data]="clients"
+    [columns]="roleColumn"
+    [data]="roles"
     [actionTemplate]="actionTemplate"
     [additionalTemplate]="additionalTemplate"
   ></app-table>
@@ -43,7 +43,6 @@
       name="ellipsis"
     ></lucide-icon>
   </div>
-
   <mat-menu #actionsPayments="matMenu" xPosition="before" class="menu-actions">
     <button
       mat-menu-item
@@ -53,6 +52,7 @@
       <div
         class="w-full flex gap-x-2 items-center cursor-pointer"
       >
+
         <lucide-icon
           [className]="'text-blue-500'"
           name="info"
@@ -63,7 +63,7 @@
 
     <button
       mat-menu-item
-      [routerLink]="['/tariff', 'add']"
+      [routerLink]="['/role', 'add']"
       [queryParams]="{ id: row.id }"
       queryParamsHandling="merge"
     >

@@ -42,7 +42,7 @@ import {
   Edit,
   Info,
   Pencil,
-  UserRoundPlus, Building2, Ellipsis, Banknote,
+  UserRoundPlus, Building2, Ellipsis, Banknote, ShieldCheck,
 } from 'lucide-angular';
 
 registerLocaleData(localeRu);
@@ -95,6 +95,7 @@ export const appConfig: ApplicationConfig = {
         Building2,
         Ellipsis,
         Banknote,
+        ShieldCheck,
       })
     )
   ]

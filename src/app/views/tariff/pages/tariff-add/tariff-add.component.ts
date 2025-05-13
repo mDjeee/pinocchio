@@ -5,7 +5,7 @@ import { TariffService } from '../../../../core/services/tariff.service';
 import { LocationBackDirective } from '../../../../shared/directives/location-back.directive';
 import { NgIf } from '@angular/common';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
-import { MatError, MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatError, MatFormField, MatLabel, MatSuffix } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
 
@@ -20,7 +20,8 @@ import { MatSlideToggle } from '@angular/material/slide-toggle';
     MatFormField,
     MatLabel,
     MatInput,
-    MatSlideToggle
+    MatSlideToggle,
+    MatSuffix
   ],
   standalone: true,
   templateUrl: './tariff-add.component.html',
@@ -43,7 +44,7 @@ export class TariffAddComponent implements OnInit {
     this.tariffForm = this.fb.group({
       name: ['', [Validators.required, Validators.maxLength(100)]],
       price: [0, [Validators.required, Validators.min(0)]],
-      description: ['', Validators.maxLength(500)],
+      description: ['', Validators.maxLength(200)],
       isActive: [true],
       periodMonth: [1, [Validators.required, Validators.min(1)]]
     });
@@ -103,9 +104,4 @@ export class TariffAddComponent implements OnInit {
   get f() {
     return this.tariffForm.controls;
   }
-
-  get name() { return this.tariffForm.get('name'); }
-  get price() { return this.tariffForm.get('price'); }
-  get description() { return this.tariffForm.get('description'); }
-  get periodMonth() { return this.tariffForm.get('periodMonth'); }
 }
