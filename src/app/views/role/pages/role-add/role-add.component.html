@@ -1,1 +1,63 @@
-<p>role-add works!</p>
+<div class="">
+  <h2 class="text-2xl font-bold text-gray-800 mb-6">
+    {{ isEditMode ? 'Обновить роль' : 'Создать новую роль' }}
+  </h2>
+
+  <div *ngIf="errorMessage" class="mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
+    {{ errorMessage }}
+  </div>
+
+  <form [formGroup]="roleForm" (ngSubmit)="onSubmit()" class="space-y-4">
+    <!-- Name -->
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Наименование</mat-label>
+      <input
+        matInput
+        type="text"
+        formControlName="name"
+        required
+      />
+      <mat-error *ngIf="f['name'].hasError('required')">Обязательное поле</mat-error>
+      <mat-error *ngIf="f['name'].hasError('maxlength')">Максимум 100 символов</mat-error>
+    </mat-form-field>
+
+    <!-- Type -->
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Тип роли</mat-label>
+      <mat-select formControlName="type" required>
+        <mat-option *ngFor="let type of roleTypes" [value]="type">
+          {{ type }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="f['type'].hasError('required')">Обязательное поле</mat-error>
+
+      <lucide-icon
+        class="mx-2"
+        matSuffix
+        name="chevron-down"
+        ></lucide-icon>
+    </mat-form-field>
+
+    <!-- Actions -->
+    <div class="flex justify-end space-x-3 pt-4">
+      <button
+        type="button"
+        appLocationBack
+        class="px-4 py-2 text-sm font-medium text-white bg-gray-500 rounded-md hover:bg-gray-700 focus:outline-none"
+      >
+        Назад
+      </button>
+      <button
+        type="submit"
+        [disabled]="isLoading || roleForm.invalid"
+        class="px-4 py-2 text-sm font-medium text-white bg-green-500 rounded-md hover:bg-green-700 focus:outline-none"
+      >
+        <span *ngIf="!isLoading">{{ isEditMode ? 'Обновить' : 'Создать' }}</span>
+        <span *ngIf="isLoading" class="flex items-center">
+          <mat-spinner diameter="20" class="mr-2"></mat-spinner>
+          В процессе...
+        </span>
+      </button>
+    </div>
+  </form>
+</div>

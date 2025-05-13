@@ -12,6 +12,8 @@ import { MatMenu, MatMenuItem, MatMenuTrigger } from '@angular/material/menu';
 import { PaginatorComponent } from '../../../../shared/components/paginator/paginator.component';
 import { TableComponent } from '../../../../shared/components/table/table.component';
 import { tariffColumn } from '../../constants/tariff-column';
+import { Role } from '../../../../shared/interfaces/role.interface';
+import { AgreeModalComponent } from '../../../../shared/components/modal/agree-modal/agree-modal.component';
 
 @Component({
   selector: 'app-tariff-list',
@@ -68,7 +70,36 @@ export class TariffListComponent implements OnInit {
   }
 
   deleteTariff(tariff: Tariff) {
+    const dialogRef = this.matDialog.open(AgreeModalComponent, {
+      data: {
+        title: `Вы точно хотите удалить тариф ${tariff.name || ''}?`,
+        confirm: 'Да',
+        cancel: 'Нет'
+      },
+      width: '400px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'confirm') {
+        this.delete(tariff);
+      } else {
+        // User cancelled
+      }
+    });
+  }
+
+  delete(tariff: Tariff) {
     this.tariffService.deleteTariff(tariff.id)
+      .pipe(takeUntilDestroyed(this.destryoRef))
+      .subscribe({
+        next: (res: any) => {
+          this.toastrService.success('Тариф успешно удалён');
+          this.getTariffs();
+        },
+        error: (err: any) => {
+          this.toastrService.error(err.message);
+        }
+      });
   }
 
   protected readonly tariffColumn = tariffColumn;

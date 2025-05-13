@@ -11,6 +11,7 @@ import { TableComponent } from '../../../../shared/components/table/table.compon
 import { roleColumn } from '../../constants/role-colmun';
 import { RoleService } from '../../../../core/services/role.service';
 import { Role } from '../../../../shared/interfaces/role.interface';
+import { AgreeModalComponent } from '../../../../shared/components/modal/agree-modal/agree-modal.component';
 
 @Component({
   selector: 'app-role-list',
@@ -44,10 +45,10 @@ export class RoleListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getTariffs()
+    this.getRoles()
   }
 
-  getTariffs() {
+  getRoles() {
     this.roleService.getRoles()
       .pipe(takeUntilDestroyed(this.destryoRef))
       .subscribe({
@@ -63,11 +64,40 @@ export class RoleListComponent implements OnInit {
   pageChange(event: any) {
     this.page = event.page;
     this.size = event.size;
-    this.getTariffs();
+    this.getRoles();
   }
 
-  deleteTariff(tariff: Tariff) {
-    this.roleService.deleteRole(tariff.id)
+  deleteRole(role: Role) {
+    const dialogRef = this.matDialog.open(AgreeModalComponent, {
+      data: {
+        title: `Вы точно хотите удалить роль ${role.name || ''}?`,
+        confirm: 'Да',
+        cancel: 'Нет'
+      },
+      width: '400px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'confirm') {
+        this.delete(role);
+      } else {
+        // User cancelled
+      }
+    });
+  }
+
+  delete(role: Role) {
+    this.roleService.deleteRole(role.id)
+      .pipe(takeUntilDestroyed(this.destryoRef))
+      .subscribe({
+        next: (res: any) => {
+          this.toastrService.success('Роль успешно удалён');
+          this.getRoles();
+        },
+        error: (err: any) => {
+          this.toastrService.error(err.message);
+        }
+      });
   }
 
   protected readonly roleColumn = roleColumn;

@@ -86,7 +86,7 @@ export class TariffAddComponent implements OnInit {
 
     operation.subscribe({
       next: () => {
-        this.router.navigate(['/tariffs']);
+        this.router.navigate(['/tariff']);
       },
       error: (err) => {
         this.errorMessage = 'Failed to save tariff';

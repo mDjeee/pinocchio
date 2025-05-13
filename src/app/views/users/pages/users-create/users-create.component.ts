@@ -13,7 +13,7 @@ import { MatIconButton } from '@angular/material/button';
 import { MatInput } from '@angular/material/input';
 import { MatOption } from '@angular/material/core';
 import { MatSelect } from '@angular/material/select';
-import { NgIf } from '@angular/common';
+import { NgClass, NgIf } from '@angular/common';
 import { User } from '../../../../shared/interfaces/user.interface';
 import { ValidationService } from '../../../../core/services/validation.service';
 import { DigitMaskDirective } from '../../../../shared/directives/digit-mask.directive';
@@ -34,7 +34,8 @@ import { DigitMaskDirective } from '../../../../shared/directives/digit-mask.dir
     MatSuffix,
     NgIf,
     ReactiveFormsModule,
-    DigitMaskDirective
+    DigitMaskDirective,
+    NgClass
   ],
   standalone: true,
   templateUrl: './users-create.component.html',
@@ -65,7 +66,7 @@ export class UsersCreateComponent implements OnInit {
       lastName: ['', [Validators.required, Validators.maxLength(100)]],
       phoneNumber: ['', [Validators.required, this.validationService.validateUzPhoneNumber]],
       email: ['', [Validators.required, this.validationService.validateEmail]],
-      password: ['', [Validators.required, Validators.minLength(8)]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
 

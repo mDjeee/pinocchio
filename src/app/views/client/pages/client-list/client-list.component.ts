@@ -10,6 +10,9 @@ import { ToastrService } from 'ngx-toastr';
 import { MatDialog } from '@angular/material/dialog';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { clientColumn } from '../../constants/client-column';
+import { Role } from '../../../../shared/interfaces/role.interface';
+import { AgreeModalComponent } from '../../../../shared/components/modal/agree-modal/agree-modal.component';
+import { Client } from '../../../../shared/interfaces/client.interface';
 
 @Component({
   selector: 'app-client-list',
@@ -35,7 +38,7 @@ export class ClientListComponent implements OnInit {
 
   constructor(
     private destryoRef: DestroyRef,
-    private cleintService: ClientService,
+    private clientService: ClientService,
     private toastrService: ToastrService,
     private matDialog: MatDialog,
     private activatedRoute: ActivatedRoute,
@@ -47,7 +50,7 @@ export class ClientListComponent implements OnInit {
   }
 
   getClients() {
-    this.cleintService.getClients()
+    this.clientService.getClients()
       .pipe(takeUntilDestroyed(this.destryoRef))
       .subscribe({
         next: (res: any) => {
@@ -64,8 +67,37 @@ export class ClientListComponent implements OnInit {
     this.getClients();
   }
 
-  deleteClients(tariff: Tariff) {
-    this.cleintService.deleteClient(tariff.id)
+  deleteClient(client: Client) {
+    const dialogRef = this.matDialog.open(AgreeModalComponent, {
+      data: {
+        title: `Вы точно хотите удалить клиента ${client.id || ''}?`,
+        confirm: 'Да',
+        cancel: 'Нет'
+      },
+      width: '400px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'confirm') {
+        this.delete(client);
+      } else {
+        // User cancelled
+      }
+    });
+  }
+
+  delete(client: Client) {
+    this.clientService.deleteClient(client.id)
+      .pipe(takeUntilDestroyed(this.destryoRef))
+      .subscribe({
+        next: (res: any) => {
+          this.toastrService.success('Клиент успешно удалён');
+          this.getClients();
+        },
+        error: (err: any) => {
+          this.toastrService.error(err.message);
+        }
+      });
   }
 
   protected readonly clientColumn = clientColumn;

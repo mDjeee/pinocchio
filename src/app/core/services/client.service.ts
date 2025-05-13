@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { CreateClient, Client } from '../../shared/interfaces/Client.interface';
+import { Client, CreateClient } from '../../shared/interfaces/client.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -26,14 +26,14 @@ export class ClientService {
     return this.http.get<Client>(url);
   }
 
-  createClient(Client: CreateClient): Observable<Client> {
+  createClient(client: CreateClient): Observable<Client> {
     const url = `${this.apiUrl}/api/v1/client/add`;
-    return this.http.post<Client>(url, Client);
+    return this.http.post<Client>(url, client);
   }
 
-  updateClient(id: string, Client: Client): Observable<Client> {
+  updateClient(id: string, client: Client): Observable<Client> {
     const url = `${this.apiUrl}/api/v1/client/edit/${id}`;
-    return this.http.put<Client>(url, Client);
+    return this.http.put<Client>(url, client);
   }
 
   deleteClient(id: number): Observable<void> {
