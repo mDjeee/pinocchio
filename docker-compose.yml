@@ -1,12 +1,15 @@
 services:
   pinocchio:
-    image: 134.209.25.249:5050/frontend/pinocchio:latest
     container_name: pinocchio
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: pinocchio:latest
     ports:
-      - 4200:80
-    restart: always
+      - 80:80
+    restart: unless-stopped
     networks:
-      - yurik
+      - pinocchio
 networks:
-  yurik:
+  pinocchio:
     external: true
