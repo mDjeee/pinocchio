@@ -1,0 +1,116 @@
+<div class="">
+  <h2 class="text-2xl font-bold text-gray-800 mb-6">
+    {{ isEditMode ? 'Обновить тарифф' : 'Создать новы тарифф' }}
+  </h2>
+
+  <!-- Error Message -->
+  <div *ngIf="errorMessage" class="mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
+    {{ errorMessage }}
+  </div>
+
+  <form [formGroup]="tariffForm" (ngSubmit)="onSubmit()" class="space-y-4">
+    <!-- Name Field -->
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Наименование</mat-label>
+      <input
+        matInput
+        id="name"
+        type="text"
+        formControlName="name"
+        required
+      >
+      <mat-error *ngIf="f['name'].hasError('required')">
+        Обязательное поле
+      </mat-error>
+      <mat-error *ngIf="f['name'].hasError('maxlength')">
+        Максимум 100 символов
+      </mat-error>
+    </mat-form-field>
+
+    <div class="flex items-center gap-x-5">
+      <!-- Price Field -->
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Цена</mat-label>
+        <input
+          matInput
+          id="price"
+          type="number"
+          step="0.01"
+          formControlName="price"
+          required
+        >
+        <span matPrefix>$&nbsp;</span>
+        <mat-error *ngIf="f['price'].hasError('required')">
+          Обязательное поле
+        </mat-error>
+        <mat-error *ngIf="f['price'].hasError('min')">
+          Должен быть положительным
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Period Months -->
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Период (месяцев)</mat-label>
+        <input
+          matInput
+          id="periodMonth"
+          type="number"
+          formControlName="periodMonth"
+          required
+        >
+        <mat-error *ngIf="f['periodMonth'].hasError('required')">
+          Обязательное поле
+        </mat-error>
+        <mat-error *ngIf="f['periodMonth'].hasError('min')">
+          Минимум 1 месяц
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Active Status -->
+      <div class="flex items-center">
+        <mat-slide-toggle
+          id="isActive"
+          formControlName="isActive"
+          color="primary"
+        >Активный</mat-slide-toggle>
+      </div>
+    </div>
+
+    <!-- Description Field -->
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Описание</mat-label>
+      <textarea
+        matInput
+        id="description"
+        formControlName="description"
+        rows="3"
+      ></textarea>
+      <mat-error *ngIf="f['description'].hasError('maxlength')">
+        Максимум 200 символов
+      </mat-error>
+    </mat-form-field>
+
+
+    <!-- Form Actions -->
+    <div class="flex justify-end space-x-3 pt-4">
+      <button
+        type="button"
+        appLocationBack
+        class="px-4 py-2 text-sm font-medium text-white bg-gray-500 rounded-md hover:bg-gray-700 focus:outline-none"
+      >
+        Назад
+      </button>
+      <button
+        type="submit"
+        [disabled]="isLoading || tariffForm.invalid"
+        class="px-4 py-2 text-sm font-medium text-white bg-green-500 rounded-md hover:bg-green-700 focus:outline-none"
+      >
+        <span *ngIf="!isLoading">{{ isEditMode ? 'Обновить' : 'Создать' }}</span>
+        <span *ngIf="isLoading" class="flex items-center">
+          <mat-spinner diameter="20" class="mr-2"></mat-spinner>
+          В процессе...
+        </span>
+      </button>
+    </div>
+  </form>
+</div>

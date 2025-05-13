@@ -16,4 +16,9 @@ export const menuList: IMenu[] = [
     lucideIcon: 'users',
     route: '/users'
   },
+  {
+    title: 'Тарифы',
+    lucideIcon: 'banknote',
+    route: '/tariff'
+  },
 ];
