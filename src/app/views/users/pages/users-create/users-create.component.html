@@ -13,57 +13,87 @@
     <div class="flex flex-col gap-y-5">
       <!-- Full Name -->
       <mat-form-field appearance="outline" class="w-full">
-        <mat-label>ФИО</mat-label>
-        <input matInput formControlName="full_name" required>
-        <mat-error *ngIf="f['full_name'].hasError('required')">
+        <mat-label>Имя</mat-label>
+        <input
+          matInput
+          formControlName="firstName"
+          required
+          placeholder="Введите имя"
+        >
+        <mat-error *ngIf="f['firstName'].hasError('required')">
           Обязательное поле
         </mat-error>
-        <mat-error *ngIf="f['full_name'].hasError('maxlength')">
+        <mat-error *ngIf="f['firstName'].hasError('maxlength')">
           Максимум 100 символов
         </mat-error>
       </mat-form-field>
 
-      <!-- Phone -->
+      <!-- Full Name -->
       <mat-form-field appearance="outline" class="w-full">
-        <mat-label>Телефон</mat-label>
-        <input matInput formControlName="phone" required maxlength="12">
-        <mat-error *ngIf="f['phone'].hasError('required')">
+        <mat-label>Фамилия</mat-label>
+        <input
+          matInput
+          formControlName="lastName"
+          required
+          placeholder="Введите фамилию"
+        >
+        <mat-error *ngIf="f['lastName'].hasError('required')">
           Обязательное поле
         </mat-error>
-        <mat-error *ngIf="f['phone'].hasError('pattern')">
-          Введите корректный номер телефона
+        <mat-error *ngIf="f['lastName'].hasError('maxlength')">
+          Максимум 100 символов
         </mat-error>
       </mat-form-field>
     </div>
 
-    <!-- Column 2 -->
+
     <div class="flex flex-col gap-y-5">
-      <!-- Organization -->
+      <!-- Phone -->
       <mat-form-field appearance="outline" class="w-full">
-        <mat-label>Организация</mat-label>
-        <mat-select formControlName="org_ids" required multiple>
-          @for(org of organizations; track $index) {
-            <mat-option [value]="org.id">
-              {{ org.name }}
-            </mat-option>
-          }
-        </mat-select>
-
-        <lucide-icon
-          class="mr-1"
-          matSuffix
-          name="chevron-down"
-        ></lucide-icon>
-
-        <mat-error *ngIf="f['org_ids'].hasError('required')">
+        <mat-label>Телефон</mat-label>
+        <input
+          matInput
+          formControlName="phoneNumber"
+          required maxlength="12"
+          appDigitMask
+          placeholder="Введите телфон (998__ ___ __ __)"
+        >
+        <mat-error *ngIf="f['phoneNumber'].hasError('required')">
           Обязательное поле
+        </mat-error>
+        <mat-error *ngIf="f['phoneNumber'].hasError('invalidPhoneNumber')">
+          Введите корректный номер телефона
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Email -->
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Почта</mat-label>
+        <input
+          matInput
+          formControlName="email"
+          required
+          appDigitMask
+          placeholder="Введите плчту (some@gmail.com)"
+        >
+        <mat-error *ngIf="f['email'].hasError('required')">
+          Обязательное поле
+        </mat-error>
+        <mat-error *ngIf="f['email'].hasError('invalidEmail')">
+          Введите корректную почту
         </mat-error>
       </mat-form-field>
 
       <!-- Password -->
       <mat-form-field appearance="outline" class="w-full">
         <mat-label>Пароль</mat-label>
-        <input matInput formControlName="password" [type]="hidePassword ? 'password' : 'text'" required>
+        <input
+          matInput
+          formControlName="password"
+          [type]="hidePassword ? 'password' : 'text'"
+          required
+          placeholder="Введите пароль (some1234)"
+        >
         <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword">
           <lucide-icon
             class="text-[#1A1B1F]"

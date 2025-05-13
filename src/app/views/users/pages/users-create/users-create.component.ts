@@ -15,6 +15,8 @@ import { MatOption } from '@angular/material/core';
 import { MatSelect } from '@angular/material/select';
 import { NgIf } from '@angular/common';
 import { User } from '../../../../shared/interfaces/user.interface';
+import { ValidationService } from '../../../../core/services/validation.service';
+import { DigitMaskDirective } from '../../../../shared/directives/digit-mask.directive';
 
 @Component({
   selector: 'app-users-create',
@@ -31,7 +33,8 @@ import { User } from '../../../../shared/interfaces/user.interface';
     MatSelect,
     MatSuffix,
     NgIf,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    DigitMaskDirective
   ],
   standalone: true,
   templateUrl: './users-create.component.html',
@@ -55,17 +58,18 @@ export class UsersCreateComponent implements OnInit {
     private toastrService: ToastrService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
+    private validationService: ValidationService,
   ) {
     this.userForm = this.fb.group({
-      full_name: ['', [Validators.required, Validators.maxLength(100)]],
-      phone: ['', [Validators.required, Validators.pattern(/^998\d{9}$/)]],
-      org_ids: ['', [Validators.required]],
+      firstName: ['', [Validators.required, Validators.maxLength(100)]],
+      lastName: ['', [Validators.required, Validators.maxLength(100)]],
+      phoneNumber: ['', [Validators.required, this.validationService.validateUzPhoneNumber]],
+      email: ['', [Validators.required, this.validationService.validateEmail]],
       password: ['', [Validators.required, Validators.minLength(8)]],
     });
   }
 
   ngOnInit() {
-    this.loadOrganizations();
     this.watchRoute();
   }
 
@@ -73,36 +77,9 @@ export class UsersCreateComponent implements OnInit {
     this.activatedRoute.queryParams
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(query => {
-        this.inn = query['inn'];
         this.id = query['id'];
         if(this.id) {
           this.getUserById();
-        }
-        if(this.inn) {
-          this.getCompanyByInn();
-        }
-      });
-  }
-
-  getCompanyByInn() {
-    this.companyService.getCompanyByInn(this.inn)
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe({
-        next: (res) => {
-          this.organizationDetail = res;
-        }
-      });
-  }
-
-  loadOrganizations() {
-    this.companyService.getCompanies({ page: 1, perPage: 100 })
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe({
-        next: (res: any) => {
-          this.organizations = res.data;
-        },
-        error: (err) => {
-          this.toastrService.error('Не удалось загрузить организации');
         }
       });
   }

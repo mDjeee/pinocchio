@@ -1,16 +1,18 @@
 export interface User {
   id: number;
-  firstName: string,
-  lastName: string,
-  phoneNumber: string;
+  firstName: string;
+  lastName: string;
   email: string;
+  phoneNumber: string;
+  password: string;
   updated_at: Date;
   created_at: Date;
 }
 
 export interface CreateUser {
-  full_name: string;
-  phone: string;
-  org_ids: number[];
+  firstName: string;
+  lastName: string;
+  email: string;
+  phoneNumber: string;
   password: string;
 }

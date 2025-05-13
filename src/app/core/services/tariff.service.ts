@@ -26,7 +26,7 @@ export class TariffService {
   }
 
   createTariff(tariff: CreateTariff): Observable<Tariff> {
-    const url = `${this.apiUrl}/api/v1/tariff`;
+    const url = `${this.apiUrl}/api/v1/tariff/add`;
     return this.http.post<Tariff>(url, tariff);
   }
 

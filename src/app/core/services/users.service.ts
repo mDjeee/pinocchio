@@ -22,7 +22,7 @@ export class UsersService {
   }
 
   getUserById(id: number): Observable<User> {
-    const url = `${this.apiUrl}/api/admin/users/${id}`;
+    const url = `${this.apiUrl}/api/v1/user/${id}`;
     return this.http.get<User>(url);
   }
 
@@ -37,17 +37,17 @@ export class UsersService {
   }
 
   createUser(payload: CreateUser) {
-    const url = `${this.apiUrl}/api/admin/users`;
+    const url = `${this.apiUrl}/api/v1/user/add`;
     return this.http.post(url, payload);
   }
 
   updateUser(id: number, payload: CreateUser) {
-    const url = `${this.apiUrl}/api/admin/users/${id}`;
+    const url = `${this.apiUrl}/api/v1/user/edit/${id}`;
     return this.http.patch(url, payload);
   }
 
   deleteUser(id: number) {
-    const url = `${this.apiUrl}/api/admin/users/${id}`;
+    const url = `${this.apiUrl}/api/v1/user/delete/${id}`;
     return this.http.delete(url);
   }
 
