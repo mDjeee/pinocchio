@@ -64,7 +64,7 @@ export class AuthComponent {
     ) {
     this.form = this.fb.group({
       phoneNumber: ['', [Validators.required, this.validationService.validateUzPhoneNumber]],
-      password: ['', [Validators.required, Validators.minLength(8)]]
+      password: ['', [Validators.required, Validators.minLength(6)]]
     });
   }
 
