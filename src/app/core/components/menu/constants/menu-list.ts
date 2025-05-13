@@ -7,14 +7,14 @@ export const menuList: IMenu[] = [
     route: '/companies',
   },
   {
-    title: 'Администраторы',
+    title: 'Пользователи',
     lucideIcon: 'shield-user',
-    route: '/admins'
+    route: '/users'
   },
   {
-    title: 'Пользователи',
+    title: 'Клиенты',
     lucideIcon: 'users',
-    route: '/users'
+    route: '/clients'
   },
   {
     title: 'Тарифы',
