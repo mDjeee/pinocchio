@@ -39,7 +39,6 @@ export class AddCompanyComponent implements OnInit {
   companyForm: FormGroup;
   isEditMode = false;
   id!: number;
-  type = 'distributor';
 
   constructor(
     private fb: FormBuilder,
