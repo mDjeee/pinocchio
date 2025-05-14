@@ -1,0 +1,157 @@
+<div>
+  <!-- Header -->
+  <div class="mb-6">
+    <h2 class="text-2xl font-bold mb-1">
+      {{ id ? 'Редактирование' : 'Создание нового' }} пользователя
+    </h2>
+    <p class="text-gray-600">Заполните все необходимые поля</p>
+  </div>
+
+  <!-- Form -->
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <!-- Column 1 -->
+    <div class="flex flex-col gap-y-5">
+      <!-- Full Name -->
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Имя</mat-label>
+        <input
+          matInput
+          formControlName="firstName"
+          required
+          placeholder="Введите имя"
+        >
+        <mat-error *ngIf="f['firstName'].hasError('required')">
+          Обязательное поле
+        </mat-error>
+        <mat-error *ngIf="f['firstName'].hasError('maxlength')">
+          Максимум 100 символов
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Full Name -->
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Фамилия</mat-label>
+        <input
+          matInput
+          formControlName="lastName"
+          required
+          placeholder="Введите фамилию"
+        >
+        <mat-error *ngIf="f['lastName'].hasError('required')">
+          Обязательное поле
+        </mat-error>
+        <mat-error *ngIf="f['lastName'].hasError('maxlength')">
+          Максимум 100 символов
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Роль</mat-label>
+
+        <mat-select formControlName="roleEnum">
+          @for(role of roleTypes; track $index) {
+            <mat-option [value]="role">{{ role }}</mat-option>
+          }
+        </mat-select>
+
+        <lucide-icon
+          class="mr-2 text-green-500"
+          matSuffix
+          name="chevron-down"
+        ></lucide-icon>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Статус</mat-label>
+        <input
+          matInput
+          formControlName="status"
+          required
+          placeholder="Статус"
+        >
+        <mat-error *ngIf="f['status'].hasError('required')">
+          Обязательное поле
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+
+    <div class="flex flex-col gap-y-5">
+      <!-- Phone -->
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Телефон</mat-label>
+        <input
+          matInput
+          formControlName="phoneNumber"
+          required maxlength="12"
+          appDigitMask
+          placeholder="Введите телфон (998__ ___ __ __)"
+        >
+        <mat-error *ngIf="f['phoneNumber'].hasError('required')">
+          Обязательное поле
+        </mat-error>
+        <mat-error *ngIf="f['phoneNumber'].hasError('invalidPhoneNumber')">
+          Введите корректный номер телефона
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Email -->
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Почта</mat-label>
+        <input
+          matInput
+          formControlName="email"
+          required
+          placeholder="Введите плчту (some@gmail.com)"
+        >
+        <mat-error *ngIf="f['email'].hasError('required')">
+          Обязательное поле
+        </mat-error>
+        <mat-error *ngIf="f['email'].hasError('invalidEmail')">
+          Введите корректную почту
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Организация</mat-label>
+        <mat-select formControlName="companyId" required>
+          @for(org of organizations; track $index) {
+            <mat-option [value]="org.id">
+              {{ org.name }}
+            </mat-option>
+          }
+        </mat-select>
+
+        <lucide-icon
+          class="mr-2 text-green-600"
+          matSuffix
+          name="chevron-down"
+        ></lucide-icon>
+
+        <mat-error *ngIf="f['companyId'].hasError('required')">
+          Обязательное поле
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <!-- Form Actions -->
+    <div class="flex justify-end gap-3 pt-4 md:col-span-2">
+      <button
+        type="button"
+        appLocationBack
+        class="px-4 py-2 text-sm font-medium text-white bg-gray-500 rounded-md hover:bg-gray-700 focus:outline-none"
+      >
+        Отмена
+      </button>
+
+      <button
+        type="submit"
+        [disabled]="userForm.invalid"
+        class="px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-md hover:bg-green-700 focus:outline-none"
+        [ngClass]="{'opacity-50': userForm.invalid}"
+      >
+        Создать пользователя
+      </button>
+    </div>
+  </form>
+</div>

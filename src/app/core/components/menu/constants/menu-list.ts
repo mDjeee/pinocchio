@@ -12,6 +12,11 @@ export const menuList: IMenu[] = [
     route: '/users'
   },
   {
+    title: 'Пользователи компании',
+    lucideIcon: 'shield-user',
+    route: '/company-users'
+  },
+  {
     title: 'Клиенты',
     lucideIcon: 'users',
     route: '/clients'
@@ -26,9 +31,9 @@ export const menuList: IMenu[] = [
     lucideIcon: 'layout-list',
     route: '/company-tariff'
   },
-  {
-    title: 'Роли',
-    lucideIcon: 'shield-check',
-    route: '/role'
-  },
+  // {
+  //   title: 'Роли',
+  //   lucideIcon: 'shield-check',
+  //   route: '/role'
+  // },
 ];

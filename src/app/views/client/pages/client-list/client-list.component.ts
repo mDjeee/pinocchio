@@ -10,9 +10,9 @@ import { ToastrService } from 'ngx-toastr';
 import { MatDialog } from '@angular/material/dialog';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { clientColumn } from '../../constants/client-column';
-import { Role } from '../../../../shared/interfaces/role.interface';
 import { AgreeModalComponent } from '../../../../shared/components/modal/agree-modal/agree-modal.component';
 import { Client } from '../../../../shared/interfaces/client.interface';
+import { User } from '../../../../shared/interfaces/user.interface';
 
 @Component({
   selector: 'app-client-list',
@@ -31,7 +31,7 @@ import { Client } from '../../../../shared/interfaces/client.interface';
 })
 export class ClientListComponent implements OnInit {
   title = 'Клиенты';
-  clients: Tariff[] = [];
+  clients: User[] = [];
   page = 0;
   size = 20;
   totalItems = 0;
