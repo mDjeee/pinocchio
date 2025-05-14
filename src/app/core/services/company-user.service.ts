@@ -33,4 +33,9 @@ export class CompanyUserService {
     const url = `${this.apiUrl}/api/v1/company-user/attach-user`;
     return this.http.post(url, payload);
   }
+
+  detachUser(payload: AttachCompanyUser) {
+    const url = `${this.apiUrl}/api/v1/company-user/detach-user`;
+    return this.http.post(url, payload);
+  }
 }

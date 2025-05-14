@@ -1,16 +1,19 @@
 import { Component, DestroyRef, Input, OnInit } from '@angular/core';
 import { TableComponent } from '../../../../shared/components/table/table.component';
 import { PaginatorComponent } from '../../../../shared/components/paginator/paginator.component';
-import { CompanyService } from '../../../../core/services/company.service';
 import { ToastrService } from 'ngx-toastr';
 import { UsersService } from '../../../../core/services/users.service';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { usersColumns } from '../../../users/constants/users-columns';
 import { MatMenu, MatMenuTrigger } from '@angular/material/menu';
 import { SvgIconComponent } from '../../../../shared/components/common/svg-icon/svg-icon.component';
 import { LucideAngularModule } from 'lucide-angular';
 import { User } from '../../../../shared/interfaces/user.interface';
+import { CompanyUserService } from '../../../../core/services/company-user.service';
+import { CompanyUser } from '../../../../shared/interfaces/company-user.interface';
+import { companyUserColumn } from '../../../company-user/constants/company-user.column';
+import { AgreeModalComponent } from '../../../../shared/components/modal/agree-modal/agree-modal.component';
+import { MatDialog } from '@angular/material/dialog';
 @Component({
   selector: 'app-companies-users',
   imports: [
@@ -31,14 +34,13 @@ export class CompaniesUsersComponent implements OnInit {
   page = 0;
   size = 10;
   totalItems = 0;
-  users = [];
+  users: CompanyUser[] = [];
 
   constructor(
     private destroyRef: DestroyRef,
-    private companyService: CompanyService,
+    private companyUserService: CompanyUserService,
     private toastrService: ToastrService,
-    private usersService: UsersService,
-    private activatedRoute: ActivatedRoute,
+    private matDialog: MatDialog,
   ) {
   }
 
@@ -47,31 +49,53 @@ export class CompaniesUsersComponent implements OnInit {
   }
 
   getCompanyUsers() {
-    this.usersService.getCompanyUsers(this.companyId)
+    this.companyUserService.getCompanyUsers(this.companyId)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: (res: any) => {
-          this.users = res.data;
-          this.page = res.current_page;
-          this.totalItems = res.total;
-          this.size = res.per_page;
+          this.users = res;
         }
-      })
+      });
   }
 
-  detachUser(user: User) {
-    // this.usersService.detachUser({user_id: user.id, organization_id: user.org_id})
-    //   .pipe(takeUntilDestroyed(this.destroyRef))
-    //   .subscribe({
-    //     next: (res: any) => {
-    //       this.toastrService.success('Пользователь успешно откреплён!');
-    //       this.getCompanyUsers();
-    //     },
-    //     error: (err: any) => {
-    //       this.toastrService.error(err.message);
-    //     }
-    //   })
+  detach(user: CompanyUser) {
+    this.companyUserService.detachUser(
+      {
+        userId: user.userInfo.id,
+        companyId: user.company.id,
+      }
+    )
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (res: any) => {
+          this.toastrService.success('Пользователь успешно откреплён!');
+          this.getCompanyUsers();
+        },
+        error: (err: any) => {
+          this.toastrService.error(err.message);
+        }
+      });
   }
 
-  protected readonly usersColumns = usersColumns;
+  detachUser(user: CompanyUser) {
+    const dialogRef = this.matDialog.open(AgreeModalComponent, {
+      data: {
+        title: `Вы точно хотите открепить пользователя ${user.userInfo.firstName} ${user.userInfo.lastName}?`,
+        confirm: 'Да',
+        cancel: 'Нет'
+      },
+      width: '400px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'confirm') {
+        this.detach(user);
+      } else {
+        // User cancelled
+      }
+    });
+
+  }
+
+  protected readonly companyUserColumn = companyUserColumn;
 }

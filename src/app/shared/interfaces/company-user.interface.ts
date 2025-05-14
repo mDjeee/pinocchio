@@ -37,5 +37,4 @@ export interface CompanyUser {
 export interface AttachCompanyUser {
   userId: number;
   companyId: number;
-  roleEnum: RoleEnum;
 }
