@@ -16,6 +16,7 @@ import { User } from '../../../../shared/interfaces/user.interface';
 import { CompanyUserService } from '../../../../core/services/company-user.service';
 import { StorageService } from '../../../../core/services/storage.service';
 import { LoginResponse } from '../../../../shared/interfaces/login-response.interface';
+import { companyUserColumn } from '../../../company-user/constants/company-user.column';
 
 @Component({
   selector: 'app-client-list',
@@ -64,6 +65,7 @@ export class ClientListComponent implements OnInit {
       .pipe(takeUntilDestroyed(this.destryoRef))
       .subscribe({
         next: (res: any) => {
+          this.clients = res;
         },
         error: (err) => {
           this.toastrService.error(err.message);
@@ -77,5 +79,5 @@ export class ClientListComponent implements OnInit {
     this.getClients();
   }
 
-  protected readonly clientColumn = clientColumn;
+  protected readonly companyUserColumn = companyUserColumn;
 }
