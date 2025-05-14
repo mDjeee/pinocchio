@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
+import { CreateCompanyUser } from '../../shared/interfaces/company-user.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,16 @@ export class CompanyUserService {
 
   getCompanyUsers(companyId: number, isClients = false) {
     const url = `${this.apiUrl}/api/v1/company-user/${companyId}?isClients=${isClients}`;
+    return this.http.get(url);
+  }
+
+  addCompanyUser(payload: CreateCompanyUser) {
+    const url = `${this.apiUrl}/api/v1/add/company-user`;
+    return this.http.post(url, payload);
+  }
+
+  getCompanyUserById(companyId: number) {
+    const url = `${this.apiUrl}/api/v1/add/company-user/${companyId}`;
     return this.http.get(url);
   }
 }

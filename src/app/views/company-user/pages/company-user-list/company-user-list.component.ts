@@ -17,6 +17,8 @@ import { PaginatorComponent } from '../../../../shared/components/paginator/pagi
 import { TableComponent } from '../../../../shared/components/table/table.component';
 import { companyUserColumn } from '../../constants/company-user.column';
 import { RouterLink } from '@angular/router';
+import { LoginResponse } from '../../../../shared/interfaces/login-response.interface';
+import { StorageService } from '../../../../core/services/storage.service';
 
 @Component({
   selector: 'app-company-user-list',
@@ -40,21 +42,24 @@ export class CompanyUserListComponent implements OnInit {
   size = 10;
   totalItems = 0;
   users: CompanyUser[] = [];
+  user!: LoginResponse;
 
   constructor(
     private destroyRef: DestroyRef,
     private toastrService: ToastrService,
     private companyUserService: CompanyUserService,
     private matDialog: MatDialog,
+    private storageService: StorageService,
   ) {
   }
 
   ngOnInit() {
     this.getUsers();
+    this.user = this.storageService.getUserDetail();
   }
 
   getUsers() {
-    this.companyUserService.getCompanyUsers(1)
+    this.companyUserService.getCompanyUsers(this.user.companyUserResponse.company.id)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: (res: any) => {

@@ -13,6 +13,9 @@ import { clientColumn } from '../../constants/client-column';
 import { AgreeModalComponent } from '../../../../shared/components/modal/agree-modal/agree-modal.component';
 import { Client } from '../../../../shared/interfaces/client.interface';
 import { User } from '../../../../shared/interfaces/user.interface';
+import { CompanyUserService } from '../../../../core/services/company-user.service';
+import { StorageService } from '../../../../core/services/storage.service';
+import { LoginResponse } from '../../../../shared/interfaces/login-response.interface';
 
 @Component({
   selector: 'app-client-list',
@@ -35,22 +38,29 @@ export class ClientListComponent implements OnInit {
   page = 0;
   size = 20;
   totalItems = 0;
+  user!: LoginResponse;
 
   constructor(
     private destryoRef: DestroyRef,
-    private clientService: ClientService,
+    private companyUserService: CompanyUserService,
     private toastrService: ToastrService,
     private matDialog: MatDialog,
     private activatedRoute: ActivatedRoute,
+    private storageService: StorageService,
   ) {
   }
 
   ngOnInit() {
-    this.getClients()
+    this.getUser();
+    this.getClients();
+  }
+
+  getUser() {
+    this.user = this.storageService.getUserDetail();
   }
 
   getClients() {
-    this.clientService.getClients()
+    this.companyUserService.getCompanyUsers(this.user.companyUserResponse.company.id, true)
       .pipe(takeUntilDestroyed(this.destryoRef))
       .subscribe({
         next: (res: any) => {
@@ -65,39 +75,6 @@ export class ClientListComponent implements OnInit {
     this.page = event.page;
     this.size = event.size;
     this.getClients();
-  }
-
-  deleteClient(client: Client) {
-    const dialogRef = this.matDialog.open(AgreeModalComponent, {
-      data: {
-        title: `Вы точно хотите удалить клиента ${client.id || ''}?`,
-        confirm: 'Да',
-        cancel: 'Нет'
-      },
-      width: '400px'
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result === 'confirm') {
-        this.delete(client);
-      } else {
-        // User cancelled
-      }
-    });
-  }
-
-  delete(client: Client) {
-    this.clientService.deleteClient(client.id)
-      .pipe(takeUntilDestroyed(this.destryoRef))
-      .subscribe({
-        next: (res: any) => {
-          this.toastrService.success('Клиент успешно удалён');
-          this.getClients();
-        },
-        error: (err: any) => {
-          this.toastrService.error(err.message);
-        }
-      });
   }
 
   protected readonly clientColumn = clientColumn;

@@ -79,10 +79,9 @@ export class AuthComponent {
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe({
           next: (res: any) => {
-            console.log('res', res);
             const tokenData = this.tokenService.parseTokenResponse(res);
             this.storageService.setToken(tokenData.token);
-            this.storageService.setUserDetail(res.userResponse);
+            this.storageService.setUserDetail(res);
 
             this.router.navigate(['/companies']);
           },

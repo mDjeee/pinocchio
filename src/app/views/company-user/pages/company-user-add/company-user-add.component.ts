@@ -17,6 +17,9 @@ import { MatInput } from '@angular/material/input';
 import { MatOption } from '@angular/material/core';
 import { MatSelect } from '@angular/material/select';
 import { NgClass, NgIf } from '@angular/common';
+import { CompanyUserService } from '../../../../core/services/company-user.service';
+import { CompanyUser } from '../../../../shared/interfaces/company-user.interface';
+import { LoginResponse } from '../../../../shared/interfaces/login-response.interface';
 
 @Component({
   selector: 'app-company-user-add',
@@ -47,14 +50,15 @@ export class CompanyUserAddComponent implements OnInit {
   hidePassword = true;
   inn = '';
   id = '';
-  user?: User;
+  user?: CompanyUser;
+  currentUser!: LoginResponse;
 
   roleTypes = Object.values(RoleEnum);
 
   constructor(
     private fb: FormBuilder,
     private destroyRef: DestroyRef,
-    private userService: UsersService,
+    private companyUserService: CompanyUserService,
     private companyService: CompanyService,
     private toastrService: ToastrService,
     private router: Router,
@@ -102,10 +106,10 @@ export class CompanyUserAddComponent implements OnInit {
   }
 
   getUserById() {
-    this.userService.getUserById(+this.id)
+    this.companyUserService.getCompanyUserById(+this.id)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
-        next: (res) => {
+        next: (res: any) => {
           this.user = res;
           this.userForm.patchValue({
             ...this.user,
@@ -132,7 +136,7 @@ export class CompanyUserAddComponent implements OnInit {
 
   createUser() {
     const payload = this.userForm.getRawValue();
-    this.userService.createUser(payload)
+    this.companyUserService.addCompanyUser(payload)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: (res: any) => {
@@ -146,18 +150,18 @@ export class CompanyUserAddComponent implements OnInit {
   }
 
   updateUser() {
-    const payload = this.userForm.getRawValue();
-    this.userService.updateUser(+this.id, payload)
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe({
-        next: (res: any) => {
-          this.toastrService.success('Пользователь успешно создан!');
-          this.router.navigate(['/users']);
-        },
-        error: (err: any) => {
-          this.toastrService.error(err.message);
-        }
-      });
+    // const payload = this.userForm.getRawValue();
+    // this.companyUserService.updateUser(+this.id, payload)
+    //   .pipe(takeUntilDestroyed(this.destroyRef))
+    //   .subscribe({
+    //     next: (res: any) => {
+    //       this.toastrService.success('Пользователь успешно создан!');
+    //       this.router.navigate(['/users']);
+    //     },
+    //     error: (err: any) => {
+    //       this.toastrService.error(err.message);
+    //     }
+    //   });
   }
 
   get f() {
