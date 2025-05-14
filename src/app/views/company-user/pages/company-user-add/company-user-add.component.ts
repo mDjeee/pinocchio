@@ -70,7 +70,7 @@ export class CompanyUserAddComponent implements OnInit {
       lastName: ['', [Validators.required, Validators.maxLength(100)]],
       phoneNumber: ['', [Validators.required, this.validationService.validateUzPhoneNumber]],
       email: ['', [Validators.required, this.validationService.validateEmail]],
-      roleEnum: ['', [Validators.required]],
+      role: ['', [Validators.required]],
       companyId: [null, [Validators.required]],
       status: ['ACTIVE', [Validators.required]]
     });

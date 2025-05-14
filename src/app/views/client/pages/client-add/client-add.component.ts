@@ -68,7 +68,7 @@ export class ClientAddComponent implements OnInit {
       lastName: ['', [Validators.required, Validators.maxLength(100)]],
       phoneNumber: ['', [Validators.required, this.validationService.validateUzPhoneNumber]],
       email: ['', [Validators.required, this.validationService.validateEmail]],
-      roleEnum: [null],
+      role: [RoleEnum.CUSTOM],
       companyId: [null, [Validators.required]],
       status: ['ACTIVE', [Validators.required]]
     });
