@@ -54,8 +54,8 @@ export class CompanyUserListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getUsers();
     this.user = this.storageService.getUserDetail();
+    this.getUsers();
   }
 
   getUsers() {

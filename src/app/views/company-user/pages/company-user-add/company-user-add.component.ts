@@ -141,7 +141,7 @@ export class CompanyUserAddComponent implements OnInit {
       .subscribe({
         next: (res: any) => {
           this.toastrService.success('Пользователь успешно создан!');
-          this.router.navigate(['/users']);
+          this.router.navigate(['/company-users']);
         },
         error: (err: any) => {
           this.toastrService.error(err.message);

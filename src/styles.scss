@@ -35,7 +35,7 @@
   --mat-bottom-sheet-container-background-color: var(--mat-sys-on-primary);
 
   --mat-table-header-container-height: 40px;
-  --mat-table-row-item-container-height: 40px;
+  --mat-table-row-item-container-height: 32px;
 
   --mdc-dialog-container-color: #ffffff;
 
@@ -136,4 +136,8 @@ mat-form-field.secondary {
   .mat-mdc-form-field-infix {
     z-index: 2 !important;
   }
+}
+
+.mat-mdc-menu-item {
+  min-height: 32px !important;
 }
