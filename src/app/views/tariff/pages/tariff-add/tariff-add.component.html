@@ -109,10 +109,7 @@
         class="px-4 py-2 text-sm font-medium text-white bg-green-500 rounded-md hover:bg-green-700 focus:outline-none"
       >
         <span *ngIf="!isLoading">{{ isEditMode ? 'Обновить' : 'Создать' }}</span>
-        <span *ngIf="isLoading" class="flex items-center">
-          <mat-spinner diameter="20" class="mr-2"></mat-spinner>
-          В процессе...
-        </span>
+        <app-spin-process *ngIf="isLoading"></app-spin-process>
       </button>
     </div>
   </form>

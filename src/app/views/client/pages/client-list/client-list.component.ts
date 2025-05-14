@@ -17,6 +17,10 @@ import { CompanyUserService } from '../../../../core/services/company-user.servi
 import { StorageService } from '../../../../core/services/storage.service';
 import { LoginResponse } from '../../../../shared/interfaces/login-response.interface';
 import { companyUserColumn } from '../../../company-user/constants/company-user.column';
+import { CompanyUser } from '../../../../shared/interfaces/company-user.interface';
+import {
+  SubscribeUserModalComponent
+} from '../../../../shared/components/modal/subscribe-user-modal/subscribe-user-modal.component';
 
 @Component({
   selector: 'app-client-list',
@@ -35,7 +39,7 @@ import { companyUserColumn } from '../../../company-user/constants/company-user.
 })
 export class ClientListComponent implements OnInit {
   title = 'Клиенты';
-  clients: User[] = [];
+  clients: CompanyUser[] = [];
   page = 0;
   size = 20;
   totalItems = 0;
@@ -77,6 +81,21 @@ export class ClientListComponent implements OnInit {
     this.page = event.page;
     this.size = event.size;
     this.getClients();
+  }
+
+  subscribeUser(user: CompanyUser) {
+    const dialog = this.matDialog.open(SubscribeUserModalComponent, {
+      data: user,
+      width: '400px',
+    });
+
+    dialog.afterClosed()
+      .pipe(takeUntilDestroyed(this.destryoRef))
+      .subscribe(result => {
+      if(result == 'update') {
+        this.getClients();
+      }
+    });
   }
 
   protected readonly companyUserColumn = companyUserColumn;

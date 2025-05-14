@@ -10,6 +10,7 @@ import { MatOption, MatSelect } from '@angular/material/select';
 import { LocationBackDirective } from '../../../../shared/directives/location-back.directive';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { LucideAngularModule } from 'lucide-angular';
+import { SpinProcessComponent } from '../../../../shared/components/spin-process/spin-process.component';
 
 @Component({
   selector: 'app-role-add',
@@ -27,6 +28,7 @@ import { LucideAngularModule } from 'lucide-angular';
     MatError,
     LucideAngularModule,
     MatSuffix,
+    SpinProcessComponent,
   ],
   standalone: true,
   templateUrl: './role-add.component.html',

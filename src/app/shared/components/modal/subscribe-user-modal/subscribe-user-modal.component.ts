@@ -1,59 +1,62 @@
 import { Component, DestroyRef, Inject, OnInit } from '@angular/core';
+import { Tariff } from '../../../interfaces/tariff.interface';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogClose, MatDialogRef } from '@angular/material/dialog';
 import { Organization } from '../../../interfaces/company.interface';
 import { SubscriptionService } from '../../../../core/services/subscription.service';
 import { TariffService } from '../../../../core/services/tariff.service';
-import { Tariff } from '../../../interfaces/tariff.interface';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ToastrService } from 'ngx-toastr';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { LoginResponse } from '../../../interfaces/login-response.interface';
+import { StorageService } from '../../../../core/services/storage.service';
+import { CompanyUser } from '../../../interfaces/company-user.interface';
+import { CompanyTariffService } from '../../../../core/services/company-tariff.service';
+import { CompanyTariff } from '../../../interfaces/company-tariff.interface';
 import { LucideAngularModule } from 'lucide-angular';
 import { MatFormField, MatLabel, MatSuffix } from '@angular/material/form-field';
-import { MatOption, MatSelect } from '@angular/material/select';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatOption } from '@angular/material/core';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
-import { NgClass, NgIf } from '@angular/common';
-import { LocationBackDirective } from '../../../directives/location-back.directive';
+import { MatSelect } from '@angular/material/select';
+import { NgClass } from '@angular/common';
 import { SpinProcessComponent } from '../../spin-process/spin-process.component';
 
 @Component({
-  selector: 'app-subscribe-company-modal',
+  selector: 'app-subscribe-user-modal',
   imports: [
     LucideAngularModule,
     MatDialogClose,
     MatFormField,
-    MatSelect,
-    MatOption,
     MatLabel,
+    MatOption,
+    MatProgressSpinner,
+    MatSelect,
     MatSuffix,
     ReactiveFormsModule,
-    MatProgressSpinner,
-    NgIf,
     NgClass,
-    LocationBackDirective,
-    MatSuffix,
     SpinProcessComponent
   ],
   standalone: true,
-  templateUrl: './subscribe-company-modal.component.html',
-  styleUrl: './subscribe-company-modal.component.scss'
+  templateUrl: './subscribe-user-modal.component.html',
+  styleUrl: './subscribe-user-modal.component.scss'
 })
-export class SubscribeCompanyModalComponent implements OnInit {
-  tariffs: Tariff[] = [];
+export class SubscribeUserModalComponent implements OnInit {
+  tariffs: CompanyTariff[] = [];
   subForm: FormGroup;
   loading = false;
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public company: Organization,
+    @Inject(MAT_DIALOG_DATA) public user: CompanyUser,
     private destroyRef: DestroyRef,
     private subscriptionService: SubscriptionService,
-    private tariffService: TariffService,
+    private companyTariffService: CompanyTariffService,
     private toastrService: ToastrService,
     private fb: FormBuilder,
-    private matDialogRef: MatDialogRef<SubscribeCompanyModalComponent>
+    private matDialogRef: MatDialogRef<SubscribeUserModalComponent>,
   ) {
     this.subForm = this.fb.group({
-      companyId: [this.company.id, [Validators.required]],
+      companyId: [this.user.company.id, [Validators.required]],
       tariffId: [null, [Validators.required]],
+      userId: [this.user.userInfo.id, [Validators.required]]
     });
   }
 
@@ -62,7 +65,7 @@ export class SubscribeCompanyModalComponent implements OnInit {
   }
 
   getTariffs() {
-    this.tariffService.getTariffs()
+    this.companyTariffService.getTariffs()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: (res: any) => {
@@ -85,7 +88,7 @@ export class SubscribeCompanyModalComponent implements OnInit {
   createSubscription() {
     this.loading = true;
     const payload = this.subForm.getRawValue();
-    this.subscriptionService.subscribeCompany(payload)
+    this.subscriptionService.subscribeUser(payload)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: (res: any) => {

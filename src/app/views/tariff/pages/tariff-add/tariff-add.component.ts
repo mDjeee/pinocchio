@@ -8,6 +8,7 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { MatError, MatFormField, MatLabel, MatSuffix } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
+import { SpinProcessComponent } from '../../../../shared/components/spin-process/spin-process.component';
 
 @Component({
   selector: 'app-tariff-add',
@@ -21,7 +22,8 @@ import { MatSlideToggle } from '@angular/material/slide-toggle';
     MatLabel,
     MatInput,
     MatSlideToggle,
-    MatSuffix
+    MatSuffix,
+    SpinProcessComponent
   ],
   standalone: true,
   templateUrl: './tariff-add.component.html',

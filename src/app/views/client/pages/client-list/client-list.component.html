@@ -44,50 +44,65 @@
   </div>
 
   <mat-menu #actionsPayments="matMenu" xPosition="before" class="menu-actions">
-    <button
-      mat-menu-item
-      [routerLink]="[row.id]"
-      queryParamsHandling="merge"
-    >
-      <div
-        class="w-full flex gap-x-2 items-center cursor-pointer"
-      >
-        <lucide-icon
-          [className]="'text-blue-500'"
-          name="info"
-        ></lucide-icon>
-        <div class="text-xs font-medium">Детали</div>
-      </div>
-    </button>
+<!--    <button-->
+<!--      mat-menu-item-->
+<!--      [routerLink]="[row.id]"-->
+<!--      queryParamsHandling="merge"-->
+<!--    >-->
+<!--      <div-->
+<!--        class="w-full flex gap-x-2 items-center cursor-pointer"-->
+<!--      >-->
+<!--        <lucide-icon-->
+<!--          [className]="'text-blue-500'"-->
+<!--          name="info"-->
+<!--        ></lucide-icon>-->
+<!--        <div class="text-xs font-medium">Детали</div>-->
+<!--      </div>-->
+<!--    </button>-->
+
+<!--    <button-->
+<!--      mat-menu-item-->
+<!--      [routerLink]="['/tariff', 'add']"-->
+<!--      [queryParams]="{ id: row.id }"-->
+<!--      queryParamsHandling="merge"-->
+<!--    >-->
+<!--      <div-->
+<!--        class="w-full flex gap-x-2 items-center cursor-pointer"-->
+<!--      >-->
+<!--        <lucide-icon-->
+<!--          [className]="'text-green-500'"-->
+<!--          name="pencil"-->
+<!--        ></lucide-icon>-->
+<!--        <div class="text-xs font-medium">Редактировать</div>-->
+<!--      </div>-->
+<!--    </button>-->
+
+<!--    <button-->
+<!--      mat-menu-item-->
+<!--    >-->
+<!--      <div-->
+<!--        class="w-full flex gap-x-2 items-center cursor-pointer"-->
+<!--      >-->
+<!--        <lucide-icon-->
+<!--          [className]="'text-red-500'"-->
+<!--          name="trash"-->
+<!--        ></lucide-icon>-->
+<!--        <div class="text-xs font-medium">Удалить</div>-->
+<!--      </div>-->
+<!--    </button>-->
 
     <button
       mat-menu-item
-      [routerLink]="['/tariff', 'add']"
-      [queryParams]="{ id: row.id }"
-      queryParamsHandling="merge"
     >
       <div
         class="w-full flex gap-x-2 items-center cursor-pointer"
+        (click)="subscribeUser(row)"
       >
         <lucide-icon
-          [className]="'text-green-500'"
-          name="pencil"
+          [className]="'text-orange-500'"
+          name="bell-plus"
         ></lucide-icon>
-        <div class="text-xs font-medium">Редактировать</div>
-      </div>
-    </button>
-
-    <button
-      mat-menu-item
-    >
-      <div
-        class="w-full flex gap-x-2 items-center cursor-pointer"
-      >
-        <lucide-icon
-          [className]="'text-red-500'"
-          name="trash"
-        ></lucide-icon>
-        <div class="text-xs font-medium">Удалить</div>
+        <div class="text-xs font-medium">Добавить подписку</div>
       </div>
     </button>
   </mat-menu>

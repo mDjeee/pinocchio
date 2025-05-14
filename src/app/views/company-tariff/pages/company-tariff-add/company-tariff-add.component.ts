@@ -9,6 +9,7 @@ import { MatInput } from '@angular/material/input';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { NgIf } from '@angular/common';
+import { SpinProcessComponent } from '../../../../shared/components/spin-process/spin-process.component';
 
 @Component({
   selector: 'app-company-tariff-add',
@@ -22,7 +23,8 @@ import { NgIf } from '@angular/common';
     MatSlideToggle,
     MatSuffix,
     NgIf,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SpinProcessComponent
   ],
   standalone: true,
   templateUrl: './company-tariff-add.component.html',
