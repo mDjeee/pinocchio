@@ -16,10 +16,10 @@
       >Меню</span>
     }
 
-    <app-svg-icon
-      [iconName]="isMenuOpen ? 'sidebar-left' : 'sidebar-right'"
-      className="h-6 w-6 text-primary group-hover:text-highlight cursor-pointer transition-colors">
-    </app-svg-icon>
+    <lucide-icon
+      [name]="isMenuOpen ? 'panel-right-open' : 'panel-right-close'"
+      [className]="'h-6 w-6 text-primary group-hover:text-highlight cursor-pointer transition-colors'">
+    ></lucide-icon>
   </div>
 
   @for(menuItem of menuItems; track $index) {

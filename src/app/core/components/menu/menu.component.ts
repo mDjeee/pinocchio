@@ -20,6 +20,7 @@ import { menuList } from './constants/menu-list';
 import { SvgIconComponent } from '../../../shared/components/common/svg-icon/svg-icon.component';
 import { MenuItemComponent } from '../../../shared/components/menu-item/menu-item.component';
 import { slideInOutAnimation } from '../../../shared/animations/slide-in-out.animation';
+import { LucideAngularModule } from 'lucide-angular';
 
 export interface IMenu {
   title: string;
@@ -56,6 +57,7 @@ export interface IMenu {
     MatDivider,
     SvgIconComponent,
     MenuItemComponent,
+    LucideAngularModule,
   ],
   standalone: true,
   templateUrl: './menu.component.html',

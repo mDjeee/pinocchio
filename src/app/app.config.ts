@@ -42,7 +42,16 @@ import {
   Edit,
   Info,
   Pencil,
-  UserRoundPlus, Building2, Ellipsis, Banknote, ShieldCheck, BellPlus, LayoutList,
+  UserRoundPlus,
+  Building2,
+  Ellipsis,
+  Banknote,
+  ShieldCheck,
+  BellPlus,
+  LayoutList,
+  LogOutIcon,
+  PanelRightClose,
+  PanelRightOpen,
 } from 'lucide-angular';
 import { headersInterceptor } from './core/interceptors/headers.interceptor';
 
@@ -100,6 +109,9 @@ export const appConfig: ApplicationConfig = {
         ShieldCheck,
         BellPlus,
         LayoutList,
+        LogOutIcon,
+        PanelRightClose,
+        PanelRightOpen,
       })
     )
   ]
