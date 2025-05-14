@@ -17,6 +17,7 @@ import { NgClass, NgIf } from '@angular/common';
 import { User } from '../../../../shared/interfaces/user.interface';
 import { ValidationService } from '../../../../core/services/validation.service';
 import { DigitMaskDirective } from '../../../../shared/directives/digit-mask.directive';
+import { RoleEnum } from '../../../../shared/interfaces/role.interface';
 
 @Component({
   selector: 'app-users-create',
@@ -51,6 +52,8 @@ export class UsersCreateComponent implements OnInit {
   id = '';
   user?: User;
 
+  roleTypes = Object.values(RoleEnum);
+
   constructor(
     private fb: FormBuilder,
     private destroyRef: DestroyRef,
@@ -66,6 +69,7 @@ export class UsersCreateComponent implements OnInit {
       lastName: ['', [Validators.required, Validators.maxLength(100)]],
       phoneNumber: ['', [Validators.required, this.validationService.validateUzPhoneNumber]],
       email: ['', [Validators.required, this.validationService.validateEmail]],
+      role: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
@@ -92,7 +96,7 @@ export class UsersCreateComponent implements OnInit {
         next: (res) => {
           this.user = res;
           this.userForm.patchValue({
-            ...this.user
+            ...this.user,
           });
         },
         error: (err: any) => {
