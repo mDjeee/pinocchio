@@ -16,7 +16,6 @@ import { MatOption } from '@angular/material/core';
 import { MatSelect } from '@angular/material/select';
 import { NgIf } from '@angular/common';
 import { CompanyUserService } from '../../../../core/services/company-user.service';
-import { RoleEnum } from '../../../interfaces/role.interface';
 
 @Component({
   selector: 'app-attach-user-modal',
@@ -42,7 +41,6 @@ import { RoleEnum } from '../../../interfaces/role.interface';
 export class AttachUserModalComponent implements OnInit {
   userForm: FormGroup;
   organizations: any[] = [];
-  roleTypes = Object.values(RoleEnum);
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public user: User,
@@ -56,7 +54,6 @@ export class AttachUserModalComponent implements OnInit {
     this.userForm = this.fb.group({
       userId: [this.user.id, [Validators.required]],
       companyId: [null, [Validators.required]],
-      role: [null, [Validators.required]],
     });
   }
 
@@ -79,19 +76,19 @@ export class AttachUserModalComponent implements OnInit {
 
   onSubmit() {
     if (this.userForm.valid) {
-      this.updateUser();
+      this.attachUser();
     } else {
       this.userForm.markAllAsTouched();
     }
   }
 
-  updateUser() {
+  attachUser() {
     const payload = this.userForm.getRawValue();
     this.companyUserService.attachUser(payload)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: (res: any) => {
-          this.toastrService.success('Пользователь успешно имзенён!');
+          this.toastrService.success('Пользователь успешно прикреплён!');
           this.matDialogRef.close('update');
         },
         error: (err: any) => {
