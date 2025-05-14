@@ -33,3 +33,9 @@ export interface CompanyUser {
   },
   status: string,
 }
+
+export interface AttachCompanyUser {
+  userId: number;
+  companyId: number;
+  roleEnum: RoleEnum;
+}

@@ -18,7 +18,7 @@
     <div class="flex flex-col gap-y-5">
       <div class="text-lg font-medium">
         <span class="text-gray-500">Имя: </span>
-        <span>{{ user.firstName }}</span>
+        <span>{{ user.firstName }} {{ user.lastName }}</span>
       </div>
 
       <div class="text-lg font-medium">
@@ -28,7 +28,7 @@
       <!-- Organization -->
       <mat-form-field appearance="outline" class="w-full">
         <mat-label>Организация</mat-label>
-        <mat-select formControlName="org_ids" required multiple>
+        <mat-select formControlName="companyId" required>
           @for(org of organizations; track $index) {
             <mat-option [value]="org.id">
               {{ org.name }}
@@ -42,9 +42,25 @@
           name="chevron-down"
         ></lucide-icon>
 
-        <mat-error *ngIf="f['org_ids'].hasError('required')">
+        <mat-error *ngIf="f['companyId'].hasError('required')">
           Обязательное поле
         </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Роль</mat-label>
+
+        <mat-select formControlName="role">
+          @for(role of roleTypes; track $index) {
+            <mat-option [value]="role">{{ role }}</mat-option>
+          }
+        </mat-select>
+
+        <lucide-icon
+          class="mr-2 text-green-500"
+          matSuffix
+          name="chevron-down"
+        ></lucide-icon>
       </mat-form-field>
     </div>
 

@@ -15,6 +15,8 @@ import { MatInput } from '@angular/material/input';
 import { MatOption } from '@angular/material/core';
 import { MatSelect } from '@angular/material/select';
 import { NgIf } from '@angular/common';
+import { CompanyUserService } from '../../../../core/services/company-user.service';
+import { RoleEnum } from '../../../interfaces/role.interface';
 
 @Component({
   selector: 'app-attach-user-modal',
@@ -40,18 +42,21 @@ import { NgIf } from '@angular/common';
 export class AttachUserModalComponent implements OnInit {
   userForm: FormGroup;
   organizations: any[] = [];
+  roleTypes = Object.values(RoleEnum);
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public user: User,
     private fb: FormBuilder,
     private destroyRef: DestroyRef,
-    private userService: UsersService,
+    private companyUserService: CompanyUserService,
     private companyService: CompanyService,
     private toastrService: ToastrService,
     private matDialogRef: MatDialogRef<AttachUserModalComponent>,
   ) {
     this.userForm = this.fb.group({
-      org_ids: ['', [Validators.required]],
+      userId: [this.user.id, [Validators.required]],
+      companyId: [null, [Validators.required]],
+      role: [null, [Validators.required]],
     });
   }
 
@@ -59,29 +64,12 @@ export class AttachUserModalComponent implements OnInit {
     this.loadOrganizations();
   }
 
-  getUserById() {
-    this.userService.getUserById(this.user.id)
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe({
-        next: (res) => {
-          this.user = res;
-          this.userForm.patchValue({
-            ...this.user
-          });
-        },
-        error: (err: any) => {
-          this.toastrService.error(err.message);
-        }
-      });
-  }
-
   loadOrganizations() {
     this.companyService.getCompanies()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: (res: any) => {
-          this.organizations = res.data;
-          this.getUserById();
+          this.organizations = res;
         },
         error: (err) => {
           this.toastrService.error('Не удалось загрузить организации');
@@ -99,7 +87,7 @@ export class AttachUserModalComponent implements OnInit {
 
   updateUser() {
     const payload = this.userForm.getRawValue();
-    this.userService.updateUser(this.user.id, payload)
+    this.companyUserService.attachUser(payload)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: (res: any) => {
