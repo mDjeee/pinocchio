@@ -15,34 +15,11 @@ export class CompanyService {
   ) {
   }
 
-  getCompanies(
-    pagination: {
-      page: number,
-      perPage: number
-    },
-    filter?: {
-      name?: string;
-      phoneNumber?: string;
-      address?: string;
-      email?: string;
-    }
-  ) {
+  getCompanies() {
 
     const url = `${this.apiUrl}/api/v1/company/all`;
-    const queryParams = new URLSearchParams();
 
-    queryParams.append('page', (pagination.page || 0).toString());
-    queryParams.append('perPage', (pagination.perPage || 15).toString());
-
-    if (filter) {
-      Object.entries(filter).forEach(([key, value]) => {
-        if (value !== undefined && value !== null && value !== '') {
-          queryParams.append(`filter[${key}]`, value.toString());
-        }
-      });
-    }
-
-    return this.http.get(`${url}?${queryParams.toString()}`);
+    return this.http.get(url);
   }
 
   getCompanyById(id: number) {

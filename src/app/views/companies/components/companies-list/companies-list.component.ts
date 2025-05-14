@@ -60,10 +60,7 @@ export class CompaniesListComponent implements OnInit {
   }
 
   getCompanies() {
-    this.companyService.getCompanies(
-      { page: this.page, perPage: this.size },
-      { }
-      )
+    this.companyService.getCompanies()
       .pipe(takeUntilDestroyed(this.destryoRef))
       .subscribe({
         next: (res: any) => {

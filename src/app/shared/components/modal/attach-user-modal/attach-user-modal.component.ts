@@ -76,7 +76,7 @@ export class AttachUserModalComponent implements OnInit {
   }
 
   loadOrganizations() {
-    this.companyService.getCompanies({ page: 1, perPage: 100 })
+    this.companyService.getCompanies()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: (res: any) => {
