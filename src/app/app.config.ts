@@ -44,6 +44,7 @@ import {
   Pencil,
   UserRoundPlus, Building2, Ellipsis, Banknote, ShieldCheck,
 } from 'lucide-angular';
+import { headersInterceptor } from './core/interceptors/headers.interceptor';
 
 registerLocaleData(localeRu);
 
@@ -56,6 +57,7 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withInterceptors([
       responseInterceptor,
       authInterceptor,
+      headersInterceptor,
       spinnerInterceptor,
       sessionInterceptor,
     ])),
