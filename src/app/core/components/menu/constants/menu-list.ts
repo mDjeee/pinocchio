@@ -22,6 +22,11 @@ export const menuList: IMenu[] = [
     route: '/tariff'
   },
   {
+    title: 'Тарифы компании',
+    lucideIcon: 'layout-list',
+    route: '/company-tariff'
+  },
+  {
     title: 'Роли',
     lucideIcon: 'shield-check',
     route: '/role'

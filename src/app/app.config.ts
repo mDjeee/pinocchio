@@ -42,7 +42,7 @@ import {
   Edit,
   Info,
   Pencil,
-  UserRoundPlus, Building2, Ellipsis, Banknote, ShieldCheck, BellPlus,
+  UserRoundPlus, Building2, Ellipsis, Banknote, ShieldCheck, BellPlus, LayoutList,
 } from 'lucide-angular';
 import { headersInterceptor } from './core/interceptors/headers.interceptor';
 
@@ -99,6 +99,7 @@ export const appConfig: ApplicationConfig = {
         Banknote,
         ShieldCheck,
         BellPlus,
+        LayoutList,
       })
     )
   ]

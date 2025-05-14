@@ -6,6 +6,7 @@ import { RedirectGuard } from '../core/guards/redirect.guard';
 import { tariffRoutes } from '../views/tariff/tariff.routes';
 import { clientRoutes } from '../views/client/client.routes';
 import { roleRoutes } from '../views/role/role.routes';
+import { companyTariffRoutes } from '../views/company-tariff/company-tariff.routes';
 
 export const viewRoutes: Routes = [
   {
@@ -17,6 +18,7 @@ export const viewRoutes: Routes = [
   ...adminsRoute,
   ...usersRoutes,
   ...tariffRoutes,
+  ...companyTariffRoutes,
   ...clientRoutes,
   ...roleRoutes,
   {

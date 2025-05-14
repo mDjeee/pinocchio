@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { GlobalSpinnerComponent } from '../../core/components/global-spinner/global-spinner.component';
 import { HeaderComponent } from '../../core/components/header/header.component';
 import { MatSidenav, MatSidenavContainer, MatSidenavContent } from '@angular/material/sidenav';
@@ -25,12 +25,4 @@ import { NgClass } from '@angular/common';
   styleUrl: './default-layout.component.scss'
 })
 export class DefaultLayoutComponent {
-  isMenuOpen = true;
-
-  @ViewChild('sidenav') sidenav: MatSidenav | undefined;
-
-  toggleMenu() {
-    this.isMenuOpen = !this.isMenuOpen;
-    this.sidenav?.open();
-  }
 }

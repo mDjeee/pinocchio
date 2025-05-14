@@ -1,19 +1,21 @@
-import { Component, DestroyRef, OnInit } from '@angular/core';
+import { Component, DestroyRef } from '@angular/core';
+import { Tariff } from '../../../../shared/interfaces/tariff.interface';
+import { TariffService } from '../../../../core/services/tariff.service';
 import { ToastrService } from 'ngx-toastr';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { Tariff } from '../../../../shared/interfaces/tariff.interface';
-import { TariffService } from '../../../../core/services/tariff.service';
+import { AgreeModalComponent } from '../../../../shared/components/modal/agree-modal/agree-modal.component';
+import { CompanyTariffService } from '../../../../core/services/company-tariff.service';
+import { CompanyTariff } from '../../../../shared/interfaces/company-tariff.interface';
 import { LucideAngularModule } from 'lucide-angular';
 import { MatMenu, MatMenuItem, MatMenuTrigger } from '@angular/material/menu';
 import { PaginatorComponent } from '../../../../shared/components/paginator/paginator.component';
 import { TableComponent } from '../../../../shared/components/table/table.component';
-import { tariffColumn } from '../../constants/tariff-column';
-import { AgreeModalComponent } from '../../../../shared/components/modal/agree-modal/agree-modal.component';
+import { companyTariffColumn } from '../../constants/company-tariff.column';
 
 @Component({
-  selector: 'app-tariff-list',
+  selector: 'app-company-tariff-list',
   imports: [
     LucideAngularModule,
     MatMenu,
@@ -24,19 +26,19 @@ import { AgreeModalComponent } from '../../../../shared/components/modal/agree-m
     MatMenuTrigger
   ],
   standalone: true,
-  templateUrl: './tariff-list.component.html',
-  styleUrl: './tariff-list.component.scss'
+  templateUrl: './company-tariff-list.component.html',
+  styleUrl: './company-tariff-list.component.scss'
 })
-export class TariffListComponent implements OnInit {
-  title = 'Тарифы';
-  tariffs: Tariff[] = [];
+export class CompanyTariffListComponent {
+  title = 'Тарифы компании';
+  tariffs: CompanyTariff[] = [];
   page = 0;
   size = 20;
   totalItems = 0;
 
   constructor(
     private destryoRef: DestroyRef,
-    private tariffService: TariffService,
+    private companyTariffService: CompanyTariffService,
     private toastrService: ToastrService,
     private matDialog: MatDialog,
     private activatedRoute: ActivatedRoute,
@@ -48,7 +50,7 @@ export class TariffListComponent implements OnInit {
   }
 
   getTariffs() {
-    this.tariffService.getTariffs()
+    this.companyTariffService.getTariffs()
       .pipe(takeUntilDestroyed(this.destryoRef))
       .subscribe({
         next: (res: any) => {
@@ -86,7 +88,7 @@ export class TariffListComponent implements OnInit {
   }
 
   delete(tariff: Tariff) {
-    this.tariffService.deleteTariff(tariff.id)
+    this.companyTariffService.deleteTariff(tariff.id)
       .pipe(takeUntilDestroyed(this.destryoRef))
       .subscribe({
         next: (res: any) => {
@@ -99,5 +101,5 @@ export class TariffListComponent implements OnInit {
       });
   }
 
-  protected readonly tariffColumn = tariffColumn;
+  protected readonly companyTariffColumn = companyTariffColumn;
 }
