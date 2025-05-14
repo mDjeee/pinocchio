@@ -1,0 +1,59 @@
+<div class="flex flex-col gap-y-5 p-5">
+  <div class="flex items-center justify-between">
+    <div class="text-xl text-gray-500">Добавить подписку к {{ company.name }}</div>
+
+    <lucide-icon
+      [className]="'cursor-pointer hover:text-gray-600'"
+      mat-dialog-close
+      name="x"
+    ></lucide-icon>
+  </div>
+
+  <div
+    class="flex flex-col gap-y-5"
+    [formGroup]="subForm"
+    (ngSubmit)="onSubmit()"
+  >
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Тариф</mat-label>
+
+      <mat-select formControlName="tariffId">
+        @for(tariff of tariffs; track $index) {
+          <mat-option [value]="tariff.id">{{ tariff.name }}</mat-option>
+        }
+      </mat-select>
+
+      <lucide-icon
+        class="mr-2 text-green-500"
+        matSuffix
+        name="chevron-down"
+      ></lucide-icon>
+    </mat-form-field>
+
+    <div class="flex self-end gap-x-5 items-center">
+      <button
+        type="button"
+        class="px-4 py-2 text-sm font-medium text-white bg-gray-600 rounded-md hover:bg-gray-700 focus:outline-none"
+        mat-dialog-close
+      >
+        Назад
+      </button>
+
+      <button
+        type="submit"
+        (click)="onSubmit()"
+        class="px-4 py-2 flex gap-x-2.5 items-center text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none"
+        [ngClass]="{'opacity-50': subForm.invalid}"
+      >
+        @if(loading) {
+          <span class="flex items-center">
+            <mat-spinner diameter="20" class="mr-2"></mat-spinner>
+            В процессе...
+          </span>
+        } @else {
+          <span>Создать подписку</span>
+        }
+      </button>
+    </div>
+  </div>
+</div>

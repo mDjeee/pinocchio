@@ -13,6 +13,9 @@ import { MatMenu, MatMenuItem, MatMenuTrigger } from '@angular/material/menu';
 import { SvgIconComponent } from '../../../../shared/components/common/svg-icon/svg-icon.component';
 import { LucideAngularModule } from 'lucide-angular';
 import { AgreeModalComponent } from '../../../../shared/components/modal/agree-modal/agree-modal.component';
+import {
+  SubscribeCompanyModalComponent
+} from '../../../../shared/components/modal/subscribe-company-modal/subscribe-company-modal.component';
 
 @Component({
   selector: 'app-companies-list',
@@ -93,6 +96,19 @@ export class CompaniesListComponent implements OnInit {
     this.page = event.page;
     this.size = event.size;
     this.getCompanies();
+  }
+
+  openSubscribeModal(org: Organization) {
+    const dialogRef = this.matDialog.open(SubscribeCompanyModalComponent, {
+      width: '400px',
+      data: org,
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result === 'update') {
+        this.getCompanies();
+      }
+    })
   }
 
   deleteOrg(org: Organization) {

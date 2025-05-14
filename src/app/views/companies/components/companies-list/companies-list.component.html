@@ -84,6 +84,21 @@
 
     <button
       mat-menu-item
+      (click)="openSubscribeModal(row)"
+    >
+      <div
+        class="w-full flex gap-x-2 items-center cursor-pointer"
+      >
+        <lucide-icon
+          [className]="'text-orange-500'"
+          name="bell-plus"
+        ></lucide-icon>
+        <div class="text-xs font-medium">Добавить подписку</div>
+      </div>
+    </button>
+
+    <button
+      mat-menu-item
       (click)="deleteOrg(row)"
     >
       <div
