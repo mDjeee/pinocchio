@@ -83,7 +83,7 @@ export class AuthComponent {
             this.storageService.setToken(tokenData.token);
             this.storageService.setUserDetail(res);
 
-            this.router.navigate(['/companies']);
+            this.router.navigate(['/dashboard']);
           },
           error: (err) => {
             this.toastrService.error(err.message);
