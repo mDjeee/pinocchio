@@ -9,6 +9,7 @@ import { roleRoutes } from '../views/role/role.routes';
 import { companyTariffRoutes } from '../views/company-tariff/company-tariff.routes';
 import { companyUserRoutes } from '../views/company-user/company-user.routes';
 import { dashboardRoutes } from '../views/dashboard/dashboard.routes';
+import { subscriptionsRoutes } from '../views/subscriptions/subsrcriptions.routes';
 
 export const viewRoutes: Routes = [
   {
@@ -25,6 +26,7 @@ export const viewRoutes: Routes = [
   ...clientRoutes,
   ...roleRoutes,
   ...companyUserRoutes,
+  ...subscriptionsRoutes,
   {
     path: '**',
     loadComponent: () => import('../views/not-found-page/not-found-page.component')

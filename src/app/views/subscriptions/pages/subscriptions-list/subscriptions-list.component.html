@@ -1,0 +1,29 @@
+<div class="flex flex-col gap-y-5 min-h-full">
+  <div class="flex justify-between items-center">
+    <div class="text-[#2B2D33] text-[22px] font-medium">{{ title }}</div>
+  </div>
+
+  <app-subscriptions-filter
+    (filterApplied)="updateFilter($event)"
+  ></app-subscriptions-filter>
+
+  <app-table
+    [numbering]="true"
+    [columns]="subsColumn"
+    [data]="subscriptions"
+    [additionalTemplate]="additionalTemplate"
+  ></app-table>
+
+  <app-paginator
+    class="mt-auto"
+    [currentPage]="page + 1"
+    [totalItems]="totalItems"
+    [itemsPerPage]="size"
+    (pageChange)="pageChange($event)"
+  ></app-paginator>
+</div>
+
+<ng-template #additionalTemplate let-row>
+  <div class="w-full h-full flex items-center justify-between">
+  </div>
+</ng-template>

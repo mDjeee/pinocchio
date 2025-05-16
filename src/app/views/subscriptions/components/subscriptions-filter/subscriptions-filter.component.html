@@ -1,0 +1,39 @@
+<form [formGroup]="filterForm" (ngSubmit)="applyFilter()" class="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
+  <!-- Date range -->
+  <mat-form-field appearance="outline" class="col-span-2">
+    <mat-label>Диапазон дат</mat-label>
+    <mat-date-range-input [formGroup]="filterForm" [rangePicker]="picker">
+      <input matStartDate formControlName="dateFrom" placeholder="С">
+      <input matEndDate formControlName="dateTo" placeholder="По">
+    </mat-date-range-input>
+    <mat-datepicker-toggle matSuffix [for]="picker" />
+    <mat-date-range-picker #picker></mat-date-range-picker>
+  </mat-form-field>
+
+  <!-- Company -->
+<!--  <mat-form-field appearance="outline">-->
+<!--    <mat-label>Компания</mat-label>-->
+<!--    <mat-select formControlName="companyId">-->
+<!--      <mat-option *ngFor="let company of companies" [value]="company.id">-->
+<!--        {{ company.name }}-->
+<!--      </mat-option>-->
+<!--    </mat-select>-->
+<!--  </mat-form-field>-->
+
+  <!-- User -->
+<!--  <mat-form-field appearance="outline">-->
+<!--    <mat-label>Пользователь</mat-label>-->
+<!--    <mat-select formControlName="userId">-->
+<!--      <mat-option *ngFor="let user of users" [value]="user.id">-->
+<!--        {{ user.name }}-->
+<!--      </mat-option>-->
+<!--    </mat-select>-->
+<!--  </mat-form-field>-->
+
+  <button
+    type="submit"
+    class="px-4 py-2 text-sm font-medium text-white bg-blue-500 rounded-md hover:bg-blue-600"
+  >
+    Применить
+  </button>
+</form>
