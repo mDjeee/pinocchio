@@ -16,4 +16,12 @@ export class StatsComponent {
     allAmount: number;
     amount: number;
   };
+
+  statsList = [
+    { key: 'allUserCount', label: 'Всего клиентов' },
+    { key: 'newMembers', label: 'Новые клиенты' },
+    { key: 'activeMembers', label: 'Активные клиенты' },
+    { key: 'churnCount', label: 'Больше не посещают' },
+    { key: 'amount', label: 'Доход за период' }
+  ] as const;
 }
