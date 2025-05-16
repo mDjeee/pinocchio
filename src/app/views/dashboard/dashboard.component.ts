@@ -145,36 +145,70 @@ export class DashboardComponent implements OnInit {
       .subscribe({
         next: (res: any) => {
           console.log('res', res);
-          this.mockStats = res;
-          this.convertData(this.mockStats);
+
+          let statsArray: Statistics[] = [];
+
+          if (Array.isArray(res)) {
+            statsArray = res;
+          } else if (res && Array.isArray(res.data)) {
+            statsArray = res.data;
+          }
+
+          this.mockStats = statsArray;
+          this.convertData(statsArray);
         },
         error: (err: any) => {
-          this.toastrService.error(err.message);
+          this.toastrService.error(err.message || 'Ошибка загрузки статистики');
+          this.mockStats = [];
+          this.convertData([]);
         }
       });
   }
 
+
   convertData(mockStats: Statistics[]) {
+    if (!Array.isArray(mockStats) || mockStats.length === 0) {
+      this.summaryStats = {
+        allUserCount: 0,
+        newMembers: 0,
+        activeMembers: 0,
+        churnCount: 0,
+        allAmount: 0,
+        amount: 0
+      };
+
+      this.chartData = {
+        users: [],
+        active: [],
+        labels: [],
+        ratios: [0, 0],
+        amounts: [],
+        newUsers: [0, 0]
+      };
+
+      return;
+    }
+
     this.summaryStats = {
-      allUserCount: mockStats.reduce((a, b) => a + b.allUserCount, 0),
-      newMembers: mockStats.reduce((a, b) => a + b.newMembers, 0),
-      activeMembers: mockStats.reduce((a, b) => a + b.activeMembers, 0),
-      churnCount: mockStats.reduce((a, b) => a + b.churnCount, 0),
-      allAmount: mockStats.reduce((a, b) => a + b.allAmount, 0),
-      amount: mockStats.reduce((a, b) => a + b.amount, 0),
+      allUserCount: mockStats.reduce((a, b) => a + b.allUserCount, 0) || 0,
+      newMembers: mockStats.reduce((a, b) => a + b.newMembers, 0) || 0,
+      activeMembers: mockStats.reduce((a, b) => a + b.activeMembers, 0) || 0,
+      churnCount: mockStats.reduce((a, b) => a + b.churnCount, 0) || 0,
+      allAmount: mockStats.reduce((a, b) => a + b.allAmount, 0) || 0,
+      amount: mockStats.reduce((a, b) => a + b.amount, 0) || 0
     };
 
-    this.chartData.users = mockStats.map(s => s.allUserCount);
-    this.chartData.active = mockStats.map(s => s.activeMembers);
-    this.chartData.labels = mockStats.map(s => s.date);
-    this.chartData.amounts = mockStats.map(s => s.amount);
+    this.chartData.users = mockStats.map(s => s.allUserCount || 0);
+    this.chartData.active = mockStats.map(s => s.activeMembers || 0);
+    this.chartData.labels = mockStats.map(s => s.date || '');
+    this.chartData.amounts = mockStats.map(s => s.amount || 0);
     this.chartData.ratios = [
-      this.summaryStats.activeMembers,
-      this.summaryStats.churnCount
-    ]
+      this.summaryStats.activeMembers || 0,
+      this.summaryStats.churnCount || 0
+    ];
     this.chartData.newUsers = [
-      this.summaryStats.allUserCount,
-      this.summaryStats.newMembers
+      this.summaryStats.allUserCount || 0,
+      this.summaryStats.newMembers || 0
     ];
   }
 

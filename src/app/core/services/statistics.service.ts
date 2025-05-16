@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { StatisticsFilter } from '../../shared/interfaces/statistics.interface';
 
 @Injectable({
@@ -14,8 +14,15 @@ export class StatisticsService {
   ) {
   }
 
-  getStatistics(companyId: number, payload: StatisticsFilter) {
+  getStatistics(companyId: number, filter: StatisticsFilter) {
     const url = `${this.apiUrl}/api/v1/company-user/get-company-users/statistics/${companyId}`;
-    return this.http.post(url, payload);
+
+    const params = new HttpParams()
+      .set('dateFrom', filter.dateFrom)
+      .set('dateTo', filter.dateTo)
+      .set('isDaily', filter.isDaily) // Enum будет автоматически сериализован в строку
+      .set('byBranch', filter.byBranch.toString());
+
+    return this.http.get(url, { params });
   }
 }
