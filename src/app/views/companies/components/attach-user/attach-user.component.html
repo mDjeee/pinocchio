@@ -52,6 +52,24 @@
       </mat-error>
     </mat-form-field>
 
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Компания</mat-label>
+      <mat-select formControlName="companyId">
+        @for(org of organizations; track $index) {
+          <mat-select [value]="org.id">{{ org.name }}</mat-select>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Роль</mat-label>
+      <mat-select formControlName="role">
+        @for(role of roleGroup; track $index) {
+          <mat-select [value]="role">{{ role }}</mat-select>
+        }
+      </mat-select>
+    </mat-form-field>
+
 <!--    <div class="flex flex-col gap-y-5">-->
 <!--      -->
 <!--    </div>-->

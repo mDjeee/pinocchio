@@ -16,6 +16,8 @@ import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute, Router } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { OrganizationDetail } from '../../../../shared/interfaces/company.interface';
+import { CompanyUserService } from '../../../../core/services/company-user.service';
+import { RoleEnum } from '../../../../shared/interfaces/role.interface';
 
 @Component({
   selector: 'app-attach-user-modal',
@@ -47,11 +49,13 @@ export class AttachUserComponent implements OnInit {
   companyId?: number;
   orgDetail?: OrganizationDetail;
   inn = '';
+  roleGroup = Object.values(RoleEnum);
 
   constructor(
     private fb: FormBuilder,
     private destroyRef: DestroyRef,
     private userService: UsersService,
+    private companyUserService: CompanyUserService,
     private companyService: CompanyService,
     private toastrService: ToastrService,
     private router: Router,
@@ -61,8 +65,10 @@ export class AttachUserComponent implements OnInit {
     this.userForm = this.fb.group({
       full_name: ['', [Validators.required, Validators.maxLength(100)]],
       phone: ['', [Validators.required, Validators.pattern(/^998\d{9}$/)]],
-      org_ids: [[], [Validators.required]],
-      password: ['', [Validators.required, Validators.minLength(8)]],
+      companyId: [null, [Validators.required]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      role: [null, [Validators.required]],
+      status: ['ACTIVE'],
     });
   }
 
@@ -115,7 +121,7 @@ export class AttachUserComponent implements OnInit {
 
   createUser() {
     const payload = this.userForm.getRawValue();
-    this.userService.createUser(payload)
+    this.companyUserService.addCompanyUser(payload)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: (res: any) => {
