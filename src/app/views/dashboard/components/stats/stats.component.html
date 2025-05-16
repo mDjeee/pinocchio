@@ -1,0 +1,22 @@
+<div class="flex items-center justify-between gap-4">
+  <div class="w-full bg-white p-4 rounded-lg shadow text-center border border-gray-100">
+    <div class="text-sm text-gray-500">Всего клиентов</div>
+    <div class="text-xl font-bold">{{ stats.allUserCount }}</div>
+  </div>
+  <div class="w-full bg-white p-4 rounded-lg shadow text-center border border-gray-100">
+    <div class="text-sm text-gray-500">Новые клиенты</div>
+    <div class="text-xl font-bold">{{ stats.newMembers }}</div>
+  </div>
+  <div class="w-full bg-white p-4 rounded-lg shadow text-center border border-gray-100">
+    <div class="text-sm text-gray-500">Активные клиенты</div>
+    <div class="text-xl font-bold">{{ stats.activeMembers }}</div>
+  </div>
+  <div class="w-full bg-white p-4 rounded-lg shadow text-center border border-gray-100">
+    <div class="text-sm text-gray-500">Больше не посещают</div>
+    <div class="text-xl font-bold">{{ stats.churnCount }}</div>
+  </div>
+  <div class="w-full bg-white p-4 rounded-lg shadow text-center border border-gray-100">
+    <div class="text-sm text-gray-500">Доход за период</div>
+    <div class="text-xl font-bold">{{ stats.amount }}</div>
+  </div>
+</div>

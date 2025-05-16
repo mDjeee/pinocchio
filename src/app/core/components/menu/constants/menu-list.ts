@@ -2,6 +2,11 @@ import { IMenu } from '../menu.component';
 
 export const menuList: IMenu[] = [
   {
+    title: 'Дэшбоард',
+    lucideIcon: 'gauge',
+    route: '/dashboard',
+  },
+  {
     title: 'Компании',
     lucideIcon: 'building-2',
     route: '/companies',

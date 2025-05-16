@@ -1,0 +1,83 @@
+<div class="flex flex-col gap-y-5">
+  <form [formGroup]="filterForm" (ngSubmit)="applyFilter()" class="grid grid-cols-1 md:grid-cols-5 gap-4 items-center">
+    <!-- Date Range Picker -->
+    <mat-form-field appearance="outline" class="col-span-2">
+      <mat-label>Дата диапазон</mat-label>
+      <mat-date-range-input [formGroup]="filterForm" [rangePicker]="picker">
+        <input matStartDate formControlName="dateFrom" placeholder="С">
+        <input matEndDate formControlName="dateTo" placeholder="По">
+      </mat-date-range-input>
+
+      <mat-datepicker-toggle matSuffix [for]="picker">
+        <lucide-icon matDatepickerToggleIcon name="calendar-1" class="w-12"></lucide-icon>
+      </mat-datepicker-toggle>
+
+      <mat-date-range-picker #picker></mat-date-range-picker>
+    </mat-form-field>
+
+    <!-- Date Type Selector -->
+    <mat-form-field appearance="outline">
+      <mat-label>Тип даты</mat-label>
+      <mat-select formControlName="isDaily">
+        <mat-option [value]="DateTypeEnum.DAILY">Ежедневно</mat-option>
+        <mat-option [value]="DateTypeEnum.MONTHY">Ежемесячно</mat-option>
+        <mat-option [value]="DateTypeEnum.YEARLY">Ежегодно</mat-option>
+      </mat-select>
+
+      <lucide-icon
+        class="mr-2 text-green-500"
+        matSuffix
+        name="chevron-down"
+      ></lucide-icon>
+    </mat-form-field>
+
+    <!-- By Branch Checkbox -->
+    <mat-checkbox formControlName="byBranch">По филиалам</mat-checkbox>
+
+    <!-- Submit -->
+    <button
+      type="submit"
+      class="px-4 py-2 text-sm font-medium text-white bg-blue-500 rounded-md hover:bg-blue-700 focus:outline-none"
+    >
+      Применить
+    </button>
+  </form>
+
+  <app-stats [stats]="summaryStats"></app-stats>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+    <div class="flex flex-col gap-y-5">
+      <app-line-chart
+        class="flex justify-center items-center bg-white p-4 rounded-lg shadow-lg border border-gray-100"
+        [data]="chartData.amounts"
+        [labels]="chartData.labels"
+        axisLabel="Доход, сум"
+        title="Доход по датам"
+      ></app-line-chart>
+
+      <app-doughnut-chart
+        class="flex justify-center items-center bg-white p-4 rounded-lg shadow-lg border border-gray-100"
+        [data]="chartData.ratios"
+        [labels]="['Активные', 'Неактивные']"
+        title="Количество клиентов"
+      ></app-doughnut-chart>
+    </div>
+
+    <div class="flex flex-col gap-y-5">
+      <app-bar-chart
+        class="flex justify-center items-center bg-white p-4 rounded-lg shadow-lg border border-gray-100"
+        [data]="chartData.users"
+        [labels]="chartData.labels"
+        title="Количество активных клиентов"
+      ></app-bar-chart>
+
+      <app-pie-chart
+        class="flex justify-center items-center bg-white p-4 rounded-lg shadow-lg border border-gray-100"
+        [data]="chartData.newUsers"
+        [labels]="['Все клиенты', 'Новые']"
+        title="Клиенты"
+      ></app-pie-chart>
+    </div>
+  </div>
+</div>

@@ -4,5 +4,5 @@ import { inject } from '@angular/core';
 export const RedirectGuard: CanActivateFn = (route, state) => {
 
   const router = inject(Router);
-  return router.createUrlTree(['companies']);
+  return router.createUrlTree(['dashboard']);
 }

@@ -24,14 +24,20 @@
   --mdc-elevated-card-container-color: #ffffff;
   --mat-select-panel-background-color: #ffffff;
   --mat-menu-container-color: #ffffff;
+  --mat-datepicker-calendar-container-background-color: #ffffff;
+
+  --mat-datepicker-calendar-container-elevation-shadow:
+    0px 4px 20px rgba(0, 0, 0, 0.3),
+    0px 7px 10px rgba(0, 0, 0, 0.22);
 
   --mdc-outlined-text-field-outline-color: #608DF0; /* var(--mat-sys-secondary-container); */
 
   --mat-table-row-item-label-text-tracking: 0px;
 
-  --mdc-outlined-text-field-container-shape: 14px;
-  --mdc-dialog-container-shape: 14px;
-  --mat-bottom-sheet-container-shape: 14px;
+  --mat-datepicker-calendar-container-shape: 5px;
+  --mdc-outlined-text-field-container-shape: 5px;
+  --mdc-dialog-container-shape: 5px;
+  --mat-bottom-sheet-container-shape: 5px;
   --mat-bottom-sheet-container-background-color: var(--mat-sys-on-primary);
 
   --mat-table-header-container-height: 40px;

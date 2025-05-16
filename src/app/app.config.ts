@@ -51,7 +51,7 @@ import {
   LayoutList,
   LogOutIcon,
   PanelRightClose,
-  PanelRightOpen,
+  PanelRightOpen, Gauge, FunnelPlus, FunnelX, Calendar1,
 } from 'lucide-angular';
 import { headersInterceptor } from './core/interceptors/headers.interceptor';
 
@@ -112,6 +112,10 @@ export const appConfig: ApplicationConfig = {
         LogOutIcon,
         PanelRightClose,
         PanelRightOpen,
+        Gauge,
+        FunnelPlus,
+        FunnelX,
+        Calendar1,
       })
     )
   ]

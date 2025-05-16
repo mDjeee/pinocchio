@@ -5,7 +5,14 @@
       class="sticky shadow-2xl border border-gray-100"
     ></app-menu>
 
-    <main class="flex-1 min-w-0 bg-white border border-gray-100 p-6 shadow-2xl">
+    <main
+      class="flex-1 min-w-0 border border-gray-100 shadow-2xl p-6 "
+      [ngStyle]="{ 'background': routeData?.background || '#ffffff' }"
+      [ngClass]="{
+      'border border-gray-100': !routeData?.excludeBorder,
+      'shadow-2xl': !routeData?.excludeShadow,
+      }"
+    >
       <router-outlet></router-outlet>
     </main>
   </div>
