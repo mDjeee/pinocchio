@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { LucideAngularModule } from 'lucide-angular';
 import { SvgIconComponent } from '../../../shared/components/common/svg-icon/svg-icon.component';
 import { RouterLink } from '@angular/router';
 import { StorageService } from '../../services/storage.service';
+import { LoginResponse } from '../../../shared/interfaces/login-response.interface';
 
 @Component({
   selector: 'app-header-nav',
@@ -13,13 +14,15 @@ import { StorageService } from '../../services/storage.service';
   ],
   standalone: true,
   templateUrl: './header-nav.component.html',
-  styleUrl: './header-nav.component.scss'
+  styleUrl: './header-nav.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderNavComponent implements OnInit {
-  userDetail: any;
+  userDetail!: LoginResponse;
 
   constructor(
     private storageService: StorageService,
+    private _cdRef: ChangeDetectorRef,
   ) {
   }
 
@@ -29,5 +32,6 @@ export class HeaderNavComponent implements OnInit {
 
   getUserDetail() {
     this.userDetail = this.storageService.getUserDetail();
+    this._cdRef.detectChanges();
   }
 }
