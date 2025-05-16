@@ -25,5 +25,12 @@
 
 <ng-template #additionalTemplate let-row>
   <div class="w-full h-full flex items-center justify-between">
+    <span class="text-center">
+      @if(row) {
+        Да
+      } @else {
+        Нет
+      }
+    </span>
   </div>
 </ng-template>

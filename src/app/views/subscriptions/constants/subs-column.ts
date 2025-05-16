@@ -6,5 +6,5 @@ export const subsColumn: TableColumn[] = [
   { header: 'Цена', field: 'tariff.price' },
   { header: 'Период', field: 'tariff.periodMonth' },
   { header: 'Срок', field: 'expiredAt' },
-  { header: 'Активный', field: 'tariff.isActive' },
+  { header: 'Активный', field: 'additionalTemplate' },
 ];
