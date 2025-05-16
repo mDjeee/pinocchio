@@ -1,4 +1,4 @@
-import { Component, DestroyRef, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, DestroyRef, OnInit } from '@angular/core';
 import { DigitMaskDirective } from '../../../../shared/directives/digit-mask.directive';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LocationBackDirective } from '../../../../shared/directives/location-back.directive';
@@ -61,10 +61,13 @@ export class AttachUserComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private location: Location,
+    private _cdRef: ChangeDetectorRef,
   ) {
     this.userForm = this.fb.group({
-      full_name: ['', [Validators.required, Validators.maxLength(100)]],
-      phone: ['', [Validators.required, Validators.pattern(/^998\d{9}$/)]],
+      firstName: ['', [Validators.required, Validators.maxLength(100)]],
+      lastName: ['', [Validators.required, Validators.maxLength(100)]],
+      email: ['', [Validators.required]],
+      phoneNumber: ['', [Validators.required, Validators.pattern(/^998\d{9}$/)]],
       companyId: [null, [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       role: [null, [Validators.required]],
@@ -73,40 +76,17 @@ export class AttachUserComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.watchRoute();
+    this.getOrganizations();
   }
 
-  watchRoute() {
-    this.activatedRoute.params
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(param => {
-        this.companyId = param['id'];
-
-        if(this.companyId) {
-          this.userForm.patchValue({
-            org_ids: [+this.companyId],
-          });
-        }
-      });
-
-    this.activatedRoute.queryParams
+  getOrganizations() {
+    this.companyService.getCompanies()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
-        next: (query) => {
-          this.inn = query['inn'];
-          if(this.inn) {
-            this.getOrgDetail();
-          }
-        }
-      })
-  }
-
-  getOrgDetail() {
-    this.companyService.getCompanyByInn(this.inn)
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe({
-        next: (res) => {
-          this.orgDetail = res;
+        next: (res: any) => {
+          console.log('res', res);
+          this.organizations = res;
+          this._cdRef.detectChanges();
         }
       });
   }
