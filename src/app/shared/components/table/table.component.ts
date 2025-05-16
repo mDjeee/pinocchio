@@ -272,7 +272,7 @@ export class TableComponent {
   getNestedValue(obj: any, column: any) {
     let path: string = column.field;
     let data = path.split('.').reduce((o, key) => (o ? o[key] : null), obj);
-    if (path === 'docDate' || path === 'createdDate') {
+    if (path === 'docDate' || path === 'createdDate' || path === 'expiredAt') {
       if (data?.length > 11) {
         data = new Date(data).toLocaleDateString('ru-Ru', {day: 'numeric', month: 'numeric', year: 'numeric'})
       }
