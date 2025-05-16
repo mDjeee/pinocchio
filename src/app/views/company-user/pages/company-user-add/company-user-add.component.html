@@ -48,7 +48,7 @@
       <mat-form-field appearance="outline" class="w-full">
         <mat-label>Роль</mat-label>
 
-        <mat-select formControlName="roleEnum">
+        <mat-select formControlName="role">
           @for(role of roleTypes; track $index) {
             <mat-option [value]="role">{{ role }}</mat-option>
           }
