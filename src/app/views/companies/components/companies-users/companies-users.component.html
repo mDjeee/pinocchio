@@ -3,11 +3,14 @@
     <p class="text-lg font-medium text-gray-500">Прикреплённые пользователи</p>
 
     <button
-      class="px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-md hover:bg-green-700 focus:outline-none"
-      [routerLink]="['add-user']"
-      queryParamsHandling="merge"
+      class="flex gap-x-2 items-center cursor-pointer"
+      (click)="attachUser(company)"
     >
-      Добавить пользователя
+      <lucide-icon
+        [className]="'text-blue-500'"
+        name="user-round-plus"
+      ></lucide-icon>
+      <div class="text-xs font-medium">Прикрепить пользователя</div>
     </button>
   </div>
 

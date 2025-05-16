@@ -14,6 +14,13 @@ import { CompanyUser } from '../../../../shared/interfaces/company-user.interfac
 import { companyUserColumn } from '../../../company-user/constants/company-user.column';
 import { AgreeModalComponent } from '../../../../shared/components/modal/agree-modal/agree-modal.component';
 import { MatDialog } from '@angular/material/dialog';
+import {
+  AttachUserModalComponent
+} from '../../../../shared/components/modal/attach-user-modal/attach-user-modal.component';
+import { Organization } from '../../../../shared/interfaces/company.interface';
+import {
+  AttachUserForCompanyComponent
+} from '../../../../shared/components/modal/attach-user-for-company/attach-user-for-company.component';
 @Component({
   selector: 'app-companies-users',
   imports: [
@@ -31,6 +38,7 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class CompaniesUsersComponent implements OnInit {
   @Input() companyId!: number;
+  @Input() company?: Organization;
   page = 0;
   size = 10;
   totalItems = 0;
@@ -94,7 +102,22 @@ export class CompaniesUsersComponent implements OnInit {
         // User cancelled
       }
     });
+  }
 
+  attachUser(company?: Organization) {
+    const dialog = this.matDialog
+      .open(AttachUserForCompanyComponent, {
+        data: company,
+        width: '550px'
+      });
+
+    dialog.afterClosed()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(value => {
+        if(value === 'update') {
+          this.getCompanyUsers();
+        }
+      });
   }
 
   protected readonly companyUserColumn = companyUserColumn;

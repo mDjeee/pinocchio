@@ -12,11 +12,11 @@
     <!-- Full Name -->
     <mat-form-field appearance="outline" class="w-full">
       <mat-label>ФИО</mat-label>
-      <input matInput formControlName="full_name" required>
-      <mat-error *ngIf="f['full_name'].hasError('required')">
+      <input matInput formControlName="firstName" required>
+      <mat-error *ngIf="f['firstName'].hasError('required')">
         Обязательное поле
       </mat-error>
-      <mat-error *ngIf="f['full_name'].hasError('maxlength')">
+      <mat-error *ngIf="f['firstName'].hasError('maxlength')">
         Максимум 100 символов
       </mat-error>
     </mat-form-field>
@@ -24,11 +24,11 @@
     <!-- Phone -->
     <mat-form-field appearance="outline" class="w-full">
       <mat-label>Телефон</mat-label>
-      <input matInput formControlName="phone" required maxlength="12">
-      <mat-error *ngIf="f['phone'].hasError('required')">
+      <input matInput formControlName="phoneNumber" required maxlength="12">
+      <mat-error *ngIf="f['phoneNumber'].hasError('required')">
         Обязательное поле
       </mat-error>
-      <mat-error *ngIf="f['phone'].hasError('pattern')">
+      <mat-error *ngIf="f['phoneNumber'].hasError('pattern')">
         Введите корректный номер телефона
       </mat-error>
     </mat-form-field>

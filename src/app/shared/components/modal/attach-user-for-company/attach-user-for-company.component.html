@@ -1,0 +1,71 @@
+<div class="flex flex-col gap-y-2.5 p-5">
+  <!-- Header -->
+  <div class="mb-4 border-b flex justify-between">
+    <h2 class="text-lg font-bold mb-1 text-gray-600">
+      Прикрепить пользователя к организцаии
+    </h2>
+
+    <lucide-icon
+      [className]="'cursor-pointer hover:text-gray-600'"
+      mat-dialog-close
+      name="x"
+    ></lucide-icon>
+  </div>
+
+  <!-- Form -->
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-y-5">
+    <!-- Column 2 -->
+    <div class="flex flex-col gap-y-5">
+
+      <div class="text-lg font-medium">
+        <span class="text-gray-500">Наименование компании: </span>
+        <span>{{ company.name }}</span>
+      </div>
+
+      <!-- Organization -->
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Пользователь</mat-label>
+        <mat-select formControlName="userId" required>
+          @for(user of users; track $index) {
+            <mat-option
+              [value]="user.id"
+              class="!flex !items-center !justify-between"
+            >
+              <span>{{ user.firstName }} {{ user.lastName }} - </span>
+              <span>{{ user.role }}</span>
+            </mat-option>
+          }
+        </mat-select>
+
+        <lucide-icon
+          class="mr-2 text-green-500"
+          matSuffix
+          name="chevron-down"
+        ></lucide-icon>
+
+        <mat-error *ngIf="f['userId'].hasError('required')">
+          Обязательное поле
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <!-- Form Actions -->
+    <div class="flex justify-end gap-3 pt-4 md:col-span-2">
+      <button
+        type="button"
+        mat-dialog-close
+        class="px-4 py-2 text-sm font-medium text-white bg-gray-500 rounded-md hover:bg-gray-700 focus:outline-none"
+      >
+        Отмена
+      </button>
+
+      <button
+        type="submit"
+        [disabled]="userForm.invalid"
+        class="px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-md hover:bg-green-700 focus:outline-none"
+      >
+        Прикреить
+      </button>
+    </div>
+  </form>
+</div>
