@@ -23,14 +23,16 @@
   </div>
 
   @for(menuItem of menuItems; track $index) {
-    <app-menu-item
-      [isMenuOpen]="isMenuOpen"
-      [route]="menuItem.route"
-      [svgName]="menuItem?.svgName"
-      [lucideIcon]="menuItem?.lucideIcon"
-      [title]="menuItem.title"
-      [query]="menuItem.query"
-      [compareQuery]="menuItem.compareQuery"
-    ></app-menu-item>
+    @if(!menuItem.canActivate?.length || checkHasPermission(menuItem?.canActivate)) {
+      <app-menu-item
+        [isMenuOpen]="isMenuOpen"
+        [route]="menuItem.route"
+        [svgName]="menuItem?.svgName"
+        [lucideIcon]="menuItem?.lucideIcon"
+        [title]="menuItem.title"
+        [query]="menuItem.query"
+        [compareQuery]="menuItem.compareQuery"
+      ></app-menu-item>
+    }
   }
 </div>

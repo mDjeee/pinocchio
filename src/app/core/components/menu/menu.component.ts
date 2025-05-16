@@ -21,6 +21,9 @@ import { SvgIconComponent } from '../../../shared/components/common/svg-icon/svg
 import { MenuItemComponent } from '../../../shared/components/menu-item/menu-item.component';
 import { slideInOutAnimation } from '../../../shared/animations/slide-in-out.animation';
 import { LucideAngularModule } from 'lucide-angular';
+import { viewsEnum } from '../../../shared/interfaces/views.enum';
+import { LoginResponse } from '../../../shared/interfaces/login-response.interface';
+import { StorageService } from '../../services/storage.service';
 
 export interface IMenu {
   title: string;
@@ -29,6 +32,7 @@ export interface IMenu {
   lucideIcon?: string;
   svgColor?: string;
   query?: any;
+  canActivate?: viewsEnum[];
   compareQuery?: boolean;
   children?: {
     title: string;
@@ -69,6 +73,7 @@ export class MenuComponent implements OnInit, OnChanges {
   @Input() isMenuOpen = true;
   expandedMenuItems: Record<string, boolean> = {};
   url = '';
+  user!: LoginResponse;
 
   menuItems: IMenu[] = menuList;
 
@@ -80,10 +85,12 @@ export class MenuComponent implements OnInit, OnChanges {
     private _cdRef: ChangeDetectorRef,
     private router: Router,
     private destroyRef: DestroyRef,
+    private storageService: StorageService,
   ) {
   }
 
   ngOnInit() {
+    this.user = this.storageService.getUserDetail();
     this.watchMenuExpand();
   }
 
@@ -91,6 +98,13 @@ export class MenuComponent implements OnInit, OnChanges {
     if(changes['isMenuOpen'] && changes['isMenuOpen'].currentValue != undefined) {
       this._cdRef.detectChanges();
     }
+  }
+
+  checkHasPermission(viewEnums?: viewsEnum[]): boolean {
+    if(!viewEnums) return  true;
+    if(!viewEnums?.length) return true;
+    const hasViews = this.user?.windows || [];
+    return <boolean>viewEnums?.some((view: any) => hasViews.includes(view));
   }
 
   watchMenuExpand() {
