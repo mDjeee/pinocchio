@@ -1,1 +1,58 @@
-<p>branch-add works!</p>
+<div class="">
+  <h2 class="text-2xl font-bold text-gray-800 mb-6">
+    {{ isEditMode ? 'Обновить филиал' : 'Создать новый филиал' }}
+  </h2>
+
+  <div *ngIf="errorMessage" class="mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
+    {{ errorMessage }}
+  </div>
+
+  <form [formGroup]="branchForm" (ngSubmit)="onSubmit()" class="space-y-4">
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Наименование</mat-label>
+      <input matInput formControlName="name" required />
+      <mat-error *ngIf="f['name'].hasError('required')">Обязательное поле</mat-error>
+      <mat-error *ngIf="f['name'].hasError('maxlength')">Максимум 100 символов</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Адрес</mat-label>
+      <input matInput formControlName="address" required />
+      <mat-error *ngIf="f['address'].hasError('required')">Обязательное поле</mat-error>
+      <mat-error *ngIf="f['address'].hasError('maxlength')">Максимум 200 символов</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Телефон</mat-label>
+      <input
+        matInput
+        appDigitMask
+        maxlength="12"
+        formControlName="phoneNumber"
+        required
+        placeholder="998 __ ___ __ __"
+      />
+      <mat-error *ngIf="f['phoneNumber'].hasError('required')">Обязательное поле</mat-error>
+      <mat-error *ngIf="f['phoneNumber'].hasError('maxlength')">Максимум 12 символов</mat-error>
+      <mat-error *ngIf="f['phoneNumber'].hasError('invalidPhoneNumber')">
+        Введите корректный номер (998__ ___ __ __)
+      </mat-error>
+    </mat-form-field>
+
+<!--    <mat-form-field appearance="outline" class="w-full">-->
+<!--      <mat-label>ID компании</mat-label>-->
+<!--      <input matInput type="number" formControlName="companyId" required />-->
+<!--      <mat-error *ngIf="f['companyId'].hasError('required')">Обязательное поле</mat-error>-->
+<!--    </mat-form-field>-->
+
+    <div class="flex justify-end space-x-3 pt-4">
+      <button type="button" appLocationBack class="px-4 py-2 text-sm font-medium text-white bg-gray-500 rounded-md hover:bg-gray-700">
+        Назад
+      </button>
+      <button type="submit" [disabled]="isLoading || branchForm.invalid" class="px-4 py-2 text-sm font-medium text-white bg-green-500 rounded-md hover:bg-green-700">
+        <span *ngIf="!isLoading">{{ isEditMode ? 'Обновить' : 'Создать' }}</span>
+        <app-spin-process *ngIf="isLoading"></app-spin-process>
+      </button>
+    </div>
+  </form>
+</div>

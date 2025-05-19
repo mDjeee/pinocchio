@@ -50,6 +50,12 @@ export const menuList: IMenu[] = [
     route: '/company-tariff',
     canActivate: [viewsEnum.COMPANY_USER_TARIFFS],
   },
+  {
+    title: 'Филиал',
+    lucideIcon: 'building-2',
+    route: '/branch',
+    canActivate: [viewsEnum.COMPANY_USER_STATISTICS],
+  },
   // {
   //   title: 'Роли',
   //   lucideIcon: 'shield-check',

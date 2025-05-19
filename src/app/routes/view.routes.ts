@@ -10,6 +10,7 @@ import { companyTariffRoutes } from '../views/company-tariff/company-tariff.rout
 import { companyUserRoutes } from '../views/company-user/company-user.routes';
 import { dashboardRoutes } from '../views/dashboard/dashboard.routes';
 import { subscriptionsRoutes } from '../views/subscriptions/subsrcriptions.routes';
+import { branchRoutes } from '../views/branch/branch.routes';
 
 export const viewRoutes: Routes = [
   {
@@ -27,6 +28,7 @@ export const viewRoutes: Routes = [
   ...roleRoutes,
   ...companyUserRoutes,
   ...subscriptionsRoutes,
+  ...branchRoutes,
   {
     path: '**',
     loadComponent: () => import('../views/not-found-page/not-found-page.component')
