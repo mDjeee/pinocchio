@@ -79,13 +79,13 @@ export class AuthComponent {
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe({
           next: (res: any) => {
-            const tokenData = this.tokenService.parseTokenResponse(res);
-            this.storageService.setToken(tokenData.token);
+            this.storageService.setToken(res.token);
             this.storageService.setUserDetail(res);
 
             this.router.navigate(['/dashboard']);
           },
           error: (err) => {
+            console.log(err)
             this.toastrService.error(err.message);
           }
         });

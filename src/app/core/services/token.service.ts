@@ -16,6 +16,7 @@ export class TokenService {
     expiresIn: number,
     refreshExpiresIn: number
   } {
+    console.log('token set', data.token)
     if (!data?.token) {
       throw new Error('Invalid token response');
     }

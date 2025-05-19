@@ -139,7 +139,7 @@ export class DashboardComponent implements OnInit {
       isDaily: rawValue.isDaily,
       byBranch: rawValue.byBranch
     };
-
+    if(!this.user.companyUserResponse) return;
     this.statisticsService.getStatistics(this.user.companyUserResponse.company.id, filter)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({

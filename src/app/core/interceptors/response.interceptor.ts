@@ -35,9 +35,10 @@ export const responseInterceptor: HttpInterceptorFn = (request, next) => {
             body: (response.body as any).result.data
           });
         } else {
+          console.log('res', response);
           // For error responses, throw the error or a default one
           const error = (response.body as any).error ?? {
-            message: 'Неизвестная ошибка',
+            message: (response.body as any)?.result?.message || 'Неизвестная ошибка',
             code: -1
           };
           throw error;
