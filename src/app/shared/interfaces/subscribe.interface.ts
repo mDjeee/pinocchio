@@ -9,6 +9,7 @@ export interface CreateSubscribeUser {
   companyId: number;
   tariffId: number;
   userId: number;
+  branchId: number;
 }
 
 export interface SubscriptionsFilter {

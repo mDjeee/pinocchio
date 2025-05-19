@@ -32,6 +32,22 @@
       ></lucide-icon>
     </mat-form-field>
 
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Филал</mat-label>
+
+      <mat-select formControlName="branchId">
+        @for(branch of bracnhes; track $index) {
+          <mat-option [value]="branch.id">{{ branch.name }}</mat-option>
+        }
+      </mat-select>
+
+      <lucide-icon
+        class="mr-2 text-green-500"
+        matSuffix
+        name="chevron-down"
+      ></lucide-icon>
+    </mat-form-field>
+
     <div class="flex self-end gap-x-5 items-center">
       <button
         type="button"
