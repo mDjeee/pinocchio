@@ -61,18 +61,19 @@
         ></lucide-icon>
       </mat-form-field>
 
-      <mat-form-field appearance="outline" class="w-full">
-        <mat-label>Статус</mat-label>
-        <input
-          matInput
-          formControlName="status"
-          required
-          placeholder="Статус"
-        >
-        <mat-error *ngIf="f['status'].hasError('required')">
-          Обязательное поле
-        </mat-error>
-      </mat-form-field>
+<!--      <mat-form-field appearance="outline" class="w-full">-->
+<!--        <mat-label>Статус</mat-label>-->
+<!--        <input-->
+<!--          matInput-->
+<!--          formControlName="status"-->
+<!--          required-->
+<!--          readonly-->
+<!--          placeholder="Статус"-->
+<!--        >-->
+<!--        <mat-error *ngIf="f['status'].hasError('required')">-->
+<!--          Обязательное поле-->
+<!--        </mat-error>-->
+<!--      </mat-form-field>-->
     </div>
 
 
@@ -112,26 +113,26 @@
         </mat-error>
       </mat-form-field>
 
-      <mat-form-field appearance="outline" class="w-full">
-        <mat-label>Организация</mat-label>
-        <mat-select formControlName="companyId" required>
-          @for(org of organizations; track $index) {
-            <mat-option [value]="org.id">
-              {{ org.name }}
-            </mat-option>
-          }
-        </mat-select>
+<!--      <mat-form-field appearance="outline" class="w-full">-->
+<!--        <mat-label>Организация</mat-label>-->
+<!--        <mat-select formControlName="companyId" required>-->
+<!--          @for(org of organizations; track $index) {-->
+<!--            <mat-option [value]="org.id">-->
+<!--              {{ org.name }}-->
+<!--            </mat-option>-->
+<!--          }-->
+<!--        </mat-select>-->
 
-        <lucide-icon
-          class="mr-2 text-green-600"
-          matSuffix
-          name="chevron-down"
-        ></lucide-icon>
+<!--        <lucide-icon-->
+<!--          class="mr-2 text-green-600"-->
+<!--          matSuffix-->
+<!--          name="chevron-down"-->
+<!--        ></lucide-icon>-->
 
-        <mat-error *ngIf="f['companyId'].hasError('required')">
-          Обязательное поле
-        </mat-error>
-      </mat-form-field>
+<!--        <mat-error *ngIf="f['companyId'].hasError('required')">-->
+<!--          Обязательное поле-->
+<!--        </mat-error>-->
+<!--      </mat-form-field>-->
 
       <!-- Password -->
       <mat-form-field appearance="outline" class="w-full">

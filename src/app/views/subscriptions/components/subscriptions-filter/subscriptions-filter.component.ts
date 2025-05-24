@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatFormField, MatLabel, MatSuffix } from '@angular/material/form-field';
 import {
-  MatDatepickerToggle,
+  MatDatepickerToggle, MatDatepickerToggleIcon,
   MatDateRangeInput,
   MatDateRangePicker,
   MatEndDate,
@@ -16,6 +16,7 @@ import { LoginResponse } from '../../../../shared/interfaces/login-response.inte
 import { NgForOf } from '@angular/common';
 import { ClientService } from '../../../../core/services/client.service';
 import { UsersService } from '../../../../core/services/users.service';
+import { LucideAngularModule } from 'lucide-angular';
 
 @Component({
   selector: 'app-subscriptions-filter',
@@ -31,6 +32,9 @@ import { UsersService } from '../../../../core/services/users.service';
     MatStartDate,
     MatEndDate,
     NgForOf,
+    LucideAngularModule,
+    MatDatepickerToggleIcon,
+    MatSuffix,
   ],
   standalone: true,
   providers: [provideNativeDateAdapter()],
@@ -68,16 +72,18 @@ export class SubscriptionsFilterComponent implements OnInit {
 
     this.filterForm.patchValue({
       companyId: this.user.companyUserResponse.company.id
-    })
+    });
   }
 
   getUsers() {
-    this.userService.getUsers()
+    this.userService.getUsers();
   }
 
   applyFilter() {
     if (this.filterForm.valid) {
       const payload: any = this.filterForm.getRawValue();
+      payload.dateFrom = payload.dateFrom.toISOString();
+      payload.dateTo = payload.dateTo.toISOString();
       this.filterApplied.emit(payload);
     }
   }

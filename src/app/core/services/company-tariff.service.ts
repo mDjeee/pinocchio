@@ -16,8 +16,8 @@ export class CompanyTariffService {
   ) {
   }
 
-  getTariffs() {
-    const url = `${this.apiUrl}/api/v1/company-tariff/all`;
+  getTariffs(companyId: number) {
+    const url = `${this.apiUrl}/api/v1/company-tariff/all/${companyId}`;
     return this.http.get(url);
   }
 

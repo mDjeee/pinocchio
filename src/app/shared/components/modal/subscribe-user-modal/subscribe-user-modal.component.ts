@@ -16,6 +16,8 @@ import { NgClass } from '@angular/common';
 import { SpinProcessComponent } from '../../spin-process/spin-process.component';
 import { BranchService } from '../../../../core/services/branch.service';
 import { Branch } from '../../../interfaces/branch.interface';
+import { LoginResponse } from '../../../interfaces/login-response.interface';
+import { StorageService } from '../../../../core/services/storage.service';
 
 @Component({
   selector: 'app-subscribe-user-modal',
@@ -42,6 +44,7 @@ export class SubscribeUserModalComponent implements OnInit {
   subForm: FormGroup;
   loading = false;
   bracnhes: Branch[] = [];
+  currentUser!: LoginResponse;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public user: CompanyUser,
@@ -53,6 +56,7 @@ export class SubscribeUserModalComponent implements OnInit {
     private matDialogRef: MatDialogRef<SubscribeUserModalComponent>,
     private branchService: BranchService,
     private _cdRef: ChangeDetectorRef,
+    private storageService: StorageService,
   ) {
     this.subForm = this.fb.group({
       companyId: [this.user.company.id, [Validators.required]],
@@ -63,6 +67,7 @@ export class SubscribeUserModalComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.currentUser = this.storageService.getUserDetail();
     this.getTariffs();
     this.getBranches();
   }
@@ -84,7 +89,7 @@ export class SubscribeUserModalComponent implements OnInit {
   }
 
   getTariffs() {
-    this.companyTariffService.getTariffs()
+    this.companyTariffService.getTariffs(this.currentUser.companyUserResponse.company.id)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: (res: any) => {

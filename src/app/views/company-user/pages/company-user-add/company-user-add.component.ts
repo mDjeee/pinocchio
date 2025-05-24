@@ -1,8 +1,6 @@
 import { Component, DestroyRef, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { User } from '../../../../shared/interfaces/user.interface';
 import { CompanyRoleEnum, RoleEnum } from '../../../../shared/interfaces/role.interface';
-import { UsersService } from '../../../../core/services/users.service';
 import { CompanyService } from '../../../../core/services/company.service';
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -20,6 +18,7 @@ import { NgClass, NgIf } from '@angular/common';
 import { CompanyUserService } from '../../../../core/services/company-user.service';
 import { CompanyUser } from '../../../../shared/interfaces/company-user.interface';
 import { LoginResponse } from '../../../../shared/interfaces/login-response.interface';
+import { StorageService } from '../../../../core/services/storage.service';
 
 @Component({
   selector: 'app-company-user-add',
@@ -64,6 +63,7 @@ export class CompanyUserAddComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private validationService: ValidationService,
+    private storageService: StorageService,
   ) {
     this.userForm = this.fb.group({
       firstName: ['', [Validators.required, Validators.maxLength(100)]],
@@ -80,6 +80,14 @@ export class CompanyUserAddComponent implements OnInit {
   ngOnInit() {
     this.watchRoute();
     this.getCompanies();
+    this.setCurrentUser();
+  }
+
+  setCurrentUser() {
+    this.currentUser = this.storageService.getUserDetail();
+    this.userForm.patchValue({
+      companyId: this.currentUser.companyUserResponse.company.id
+    });
   }
 
   getCompanies() {

@@ -10,6 +10,8 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { NgIf } from '@angular/common';
 import { SpinProcessComponent } from '../../../../shared/components/spin-process/spin-process.component';
+import { LoginResponse } from '../../../../shared/interfaces/login-response.interface';
+import { StorageService } from '../../../../core/services/storage.service';
 
 @Component({
   selector: 'app-company-tariff-add',
@@ -36,12 +38,14 @@ export class CompanyTariffAddComponent implements OnInit {
   isLoading = false;
   errorMessage = '';
   id: string | null = null;
+  currentUser!: LoginResponse;
 
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private companyTariffService: CompanyTariffService
+    private companyTariffService: CompanyTariffService,
+    private storageService: StorageService,
   ) {
     this.tariffForm = this.fb.group({
       name: ['', [Validators.required, Validators.maxLength(100)]],
@@ -53,6 +57,7 @@ export class CompanyTariffAddComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.currentUser = this.storageService.getUserDetail();
     this.id = this.route.snapshot.paramMap.get('id');
     this.isEditMode = !!this.id;
 
@@ -81,6 +86,7 @@ export class CompanyTariffAddComponent implements OnInit {
     this.errorMessage = '';
 
     const formValue = this.tariffForm.value;
+    formValue.companyId = this.currentUser.companyUserResponse.company.id;
 
     const operation = this.isEditMode && this.id
       ? this.companyTariffService.updateTariff(this.id, formValue)
@@ -88,7 +94,7 @@ export class CompanyTariffAddComponent implements OnInit {
 
     operation.subscribe({
       next: () => {
-        this.router.navigate(['/tariff']);
+        this.router.navigate(['/company-tariff']);
       },
       error: (err) => {
         this.errorMessage = 'Failed to save tariff';

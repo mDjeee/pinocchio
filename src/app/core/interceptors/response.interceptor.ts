@@ -48,6 +48,7 @@ export const responseInterceptor: HttpInterceptorFn = (request, next) => {
       return response;
     }),
     catchError((error: HttpErrorResponse) => {
+      console.log('catchError', error);
       const errorObj = error.error?.error ?? {
         message: error.message || 'Неизвестная ошибка',
         code: error.status || -1

@@ -6,7 +6,11 @@
       <input matStartDate formControlName="dateFrom" placeholder="С">
       <input matEndDate formControlName="dateTo" placeholder="По">
     </mat-date-range-input>
-    <mat-datepicker-toggle matSuffix [for]="picker" />
+
+    <mat-datepicker-toggle matSuffix [for]="picker">
+      <lucide-icon matDatepickerToggleIcon name="calendar-1" class="w-12"></lucide-icon>
+    </mat-datepicker-toggle>
+
     <mat-date-range-picker #picker></mat-date-range-picker>
   </mat-form-field>
 

@@ -1,6 +1,5 @@
-import { Component, DestroyRef } from '@angular/core';
+import { Component, DestroyRef, OnInit } from '@angular/core';
 import { Tariff } from '../../../../shared/interfaces/tariff.interface';
-import { TariffService } from '../../../../core/services/tariff.service';
 import { ToastrService } from 'ngx-toastr';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, RouterLink } from '@angular/router';
@@ -13,6 +12,8 @@ import { MatMenu, MatMenuItem, MatMenuTrigger } from '@angular/material/menu';
 import { PaginatorComponent } from '../../../../shared/components/paginator/paginator.component';
 import { TableComponent } from '../../../../shared/components/table/table.component';
 import { companyTariffColumn } from '../../constants/company-tariff.column';
+import { LoginResponse } from '../../../../shared/interfaces/login-response.interface';
+import { StorageService } from '../../../../core/services/storage.service';
 
 @Component({
   selector: 'app-company-tariff-list',
@@ -27,14 +28,15 @@ import { companyTariffColumn } from '../../constants/company-tariff.column';
   ],
   standalone: true,
   templateUrl: './company-tariff-list.component.html',
-  styleUrl: './company-tariff-list.component.scss'
+  styleUrl: './company-tariff-list.component.scss',
 })
-export class CompanyTariffListComponent {
+export class CompanyTariffListComponent implements OnInit {
   title = 'Тарифы компании';
   tariffs: CompanyTariff[] = [];
   page = 0;
   size = 20;
   totalItems = 0;
+  currentUser!: LoginResponse;
 
   constructor(
     private destryoRef: DestroyRef,
@@ -42,15 +44,17 @@ export class CompanyTariffListComponent {
     private toastrService: ToastrService,
     private matDialog: MatDialog,
     private activatedRoute: ActivatedRoute,
+    private storageService: StorageService,
   ) {
   }
 
   ngOnInit() {
-    this.getTariffs()
+    this.currentUser = this.storageService.getUserDetail();
+    this.getTariffs();
   }
 
   getTariffs() {
-    this.companyTariffService.getTariffs()
+    this.companyTariffService.getTariffs(this.currentUser.companyUserResponse.company.id)
       .pipe(takeUntilDestroyed(this.destryoRef))
       .subscribe({
         next: (res: any) => {

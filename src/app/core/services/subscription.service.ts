@@ -45,7 +45,10 @@ export class SubscriptionService {
       .set('dateFrom', filter.dateFrom)
       .set('dateTo', filter.dateTo)
       .set('companyId', filter.companyId)
-      .set('userId', filter.userId);
+
+    if(filter.userId) {
+      params.set('userId', filter.userId);
+    }
 
     return this.http.get(url, { params });
   }
