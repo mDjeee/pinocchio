@@ -132,6 +132,30 @@
           Обязательное поле
         </mat-error>
       </mat-form-field>
+
+      <!-- Password -->
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Пароль</mat-label>
+        <input
+          matInput
+          formControlName="password"
+          [type]="hidePassword ? 'password' : 'text'"
+          required
+          placeholder="Введите пароль (some1234)"
+        >
+        <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword">
+          <lucide-icon
+            class="text-[#1A1B1F]"
+            [name]="hidePassword ? 'eye' : 'eye-off'"
+          ></lucide-icon>
+        </button>
+        <mat-error *ngIf="f['password'].hasError('required')">
+          Обязательное поле
+        </mat-error>
+        <mat-error *ngIf="f['password'].hasError('minlength')">
+          Минимум 6 символов
+        </mat-error>
+      </mat-form-field>
     </div>
 
     <!-- Form Actions -->

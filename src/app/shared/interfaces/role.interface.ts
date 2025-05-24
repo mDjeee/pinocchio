@@ -2,7 +2,14 @@ export enum RoleEnum {
   OWNER = 'OWNER',
   SHAREHOLDER = 'SHAREHOLDER',
   DIRECTOR = 'DIRECTOR',
-  CUSTOM = 'CUSTOM'
+  CUSTOM = 'CUSTOM',
+  ADMIN = 'ADMIN',
+}
+
+export enum CompanyRoleEnum {
+  DIRECTOR = 'DIRECTOR',
+  CUSTOM = 'CUSTOM',
+  ADMIN = 'ADMIN',
 }
 
 export interface Role {

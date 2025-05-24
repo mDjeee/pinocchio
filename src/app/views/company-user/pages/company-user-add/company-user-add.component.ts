@@ -1,7 +1,7 @@
 import { Component, DestroyRef, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { User } from '../../../../shared/interfaces/user.interface';
-import { RoleEnum } from '../../../../shared/interfaces/role.interface';
+import { CompanyRoleEnum, RoleEnum } from '../../../../shared/interfaces/role.interface';
 import { UsersService } from '../../../../core/services/users.service';
 import { CompanyService } from '../../../../core/services/company.service';
 import { ToastrService } from 'ngx-toastr';
@@ -53,7 +53,7 @@ export class CompanyUserAddComponent implements OnInit {
   user?: CompanyUser;
   currentUser!: LoginResponse;
 
-  roleTypes = Object.values(RoleEnum);
+  roleTypes = Object.values(CompanyRoleEnum);
 
   constructor(
     private fb: FormBuilder,
@@ -72,7 +72,8 @@ export class CompanyUserAddComponent implements OnInit {
       email: ['', [Validators.required, this.validationService.validateEmail]],
       role: ['', [Validators.required]],
       companyId: [null, [Validators.required]],
-      status: ['ACTIVE', [Validators.required]]
+      status: ['ACTIVE', [Validators.required]],
+      password: ['', [Validators.required]]
     });
   }
 
