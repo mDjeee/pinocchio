@@ -47,10 +47,17 @@ export const responseInterceptor: HttpInterceptorFn = (request, next) => {
       return response;
     }),
     catchError((error: HttpErrorResponse) => {
-      const errorObj = error.error?.error ?? {
+      let errorObj = error.error?.error ?? {
         message: error.message || 'Неизвестная ошибка',
         code: error.status || -1
       };
+
+      if(typeof errorObj === 'string') {
+        errorObj = {
+          message: error.error?.error || 'Неизвестная ошибка',
+          code: error.error?.status || -1
+        }
+      }
 
       // Re-throw the error to be caught by the subscriber's error handler
       return throwError(() => errorObj);
