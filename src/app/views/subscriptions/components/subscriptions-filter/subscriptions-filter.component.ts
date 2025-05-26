@@ -17,6 +17,7 @@ import { NgForOf } from '@angular/common';
 import { ClientService } from '../../../../core/services/client.service';
 import { UsersService } from '../../../../core/services/users.service';
 import { LucideAngularModule } from 'lucide-angular';
+import { LOCAL_DATE_FORMATS } from '../../../../shared/utils/date-formats';
 
 @Component({
   selector: 'app-subscriptions-filter',
@@ -82,8 +83,8 @@ export class SubscriptionsFilterComponent implements OnInit {
   applyFilter() {
     if (this.filterForm.valid) {
       const payload: any = this.filterForm.getRawValue();
-      payload.dateFrom = payload.dateFrom.toISOString();
-      payload.dateTo = payload.dateTo.toISOString();
+      // payload.dateFrom = payload.dateFrom.toLocaleString();
+      // payload.dateTo = payload.dateTo.toLocaleString();
       this.filterApplied.emit(payload);
     }
   }
