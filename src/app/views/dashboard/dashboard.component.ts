@@ -134,8 +134,8 @@ export class DashboardComponent implements OnInit {
 
     const filter: StatisticsFilter = {
       companyId: rawValue.companyId,
-      dateFrom: rawValue.dateFrom,
-      dateTo: rawValue.dateTo,
+      dateFrom: rawValue.dateFrom.toISOString(),
+      dateTo: rawValue.dateTo.toISOString(),
       isDaily: rawValue.isDaily,
       byBranch: rawValue.byBranch
     };
