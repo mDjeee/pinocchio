@@ -83,8 +83,8 @@ export class SubscriptionsFilterComponent implements OnInit {
   applyFilter() {
     if (this.filterForm.valid) {
       const payload: any = this.filterForm.getRawValue();
-      // payload.dateFrom = payload.dateFrom.toLocaleString();
-      // payload.dateTo = payload.dateTo.toLocaleString();
+      payload.dateFrom = payload.dateFrom.toLocaleString();
+      payload.dateTo = payload.dateTo.toLocaleString();
       this.filterApplied.emit(payload);
     }
   }
